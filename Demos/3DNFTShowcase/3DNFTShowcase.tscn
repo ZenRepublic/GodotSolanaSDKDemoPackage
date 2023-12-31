@@ -1,0 +1,135 @@
+[gd_scene load_steps=18 format=3 uid="uid://cwbo7ujwfaygi"]
+
+[ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_d1nih"]
+[ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_unrps"]
+[ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://Fonts/PUSSS___.TTF" id="3_52cxp"]
+[ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://Textures/Buttons/b_inactive.PNG" id="6_1i7e0"]
+[ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="7_cdlhf"]
+[ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="8_8rnd6"]
+[ext_resource type="Script" path="res://Demos/3DNFTShowcase/nft_model_showcase_system.gd" id="8_nuffl"]
+[ext_resource type="PackedScene" uid="uid://b0iofagcqa64g" path="res://Demos/3DNFTShowcase/ModelNFT.tscn" id="9_6he2r"]
+[ext_resource type="Script" path="res://Scripts/scene_change_button.gd" id="9_r2b8r"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_as8ny"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_cmecj"]
+sky_material = SubResource("ProceduralSkyMaterial_as8ny")
+
+[sub_resource type="Environment" id="Environment_17iql"]
+background_mode = 2
+sky = SubResource("Sky_cmecj")
+tonemap_mode = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bmrj2"]
+texture = ExtResource("7_cdlhf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ryjmu"]
+texture = ExtResource("8_8rnd6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f2tob"]
+texture = ExtResource("7_cdlhf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_avkrb"]
+texture = ExtResource("6_1i7e0")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xvq3"]
+
+[node name="3DNFTShowcase" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_17iql")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999998, 0.000267939, -0.00176171, 0, 0.988631, 0.150362, 0.00178197, -0.150361, 0.98863, 0.055376, 0.34515, 2.49834)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="AccountPanel" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 141.0
+script = ExtResource("1_d1nih")
+
+[node name="AccountLabel" type="Label" parent="UI/AccountPanel"]
+layout_mode = 1
+offset_left = 44.0
+offset_top = 17.0
+offset_right = 818.0
+offset_bottom = 92.0
+theme_override_fonts/font = ExtResource("2_unrps")
+theme_override_font_sizes/font_size = 60
+text = "Wallet Address"
+
+[node name="AccountAddress" type="Label" parent="UI/AccountPanel"]
+layout_mode = 1
+offset_left = 67.0
+offset_top = 89.0
+offset_right = 841.0
+offset_bottom = 129.0
+theme_override_fonts/font = ExtResource("2_unrps")
+theme_override_font_sizes/font_size = 23
+text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
+
+[node name="OwnedNFTslabel" type="Label" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -168.0
+offset_top = -164.0
+offset_right = 168.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_unrps")
+theme_override_font_sizes/font_size = 50
+text = "Zencyclopedia: Ruby #1232"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ReturnButton" type="Button" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 379.0
+offset_top = -307.0
+offset_right = 548.0
+offset_bottom = -230.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_52cxp")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxTexture_bmrj2")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ryjmu")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_f2tob")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_avkrb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0xvq3")
+text = "RETURN"
+script = ExtResource("9_r2b8r")
+path_to_scene = "res://Demos/DemoSelectScene.tscn"
+
+[node name="ModelShowcaseSystem" type="Node3D" parent="." node_paths=PackedStringArray("model_spawn")]
+script = ExtResource("8_nuffl")
+model_nft_scn = ExtResource("9_6he2r")
+model_spawn = NodePath(".")
+
+[connection signal="pressed" from="UI/ReturnButton" to="UI/ReturnButton" method="_on_pressed"]
