@@ -19,6 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hwc3u")
+mainnet_rpc = "https://rpc.hellomoon.io/6b758f53-4b78-41a7-86a9-6b61c97711eb"
 
 [node name="OverlayLayer" type="CanvasLayer" parent="."]
 layer = 10

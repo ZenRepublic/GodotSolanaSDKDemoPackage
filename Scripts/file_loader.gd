@@ -40,7 +40,6 @@ func load_token_image(image_link:String,size:int=512) -> Texture2D:
 		push_error("Failed to fetch Token Image")
 		return null
 	
-	print(response_dict["headers"])
 	var content_type:String = parse_image_type(response_dict["headers"])
 	if content_type=="":
 		push_error("Failed to figure out Image Type")
