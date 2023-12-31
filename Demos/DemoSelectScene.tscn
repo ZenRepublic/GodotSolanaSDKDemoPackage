@@ -473,6 +473,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+disabled = true
 text = "SELECT"
 script = ExtResource("6_v4ked")
 path_to_scene = "res://Demos/3DNFTShowcase/3DNFTShowcase.tscn"
