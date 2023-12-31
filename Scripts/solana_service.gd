@@ -4,6 +4,9 @@ enum RpcCluster{Mainnet,Devnet}
 @export var mainnet_rpc:String
 @export var devnet_rpc:String
 
+var default_devnet = "https://api.devnet.solana.com"
+var default_mainnet = "https://api.mainnet-beta.solana.com"
+
 @onready var wallet = $OverlayLayer/WalletService
 @onready var transaction_processor = $OverlayLayer/TransactionProcessor
 @onready var nft_manager = $NFTManager
@@ -13,6 +16,11 @@ var rpc:String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if mainnet_rpc=="":
+		mainnet_rpc=default_mainnet
+	if devnet_rpc=="":
+		devnet_rpc=default_devnet
+		
 	SolanaClient.set_encoding("base64");
 	set_rpc_cluster(rpc_cluster)
 	

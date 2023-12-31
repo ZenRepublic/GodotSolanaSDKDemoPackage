@@ -1,0 +1,8 @@
+res://Autoload/SolanaService.tscn
+res://Demos/3DNFTShowcase/3DNFTShowcase.tscn
+res://Demos/NFTListDemo/NftListDemo.tscn
+res://Demos/SystemProgramDemo/SystemProgramDemo.tscn
+res://Demos/TokenProgramDemo/TokenProgramDemo.tscn
+res://Demos/LoginScene.tscn
+res://Scripts/file_loader.gd
+res://Scripts/solana_service.gd

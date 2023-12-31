@@ -19,8 +19,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hwc3u")
-mainnet_rpc = "https://api.mainnet-beta.solana.com"
-devnet_rpc = "https://white-cosmopolitan-season.solana-devnet.quiknode.pro/4f032229d21cb155cf0fd79df599ee2a79720372/"
 
 [node name="OverlayLayer" type="CanvasLayer" parent="."]
 layer = 10

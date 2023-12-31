@@ -40,6 +40,7 @@ func load_token_image(image_link:String,size:int=512) -> Texture2D:
 		push_error("Failed to fetch Token Image")
 		return null
 	
+	print(response_dict["headers"])
 	var content_type:String = parse_image_type(response_dict["headers"])
 	if content_type=="":
 		push_error("Failed to figure out Image Type")
@@ -76,7 +77,7 @@ func parse_http_response(response:Array, body_to_json:bool=false) -> Dictionary:
 	
 func parse_image_type(headers:Array[String]) -> String:
 	for header in headers:
-		if header.contains("Content-Type"):
+		if header.to_lower().contains("content-type"):
 			return header.split("/")[1]
 	return ""
 	
