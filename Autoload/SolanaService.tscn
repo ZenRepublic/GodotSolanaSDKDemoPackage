@@ -112,6 +112,8 @@ starting_panel = NodePath("../LoadingPanel")
 
 [node name="WalletService" type="Node" parent="OverlayLayer"]
 script = ExtResource("5_f327g")
+use_generated = true
+custom_private_key = "465EdQ9kvGX4ZA4PdrhZTfHRdgzSNZ6MhLckd6na1chQ7TKRhDUrxMCqoN1okmSQBXEZkFJSPfJG9YYmbYkJ56em"
 
 [node name="PhantomController" type="PhantomController" parent="OverlayLayer/WalletService"]
 

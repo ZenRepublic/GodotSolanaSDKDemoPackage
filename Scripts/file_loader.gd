@@ -153,6 +153,9 @@ func load_3d_model(model_link:String) -> GLTFState:
 		return null
 	
 	var gltf_document:GLTFDocument = GLTFDocument.new()
+	var convert_extension:GLTFDocumentExtensionConvertImporterMesh = GLTFDocumentExtensionConvertImporterMesh.new()
+	gltf_document.register_gltf_document_extension(convert_extension)
+	
 	var state:GLTFState = GLTFState.new()
 	var glb_load_request
 	
