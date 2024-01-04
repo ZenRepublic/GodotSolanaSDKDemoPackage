@@ -9,7 +9,7 @@ class_name TransactionProcessor
 
 @onready var screen_switcher = $ScreenSwitcher
 
-var phantom_controller:PhantomController
+var wallet_adapter:WalletAdapter
 
 signal on_transaction_finish
 # Called when the node enters the scene tree for the first time.
@@ -18,10 +18,10 @@ func _ready() -> void:
 	fail_panel.visible=false
 	success_panel.visible=false
 	
-func setup(wallet:PhantomController) -> void:
-	phantom_controller = wallet
-	phantom_controller.connect("message_signed",process_transaction_pass)
-	phantom_controller.connect("signing_error",process_transaction_error)
+func setup(adapter:WalletAdapter) -> void:
+	wallet_adapter = adapter
+	wallet_adapter.connect("message_signed",process_transaction_pass)
+	wallet_adapter.connect("signing_error",process_transaction_error)
 	
 	
 func enable_tx_loader() -> void:
@@ -38,11 +38,9 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 		transaction.add_instruction(ix)
 	
 	if wallet.use_generated:
-		transaction.use_phantom_payer = false
 		transaction.set_payer(wallet.keypair)
 	else:
-		transaction.use_phantom_payer = true
-		transaction.set_payer(wallet.phantom_controller)
+		transaction.set_payer(wallet.wallet_adapter)
 
 	transaction.update_latest_blockhash("")
 	

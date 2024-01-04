@@ -24,9 +24,6 @@ func _ready() -> void:
 	SolanaClient.set_encoding("base64");
 	set_rpc_cluster(rpc_cluster)
 	
-#	if transaction_processor!=null:
-#		transaction_processor.setup(phantom_controller)
-	
 	
 func set_rpc_cluster(new_cluster:RpcCluster)->void:
 	match new_cluster:
