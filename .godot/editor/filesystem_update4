@@ -1,8 +1,8 @@
+res://Scripts/WalletAdapter/WalletAdapterUI.tscn
+res://Scripts/WalletAdapter/wallet_adapter_ui.gd
+res://Scripts/wallet_service.gd
 res://Demos/3DNFTShowcase/ModelNFT.tscn
 res://Autoload/SolanaService.tscn
-res://Scripts/wallet_service.gd
-res://Scripts/wallet_adapter_ui.gd
-res://Scripts/WalletAdapter/wallet_adapter_button.gd
-res://Scripts/WalletAdapter/wallet_adapter_ui.gd
-res://Scripts/WalletAdapter/WalletSelectButton.tscn
-res://Scripts/WalletAdapter/WalletAdapterUI.tscn
+res://Demos/LoginScene.tscn
+res://Demos/DemoSelectScene.tscn
+res://Scripts/solana_service.gd

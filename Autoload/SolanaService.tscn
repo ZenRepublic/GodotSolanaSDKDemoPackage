@@ -113,7 +113,8 @@ starting_panel = NodePath("../LoadingPanel")
 
 [node name="WalletService" type="Node" parent="OverlayLayer"]
 script = ExtResource("5_f327g")
-custom_private_key = "465EdQ9kvGX4ZA4PdrhZTfHRdgzSNZ6MhLckd6na1chQ7TKRhDUrxMCqoN1okmSQBXEZkFJSPfJG9YYmbYkJ56em"
+use_generated = true
+custom_pk_path = "C:\\Users\\thoma\\Desktop\\kp\\kp.txt"
 wallet_adapter_ui_scn = ExtResource("6_uin7u")
 
 [node name="WalletAdapter" type="WalletAdapter" parent="OverlayLayer/WalletService"]

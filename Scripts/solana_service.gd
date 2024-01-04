@@ -67,16 +67,27 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	return Pubkey.new_from_string(response_dict["result"]["value"][0]["pubkey"])
 	
 	
-func generate_keypair() -> Keypair:
+func generate_keypair(derive_from_machine:bool=false) -> Keypair:
+	var randomizer = RandomNumberGenerator.new()
+	randomizer.randomize()
+	if derive_from_machine:
+		randomizer.set_seed(OS.get_unique_id().hash()) 
+
 	var keypair = Keypair.new();
 	keypair.set_unique(false)
 	var seed := PackedByteArray()
 	for i in range(32):
-		var random_value := randi() % 256  # randi() generates a random integer
+		var random_value := randomizer.randi() % 256  # randi() generates a random integer
 		seed.append(random_value)
 #	seed.resize(32)
 	keypair.set_seed(seed);
 	
+	return keypair
+	
+func generate_keypair_from_pk(pk:String) -> Keypair:
+	var seed = SolanaSDK.bs58_decode(pk)
+	print(seed.size())
+	var keypair = Keypair.new_from_seed(seed)
 	return keypair
 
 func transfer_sol_to_address(receiver:String,amount:float) -> void:
