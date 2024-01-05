@@ -1,8 +1,8 @@
+Label
+Panel
+TextureRect
 TextureButton
 Button
-Label
-TextureRect
-Panel
 Control
 PanelContainer
 VBoxContainer

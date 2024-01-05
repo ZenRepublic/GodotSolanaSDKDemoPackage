@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Demos/NFTListDemo/nft_display_system.gd" id="10_m65q0"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="10_xwtt3"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="11_kb74x"]
-[ext_resource type="Script" path="res://Scripts/scene_change_button.gd" id="12_aui6t"]
+[ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="12_aui6t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)

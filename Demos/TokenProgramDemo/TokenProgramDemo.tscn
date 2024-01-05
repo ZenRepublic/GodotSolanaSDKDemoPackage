@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://d4kauar2qc15y" path="res://Textures/Buttons/b_green_hover.PNG" id="9_xgkwu"]
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://Textures/Buttons/b_inactive.PNG" id="10_7y3uc"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="11_po03a"]
-[ext_resource type="Script" path="res://Scripts/scene_change_button.gd" id="12_65mbq"]
+[ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="12_65mbq"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="12_q1yyo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]

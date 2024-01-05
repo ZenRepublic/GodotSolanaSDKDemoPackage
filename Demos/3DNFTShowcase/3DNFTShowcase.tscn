@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="8_8rnd6"]
 [ext_resource type="Script" path="res://Demos/3DNFTShowcase/nft_model_showcase_system.gd" id="8_nuffl"]
 [ext_resource type="PackedScene" uid="uid://b0iofagcqa64g" path="res://Demos/3DNFTShowcase/ModelNFT.tscn" id="9_6he2r"]
-[ext_resource type="Script" path="res://Scripts/scene_change_button.gd" id="9_r2b8r"]
+[ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="9_r2b8r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_as8ny"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)

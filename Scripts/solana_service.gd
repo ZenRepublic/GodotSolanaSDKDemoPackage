@@ -86,7 +86,6 @@ func generate_keypair(derive_from_machine:bool=false) -> Keypair:
 	
 func generate_keypair_from_pk(pk:String) -> Keypair:
 	var seed = SolanaSDK.bs58_decode(pk)
-	print(seed.size())
 	var keypair = Keypair.new_from_seed(seed)
 	return keypair
 

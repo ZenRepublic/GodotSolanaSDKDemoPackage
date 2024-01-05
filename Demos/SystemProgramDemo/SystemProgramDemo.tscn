@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://Textures/Buttons/b_inactive.PNG" id="9_1yhps"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="10_d36ma"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="11_p225x"]
-[ext_resource type="Script" path="res://Scripts/scene_change_button.gd" id="12_7pjvr"]
+[ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="12_7pjvr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
