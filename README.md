@@ -20,3 +20,5 @@ Coming Soon:
 
 Godot 4.1+ needed to run the project. Windows, Mac and Linux supported.
 
+If you are interested in using Solana Godot SDK for your game and you need some help, drop by to our Discord server: https://discord.gg/CBydsCq4mE
+
