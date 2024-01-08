@@ -32,9 +32,47 @@ func set_model(nft:Nft) -> void:
 			
 func instantiate_model(state:GLTFState) -> void:
 	var gltf_document:GLTFDocument = GLTFDocument.new()
-	var gltf_extension:GLTFDocumentExtension = GLTFDocumentExtension.new()
-	gltf_document.register_gltf_document_extension(gltf_extension)
 	print(state.json)
-	model = gltf_document.generate_scene(nft.model_state)
-	add_child(model)
-	self.name = nft.metadata.get_token_name()
+	model = gltf_document.generate_scene(nft.model_state,30,true,true)
+	var error = convert_to_mesh_instance(model)
+	if error == OK:
+		add_child(model)
+		self.name = nft.metadata.get_token_name()
+	else:
+		model.queue_free()
+	
+func convert_to_mesh_instance(p_root: Node):
+	if p_root == null:
+		return ERR_INVALID_PARAMETER
+	var queue: Array = [p_root]
+	var delete_queue: Array = []
+	while not queue.is_empty():
+		var node: Node = queue.front()
+		queue.pop_front()
+
+		var mesh_3d: ImporterMeshInstance3D = node as ImporterMeshInstance3D
+		if mesh_3d:
+			var mesh_instance_node_3d := MeshInstance3D.new()
+			var mesh: ImporterMesh = mesh_3d.get_mesh()
+			if mesh:
+				var array_mesh: ArrayMesh = mesh.get_mesh()
+				mesh_instance_node_3d.name = node.name
+				mesh_instance_node_3d.transform = mesh_3d.transform
+				mesh_instance_node_3d.mesh = array_mesh
+				mesh_instance_node_3d.skin = mesh_3d.get_skin()
+				mesh_instance_node_3d.skeleton = mesh_3d.get_skeleton_path()
+				node.replace_by(mesh_instance_node_3d)
+				delete_queue.append(node)
+				node = mesh_instance_node_3d
+			else:
+				mesh_instance_node_3d.queue_free()
+
+		for i in range(node.get_child_count()):
+			queue.append(node.get_child(i))
+
+	while not delete_queue.is_empty():
+		var node_to_delete: Node = delete_queue.front()
+		delete_queue.pop_front()
+		node_to_delete.queue_free()
+
+	return OK

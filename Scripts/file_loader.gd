@@ -152,14 +152,12 @@ func load_3d_model(model_link:String) -> GLTFState:
 		push_error("Failed to fetch Token Model")
 		return null
 	
-	var gltf_document:GLTFDocument = GLTFDocument.new()
-	var convert_extension:GLTFDocumentExtensionConvertImporterMesh = GLTFDocumentExtensionConvertImporterMesh.new()
-	gltf_document.register_gltf_document_extension(convert_extension)
-	
 	var state:GLTFState = GLTFState.new()
+	var gltf_document:GLTFDocument = GLTFDocument.new()
 	var glb_load_request
-	
-	glb_load_request = gltf_document.append_from_buffer(response_dict["body"],"",state)
+	var flags = 8	
+	flags |= EditorSceneFormatImporter.IMPORT_USE_NAMED_SKIN_BINDS
+	glb_load_request = gltf_document.append_from_buffer(response_dict["body"], "", state, flags)
 	
 	if glb_load_request != OK:
 		return null

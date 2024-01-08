@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cwbo7ujwfaygi"]
+[gd_scene load_steps=21 format=3 uid="uid://cwbo7ujwfaygi"]
 
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_d1nih"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_unrps"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Demos/3DNFTShowcase/nft_model_showcase_system.gd" id="8_nuffl"]
 [ext_resource type="PackedScene" uid="uid://b0iofagcqa64g" path="res://Demos/3DNFTShowcase/ModelNFT.tscn" id="9_6he2r"]
 [ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="9_r2b8r"]
+[ext_resource type="Script" path="res://Demos/3DNFTShowcase/asset_inspector.gd" id="10_0ihl4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_as8ny"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -21,6 +22,12 @@ sky_material = SubResource("ProceduralSkyMaterial_as8ny")
 background_mode = 2
 sky = SubResource("Sky_cmecj")
 tonemap_mode = 2
+
+[sub_resource type="Environment" id="Environment_1h0oo"]
+background_mode = 1
+background_color = Color(1, 0.733333, 0.607843, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bmrj2"]
 texture = ExtResource("7_cdlhf")
@@ -36,6 +43,12 @@ texture = ExtResource("6_1i7e0")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xvq3"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_30bxs"]
+top_radius = 67.0
+bottom_radius = 52.969
+height = 51.382
+radial_segments = 12
+
 [node name="3DNFTShowcase" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -46,7 +59,8 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.999998, 0.000267939, -0.00176171, 0, 0.988631, 0.150362, 0.00178197, -0.150361, 0.98863, 0.055376, 0.34515, 2.49834)
+transform = Transform3D(0.948888, -0.152521, 0.276315, 0, 0.875482, 0.48325, -0.315614, -0.45855, 0.830734, 149.29, 261.145, 448.821)
+environment = SubResource("Environment_1h0oo")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -130,6 +144,18 @@ path_to_scene = "res://Demos/DemoSelectScene.tscn"
 [node name="ModelShowcaseSystem" type="Node3D" parent="." node_paths=PackedStringArray("model_spawn")]
 script = ExtResource("8_nuffl")
 model_nft_scn = ExtResource("9_6he2r")
-model_spawn = NodePath(".")
+model_spawn = NodePath("ModelSpawnPoint")
+
+[node name="ModelSpawnPoint" type="Node3D" parent="ModelShowcaseSystem" node_paths=PackedStringArray("cam")]
+script = ExtResource("10_0ihl4")
+cam = NodePath("../../Camera3D")
+minDistance = 220.0
+maxDistance = 540.0
+defaultRotationSpeed = 1.0
+
+[node name="Podium" type="MeshInstance3D" parent="ModelShowcaseSystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25.7235, 0)
+mesh = SubResource("CylinderMesh_30bxs")
+skeleton = NodePath("../..")
 
 [connection signal="pressed" from="UI/ReturnButton" to="UI/ReturnButton" method="_on_pressed"]

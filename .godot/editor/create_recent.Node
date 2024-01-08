@@ -1,3 +1,5 @@
+Node3D
+MeshInstance3D
 Label
 Panel
 TextureRect
@@ -7,15 +9,6 @@ Control
 PanelContainer
 VBoxContainer
 WalletAdapter
-Node3D
 Camera3D
-MeshInstance3D
 CenterContainer
 FlowContainer
-Container
-ScrollContainer
-CanvasLayer
-HBoxContainer
-Transaction
-TextEdit
-SpinBox

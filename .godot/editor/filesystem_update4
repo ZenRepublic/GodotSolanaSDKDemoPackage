@@ -1,7 +1,4 @@
-res://Autoload/SolanaService.tscn
-res://Scripts/solana_service.gd
-res://Demos/SystemProgramDemo/SystemProgramDemo.tscn
-res://Demos/TokenProgramDemo/TokenProgramDemo.tscn
-res://Demos/NFTListDemo/NftListDemo.tscn
-res://Demos/3DNFTShowcase/3DNFTShowcase.tscn
 res://Demos/CandyMachineDemo/CandyMachineDemo.tscn
+res://Autoload/SolanaService.tscn
+res://Demos/3DNFTShowcase/3DNFTShowcase.tscn
+res://Demos/3DNFTShowcase/asset_inspector.gd
