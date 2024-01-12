@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvcf3y7hfwasq"]
+[gd_scene load_steps=17 format=3 uid="uid://dvcf3y7hfwasq"]
 
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_x37jh"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_wxjie"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://Textures/Buttons/b_inactive.PNG" id="6_310sy"]
 [ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="7_25l6n"]
 [ext_resource type="Texture2D" uid="uid://dq15ny3t87eog" path="res://icon.svg" id="8_fhp08"]
+[ext_resource type="Script" path="res://Demos/CandyMachineDemo/candy_machine_display.gd" id="8_iq3ir"]
+[ext_resource type="Script" path="res://Demos/NFTListDemo/displayable_nft.gd" id="9_i7656"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
@@ -91,36 +93,58 @@ text = "RETURN"
 script = ExtResource("7_25l6n")
 path_to_scene = "res://Demos/DemoSelectScene.tscn"
 
-[node name="CollectionVisual" type="TextureRect" parent="."]
+[node name="CMDisplay" type="Control" parent="." node_paths=PackedStringArray("nft_display", "collection_desc", "minted_amount", "progress_bar")]
+anchors_preset = 0
+offset_left = 147.0
+offset_top = 134.0
+offset_right = 927.0
+offset_bottom = 585.0
+script = ExtResource("8_iq3ir")
+candy_machine_id = "CiAnxgxAtM1pTdNoeZ8nqeTYBM5mPEdQHdwhXfqeS3Th"
+candy_guard_id = "9JinvCj9dAESDfErBHLuybEBxy3gpZgEdw72sBS6VJf6"
+nft_display = NodePath("CollectionNFT")
+collection_desc = NodePath("MintDetails/Description")
+minted_amount = NodePath("MintDetails/MintedInfo")
+progress_bar = NodePath("MintDetails/ProgressBar")
+
+[node name="CollectionNFT" type="Control" parent="CMDisplay" node_paths=PackedStringArray("visual", "name_label")]
+anchors_preset = 0
+offset_right = 354.0
+offset_bottom = 441.0
+script = ExtResource("9_i7656")
+visual = NodePath("CollectionVisual")
+name_label = NodePath("CollectionName")
+
+[node name="CollectionVisual" type="TextureRect" parent="CMDisplay/CollectionNFT"]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 154.0
-offset_right = 481.0
-offset_bottom = 472.0
+offset_left = 16.0
+offset_top = 20.0
+offset_right = 334.0
+offset_bottom = 338.0
 texture = ExtResource("8_fhp08")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="CollectionName" type="Label" parent="."]
+[node name="CollectionName" type="Label" parent="CMDisplay/CollectionNFT"]
 layout_mode = 0
-offset_left = 182.0
-offset_top = 486.0
-offset_right = 457.0
-offset_bottom = 564.0
+offset_left = 35.0
+offset_top = 352.0
+offset_right = 310.0
+offset_bottom = 430.0
 theme_override_font_sizes/font_size = 26
 text = "The Best NFT Collection 2024"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="MintDetails" type="Panel" parent="."]
+[node name="MintDetails" type="Panel" parent="CMDisplay"]
 layout_mode = 0
-offset_left = 533.0
-offset_top = 154.0
-offset_right = 911.0
-offset_bottom = 576.0
+offset_left = 386.0
+offset_top = 20.0
+offset_right = 764.0
+offset_bottom = 442.0
 
-[node name="Description" type="Label" parent="MintDetails"]
+[node name="Description" type="Label" parent="CMDisplay/MintDetails"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -136,5 +160,22 @@ grow_vertical = 2
 text = "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="MintedInfo" type="Label" parent="CMDisplay/MintDetails"]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 178.0
+offset_right = 276.0
+offset_bottom = 214.0
+theme_override_font_sizes/font_size = 26
+text = "69/420 Minted"
+
+[node name="ProgressBar" type="ProgressBar" parent="CMDisplay/MintDetails"]
+layout_mode = 0
+offset_top = 220.0
+offset_right = 378.0
+offset_bottom = 251.0
+max_value = 1.0
+step = 0.001
 
 [connection signal="pressed" from="ReturnButton" to="ReturnButton" method="_on_pressed"]

@@ -11,6 +11,7 @@ var default_mainnet = "https://api.mainnet-beta.solana.com"
 @onready var transaction_processor = $OverlayLayer/TransactionProcessor
 @onready var nft_manager = $NFTManager
 @onready var file_loader = $FileLoader
+@onready var candy_machine_manager = $CandyMachineManager
 
 var rpc:String
 

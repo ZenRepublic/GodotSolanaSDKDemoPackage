@@ -1,4 +1,9 @@
-res://Demos/CandyMachineDemo/CandyMachineDemo.tscn
+res://Demos/LoginScene.tscn
 res://Autoload/SolanaService.tscn
 res://Demos/3DNFTShowcase/3DNFTShowcase.tscn
-res://Demos/3DNFTShowcase/asset_inspector.gd
+res://Demos/3DNFTShowcase/ModelNFT.tscn
+res://Demos/CandyMachineDemo/CandyMachineDemo.tscn
+res://Demos/DemoSelectScene.tscn
+res://Demos/CandyMachineDemo/candy_machine_display.gd
+res://Scripts/nft_manager.gd
+res://Demos/NFTListDemo/DisplayableNFT.tscn

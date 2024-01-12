@@ -43,18 +43,9 @@ func load_nfts()->void:
 	emit_signal("on_nft_load_started",nft_mints.size())
 	
 	for i in range(nft_mints.size()):	
-		var metadata = MplTokenMetadata.get_mint_metadata(nft_mints[i])
-		if metadata==null:
+		var nft:Nft = await get_nft_from_mint(nft_mints[i],load_textures)
+		if nft == null:
 			continue
-		print(nft_mints[i].get_value())
-		var uri:String = metadata.get_uri()
-		var offchain_metadata = await SolanaService.file_loader.load_token_metadata(uri)
-		#remove any token which is not an nft. spls dont have properties
-		if !offchain_metadata.has("properties"):
-			continue
-
-		var nft:Nft = Nft.new()
-		nft.set_data(nft_mints[i],metadata,offchain_metadata,load_textures)
 		owned_nfts.append(nft)
 		emit_signal("on_nft_loaded",nft)
 		
@@ -79,7 +70,24 @@ func parse_solana_token_data(data: PackedByteArray) -> Dictionary:
 	
 	return {"mint":mint_address,"owner":owner_address,"amount":amount}
 	
+func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
+	print(nft_mint.get_value())
+	var nft:Nft = Nft.new()
 	
+	var metadata = MplTokenMetadata.get_mint_metadata(nft_mint)
+	if metadata==null:
+		return null
+	
+	var uri:String = metadata.get_uri()
+	var offchain_metadata = await SolanaService.file_loader.load_token_metadata(uri)
+	#remove any token which is not an nft. spls dont have properties
+	if !offchain_metadata.has("properties"):
+		return null
+
+	nft.set_data(nft_mint,metadata,offchain_metadata,load_texture)
+	return nft
+	
+
 func get_all_owned_nfts() -> Array[Nft]:
 	return owned_nfts
 	
