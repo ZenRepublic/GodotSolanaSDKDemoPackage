@@ -29,9 +29,8 @@ func enable_tx_loader() -> void:
 	
 var transaction:Transaction
 
-func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) -> void:
+func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction],signers:Array[Pubkey]=[]) -> void:
 	enable_tx_loader()
-	
 	transaction = Transaction.new()	
 	
 	for ix in instructions:
@@ -43,6 +42,8 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 		transaction.set_payer(wallet.wallet_adapter)
 
 	transaction.update_latest_blockhash("")
+	if signers.size()>0:
+		transaction.set_signers(signers)
 	
 	transaction.connect("transaction_response",process_transaction_pass)
 	transaction.connect("sign_error",process_transaction_error)

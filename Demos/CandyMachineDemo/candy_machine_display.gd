@@ -13,7 +13,6 @@ class_name CandyMachineDisplay
 func _ready() -> void:
 	var cm_data:CandyMachineData = SolanaService.candy_machine_manager.fetch_candy_machine(Pubkey.new_from_string(candy_machine_id))
 	setup(cm_data)
-	#print(cm_data.max_supply,cm_data.items_available)
 	pass # Replace with function body.
 
 
