@@ -61,7 +61,7 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	var token_program_id = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
 	var response_dict:Dictionary = SolanaClient.get_token_accounts_by_owner(address_to_check,token_address,token_program_id)
 	var ata:String
-	
+
 	if response_dict["result"]["value"].size() == 0:
 		return null
 	

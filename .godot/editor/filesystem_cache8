@@ -1,29 +1,33 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1705325230
+::res://::1705401489
 export_presets.cfg::TextFile::-1::1704047524::0::1::::<><>::
 icon.svg::CompressedTexture2D::8337803400720695138::1698484514::1704371641::1::::<><>::
 README.md::TextFile::-1::1704730406::0::1::::<><>::
 ::res://addons/::1704036067
-::res://Autoload/::1705334150
-SolanaService.tscn::PackedScene::4288474253152216185::1705334150::0::1::::<><>::res://Scripts/solana_service.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/transaction_processor.gd<>res://Scripts/Utility/screen_switcher.gd<>res://Scripts/wallet_service.gd<>res://Scripts/nft_manager.gd<>uid://be2rmdwqrqiw0::::res://Scripts/WalletAdapter/WalletAdapterUI.tscn<>res://Scripts/file_loader.gd<>res://Scripts/candy_machine_manager.gd
-::res://bin/::1705325227
+::res://Autoload/::1705406776
+SolanaService.tscn::PackedScene::4288474253152216185::1705406776::0::1::::<><>::res://Scripts/solana_service.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/transaction_processor.gd<>res://Scripts/Utility/screen_switcher.gd<>res://Scripts/wallet_service.gd<>res://Scripts/nft_manager.gd<>uid://be2rmdwqrqiw0::::res://Scripts/WalletAdapter/WalletAdapterUI.tscn<>res://Scripts/file_loader.gd<>res://Scripts/candy_machine_manager.gd
+::res://bin/::1705401485
 godot-solana-sdk.gdextension::GDExtension::-1::1700245802::0::1::::<><>::
 ::res://bin/libgodot-solana-sdk.macos.template_debug.framework/::1704730406
 ::res://bin/libgodot-solana-sdk.macos.template_release.framework/::1704730406
-::res://Demos/::1705063292
-DemoSelectScene.tscn::PackedScene::56380183958265618::1705063292::0::1::::<><>::uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Demos/SystemProgramDemo/account_manager.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd
-LoginScene.tscn::PackedScene::2795416145445268806::1705063291::0::1::::<><>::res://Scripts/login_manager.gd<>uid://2ktq3vdndve::::res://Demos/DemoSelectScene.tscn<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd
-::res://Demos/3DNFTShowcase/::1705063291
-3DNFTShowcase.tscn::PackedScene::6319968553857193092::1705063291::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Demos/3DNFTShowcase/nft_model_showcase_system.gd<>uid://b0iofagcqa64g::::res://Demos/3DNFTShowcase/ModelNFT.tscn<>res://Scripts/Utility/scene_change_button.gd<>res://Demos/3DNFTShowcase/asset_inspector.gd
+::res://Demos/::1705404637
+DemoSelectScene.tscn::PackedScene::56380183958265618::1705404637::0::1::::<><>::uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Demos/SystemProgramDemo/account_manager.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd
+LoginScene.tscn::PackedScene::2795416145445268806::1705404637::0::1::::<><>::res://Scripts/login_manager.gd<>uid://2ktq3vdndve::::res://Demos/DemoSelectScene.tscn<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd
+::res://Demos/3DNFTShowcase/::1705404637
+3DNFTShowcase.tscn::PackedScene::6319968553857193092::1705404637::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Demos/3DNFTShowcase/nft_model_showcase_system.gd<>uid://b0iofagcqa64g::::res://Demos/3DNFTShowcase/ModelNFT.tscn<>res://Scripts/Utility/scene_change_button.gd<>res://Demos/3DNFTShowcase/asset_inspector.gd
 asset_inspector.gd::GDScript::-1::1704730460::0::1::::<>Node3D<>::
-ModelNFT.tscn::PackedScene::4158515772925759388::1705063291::0::1::::<><>::res://Demos/3DNFTShowcase/model_nft.gd
+ModelNFT.tscn::PackedScene::4158515772925759388::1705404637::0::1::::<><>::res://Demos/3DNFTShowcase/model_nft.gd
 model_nft.gd::GDScript::-1::1704730460::0::1::::ModelNFT<>Node<>::
 nft_model_showcase_system.gd::GDScript::-1::1703949919::0::1::::<>Node<>::
-::res://Demos/CandyMachineDemo/::1705325299
-CandyMachineDemo.tscn::PackedScene::8637711420499011924::1705325298::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd<>uid://dq15ny3t87eog::::res://icon.svg<>res://Demos/CandyMachineDemo/candy_machine_display.gd<>res://Demos/NFTListDemo/displayable_nft.gd
-candy_machine_display.gd::GDScript::-1::1705325299::0::1::::CandyMachineDisplay<>Node<>::
-::res://Demos/NFTListDemo/::1705063292
-DisplayableNFT.tscn::PackedScene::6999034881072166202::1705063292::0::1::::<><>::res://Demos/NFTListDemo/displayable_nft.gd<>uid://dkyfoudbohuqq::::res://Textures/missingicon.png
+::res://Demos/CandyMachineDemo/::1705404637
+CandyMachineDemo.tscn::PackedScene::8637711420499011924::1705404637::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd<>uid://dq15ny3t87eog::::res://icon.svg<>res://Demos/CandyMachineDemo/candy_machine_display.gd<>res://Demos/NFTListDemo/displayable_nft.gd<>uid://d3dpiymsi5k6k::::res://Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG
+candy_machine_display.gd::GDScript::-1::1705404614::0::1::::CandyMachineDisplay<>Node<>::
+rubianscminfo.txt::TextFile::-1::1705398750::0::1::::<><>::
+::res://Demos/CandyMachineDemo/RubiansMintSettings/::1705401788
+rubians_default.tres::CandyGuardAccessList::9131669127376901888::1705401788::0::1::::<><>::
+rubians_open.tres::CandyGuardAccessList::5020473645813906193::1705397332::0::1::::<><>::
+::res://Demos/NFTListDemo/::1705404637
+DisplayableNFT.tscn::PackedScene::6999034881072166202::1705404637::0::1::::<><>::res://Demos/NFTListDemo/displayable_nft.gd<>uid://dkyfoudbohuqq::::res://Textures/missingicon.png
 displayable_nft.gd::GDScript::-1::1703875582::0::1::::DisplayableNFT<>Node<>::
 NftListDemo.tscn::PackedScene::3052210308847521881::1704449306::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://c6ync1x06vh2q::::res://Demos/NFTListDemo/DisplayableNFT.tscn<>res://Demos/NFTListDemo/nft_display_system.gd<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Scripts/Utility/scene_change_button.gd
 nft_display_system.gd::GDScript::-1::1704030178::0::1::::<>Node<>::
@@ -37,19 +41,22 @@ TokenProgramDemo.tscn::PackedScene::3253040214334531948::1704449297::0::1::::<><
 ::res://Fonts/::1704036417
 Circus Of Innocents.ttf::FontFile::589784106029012811::1700582088::1700582101::1::::<><>::
 PUSSS___.TTF::FontFile::7796887872950811298::1700582096::1700582101::1::::<><>::
-::res://Scripts/::1705334150
-candy_machine_manager.gd::GDScript::-1::1705329380::0::1::::CandyMachineManager<>Node<>::
+::res://Scripts/::1705406776
+candy_machine_manager.gd::GDScript::-1::1705401788::0::1::::CandyMachineManager<>Node<>::
 file_loader.gd::GDScript::-1::1704730460::0::1::::FileLoader<>Node<>::
 login_manager.gd::GDScript::-1::1703843060::0::1::::<>Node<>::
 nft.gd::GDScript::-1::1704024702::0::1::::Nft<>RefCounted<>::
-nft_manager.gd::GDScript::-1::1705062478::0::1::::NFTManager<>Node<>::
-solana_service.gd::GDScript::-1::1705057644::0::1::::<>Control<>::
+nft_manager.gd::GDScript::-1::1705406776::0::1::::NFTManager<>Node<>::
+solana_service.gd::GDScript::-1::1705404328::0::1::::<>Control<>::
 token_visualizer.gd::GDScript::-1::1703845385::0::1::::TokenVisualizer<>Node<>::
-transaction_processor.gd::GDScript::-1::1705334150::0::1::::TransactionProcessor<>Node<>::
+transaction_processor.gd::GDScript::-1::1705397332::0::1::::TransactionProcessor<>Node<>::
 wallet_service.gd::GDScript::-1::1704387301::0::1::::WalletService<>Node<>::
 ::res://Scripts/NFTCollection/::1704036417
 nft_collection.gd::GDScript::-1::1704035198::0::1::::NFTCollection<>Resource<>::
 rubians_collection.tres::Resource/Resource::1057874920309008043::1704032422::0::1::::<><>::res://Scripts/NFTCollection/nft_collection.gd
+::res://Scripts/NFTGating/::1705396140
+nft_button_lock.gd::GDScript::-1::1705396140::0::1::::NFTButtonLock<>Button<>::
+nft_button_lock_manager.gd::GDScript::-1::1705407121::0::1::::<>Node<>::
 ::res://Scripts/Utility/::1704724783
 input_field.gd::GDScript::-1::1703249790::0::1::::InputField<>LineEdit<>::
 input_field_system.gd::GDScript::-1::1703249790::0::1::::InputFieldSystem<>Node<>::

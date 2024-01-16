@@ -1,0 +1,11 @@
+[gd_resource type="CandyGuardAccessList" load_steps=2 format=3 uid="uid://cdr7p5mrfglu4"]
+
+[sub_resource type="Pubkey" id="Pubkey_bj5yi"]
+type = "CUSTOM"
+value = "rbyDXhzsM2xXtV3t9aayYR3md9rY6gyBxbQBeLThtSC"
+bytes = PackedByteArray(12, 180, 255, 222, 188, 141, 204, 151, 145, 150, 177, 82, 38, 50, 225, 82, 227, 44, 35, 231, 190, 105, 164, 74, 5, 182, 151, 79, 31, 147, 143, 225)
+
+[resource]
+enable_sol_payment = true
+sol_payment_lamports = 2190000000
+sol_payment_destination = SubResource("Pubkey_bj5yi")

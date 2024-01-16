@@ -71,7 +71,6 @@ func parse_solana_token_data(data: PackedByteArray) -> Dictionary:
 	return {"mint":mint_address,"owner":owner_address,"amount":amount}
 	
 func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
-	print(nft_mint.get_value())
 	var nft:Nft = Nft.new()
 	
 	var metadata = MplTokenMetadata.get_mint_metadata(nft_mint)
