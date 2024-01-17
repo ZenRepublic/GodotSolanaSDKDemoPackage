@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://2ktq3vdndve"]
+[gd_scene load_steps=15 format=3 uid="uid://2ktq3vdndve"]
 
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="1_plclv"]
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="2_10qtm"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="3_b8juh"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="4_mglv1"]
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://Textures/Buttons/b_inactive.PNG" id="5_dpk8s"]
-[ext_resource type="Script" path="res://Scripts/NFTGating/address_button_lock.gd" id="6_mj78i"]
 [ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="7_agyvs"]
 
 [sub_resource type="GDScript" id="GDScript_syc7x"]
@@ -102,32 +101,6 @@ theme_override_font_sizes/font_size = 30
 text = "Made by Zen Republic"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="SelectButton2" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -151.0
-offset_top = -493.0
-offset_right = 17.0
-offset_bottom = -448.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
-theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
-text = "SELECT"
-script = ExtResource("6_mj78i")
-wallet_snapshot_path = "res://Scripts/NFTGating/test_list.json"
-lock_active = true
 
 [node name="AccountPanel" type="Control" parent="."]
 layout_mode = 3
@@ -585,7 +558,6 @@ text = "SELECT"
 script = ExtResource("7_agyvs")
 path_to_scene = "res://Demos/CandyMachineDemo/CandyMachineDemo.tscn"
 
-[connection signal="pressed" from="SelectButton2" to="SelectButton2" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3/SelectButton" method="_on_pressed"]

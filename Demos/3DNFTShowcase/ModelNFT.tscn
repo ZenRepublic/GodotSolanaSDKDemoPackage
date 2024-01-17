@@ -8,11 +8,12 @@ albedo_color = Color(0.4, 0.890196, 1, 0.364706)
 
 [sub_resource type="BoxMesh" id="BoxMesh_381cj"]
 material = SubResource("StandardMaterial3D_qyh6n")
-size = Vector3(0.5, 0.5, 0.5)
+size = Vector3(3, 3, 3)
 
 [node name="ModelNFT" type="Node3D" node_paths=PackedStringArray("loading_template")]
 script = ExtResource("1_4o77f")
 loading_template = NodePath("loading_template")
+target_size = 10.0
 
 [node name="loading_template" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_381cj")

@@ -48,7 +48,7 @@ func _input(event: InputEvent) -> void:
 			if currentMousePosition != prevMousePos:
 				mouseDelta = currentMousePosition - prevMousePos
 				
-			print(mouseDelta)
+			#print(mouseDelta)
 			rotate(Vector3(0,1,0),rotateSpeed*0.001*mouseDelta.x)
 			prevMousePos = currentMousePosition		
 		

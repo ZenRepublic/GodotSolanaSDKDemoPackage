@@ -22,7 +22,7 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,payer:WalletService,recei
 		cm_id,
 		payer.get_kp(),
 		receiver,
-		mint_account.get_public_value(),
+		mint_account,
 		payer,
 		cm_data.collection_mint,
 		cm_data.authority,

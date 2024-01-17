@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cwbo7ujwfaygi"]
+[gd_scene load_steps=24 format=3 uid="uid://cwbo7ujwfaygi"]
 
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_d1nih"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_unrps"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="7_cdlhf"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="8_8rnd6"]
 [ext_resource type="Script" path="res://Demos/3DNFTShowcase/nft_model_showcase_system.gd" id="8_nuffl"]
+[ext_resource type="Texture2D" uid="uid://3npcx8cx80ui" path="res://Textures/Arrow.PNG" id="8_orjiu"]
 [ext_resource type="PackedScene" uid="uid://b0iofagcqa64g" path="res://Demos/3DNFTShowcase/ModelNFT.tscn" id="9_6he2r"]
 [ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="9_r2b8r"]
 [ext_resource type="Script" path="res://Demos/3DNFTShowcase/asset_inspector.gd" id="10_0ihl4"]
@@ -23,11 +24,8 @@ background_mode = 2
 sky = SubResource("Sky_cmecj")
 tonemap_mode = 2
 
-[sub_resource type="Environment" id="Environment_1h0oo"]
-background_mode = 1
-background_color = Color(1, 0.733333, 0.607843, 1)
-ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
+[sub_resource type="ViewportTexture" id="ViewportTexture_c2omx"]
+viewport_path = NodePath("UICanvas/UI/SubViewport")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bmrj2"]
 texture = ExtResource("7_cdlhf")
@@ -43,9 +41,17 @@ texture = ExtResource("6_1i7e0")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xvq3"]
 
+[sub_resource type="ImageTexture" id="ImageTexture_ku7fw"]
+
+[sub_resource type="Environment" id="Environment_1h0oo"]
+background_mode = 1
+background_color = Color(1, 0.733333, 0.607843, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_30bxs"]
-top_radius = 67.0
-bottom_radius = 52.969
+top_radius = 5.095
+bottom_radius = 8.525
 height = 51.382
 radial_segments = 12
 
@@ -58,24 +64,29 @@ environment = SubResource("Environment_17iql")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.948888, -0.152521, 0.276315, 0, 0.875482, 0.48325, -0.315614, -0.45855, 0.830734, 149.29, 261.145, 448.821)
-environment = SubResource("Environment_1h0oo")
+[node name="UICanvas" type="CanvasLayer" parent="."]
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="UICanvas"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="AccountPanel" type="Control" parent="UI"]
+[node name="TextureRect" type="TextureRect" parent="UICanvas/UI"]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = SubResource("ViewportTexture_c2omx")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="AccountPanel" type="Control" parent="UICanvas/UI"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 141.0
 script = ExtResource("1_d1nih")
 
-[node name="AccountLabel" type="Label" parent="UI/AccountPanel"]
+[node name="AccountLabel" type="Label" parent="UICanvas/UI/AccountPanel"]
 layout_mode = 1
 offset_left = 44.0
 offset_top = 17.0
@@ -85,7 +96,7 @@ theme_override_fonts/font = ExtResource("2_unrps")
 theme_override_font_sizes/font_size = 60
 text = "Wallet Address"
 
-[node name="AccountAddress" type="Label" parent="UI/AccountPanel"]
+[node name="AccountAddress" type="Label" parent="UICanvas/UI/AccountPanel"]
 layout_mode = 1
 offset_left = 67.0
 offset_top = 89.0
@@ -95,28 +106,7 @@ theme_override_fonts/font = ExtResource("2_unrps")
 theme_override_font_sizes/font_size = 23
 text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
 
-[node name="OwnedNFTslabel" type="Label" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -168.0
-offset_top = -164.0
-offset_right = 168.0
-offset_bottom = -19.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("2_unrps")
-theme_override_font_sizes/font_size = 50
-text = "Zencyclopedia: Ruby #1232"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="ReturnButton" type="Button" parent="UI"]
+[node name="ReturnButton" type="Button" parent="UICanvas/UI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -141,16 +131,75 @@ text = "RETURN"
 script = ExtResource("9_r2b8r")
 path_to_scene = "res://Demos/DemoSelectScene.tscn"
 
-[node name="ModelShowcaseSystem" type="Node3D" parent="." node_paths=PackedStringArray("model_spawn")]
+[node name="PrevButton" type="TextureButton" parent="UICanvas/UI"]
+layout_mode = 0
+offset_left = 306.0
+offset_top = 483.0
+offset_right = 415.0
+offset_bottom = 592.0
+texture_normal = ExtResource("8_orjiu")
+texture_pressed = ExtResource("8_orjiu")
+texture_hover = ExtResource("8_orjiu")
+texture_disabled = ExtResource("8_orjiu")
+texture_focused = SubResource("ImageTexture_ku7fw")
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
+
+[node name="NextButton" type="TextureButton" parent="UICanvas/UI"]
+layout_mode = 0
+offset_left = 744.0
+offset_top = 483.0
+offset_right = 853.0
+offset_bottom = 592.0
+texture_normal = ExtResource("8_orjiu")
+texture_pressed = ExtResource("8_orjiu")
+texture_hover = ExtResource("8_orjiu")
+texture_disabled = ExtResource("8_orjiu")
+texture_focused = SubResource("ImageTexture_ku7fw")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UICanvas/UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -139.0
+offset_top = -155.0
+offset_right = 140.0
+offset_bottom = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_unrps")
+theme_override_font_sizes/font_size = 31
+text = "Loading 3D models..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="UICanvas/UI"]
+size = Vector2i(1920, 1080)
+
+[node name="Camera3D" type="Camera3D" parent="UICanvas/UI/SubViewport"]
+transform = Transform3D(0.999936, -0.00389453, 0.0106148, 0, 0.938807, 0.344444, -0.0113067, -0.344422, 0.938747, 0.131037, 4.7643, 14.5007)
+environment = SubResource("Environment_1h0oo")
+
+[node name="ModelShowcaseSystem" type="Node3D" parent="." node_paths=PackedStringArray("model_spawn", "prev_arrow", "next_arrow", "active_nft_name")]
 script = ExtResource("8_nuffl")
 model_nft_scn = ExtResource("9_6he2r")
 model_spawn = NodePath("ModelSpawnPoint")
+prev_arrow = NodePath("../UICanvas/UI/PrevButton")
+next_arrow = NodePath("../UICanvas/UI/NextButton")
+active_nft_name = NodePath("../UICanvas/UI/Label")
 
 [node name="ModelSpawnPoint" type="Node3D" parent="ModelShowcaseSystem" node_paths=PackedStringArray("cam")]
 script = ExtResource("10_0ihl4")
-cam = NodePath("../../Camera3D")
-minDistance = 220.0
-maxDistance = 540.0
+cam = NodePath("../../UICanvas/UI/SubViewport/Camera3D")
+minDistance = 15.0
+maxDistance = 40.0
 defaultRotationSpeed = 1.0
 
 [node name="Podium" type="MeshInstance3D" parent="ModelShowcaseSystem"]
@@ -158,4 +207,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25.7235, 0)
 mesh = SubResource("CylinderMesh_30bxs")
 skeleton = NodePath("../..")
 
-[connection signal="pressed" from="UI/ReturnButton" to="UI/ReturnButton" method="_on_pressed"]
+[connection signal="pressed" from="UICanvas/UI/ReturnButton" to="UICanvas/UI/ReturnButton" method="_on_pressed"]

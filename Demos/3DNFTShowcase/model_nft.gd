@@ -1,42 +1,48 @@
-extends Node
+extends Node3D
 class_name ModelNFT
 
 @export var loading_template:Node3D
+@export var target_size:float=5.0
 
 var nft:Nft
 var model:Node3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	loading_template.visible=false
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func set_model(nft:Nft) -> void:
+func setup(nft:Nft, auto_load_model:bool=false) -> void:
 	self.nft = nft
+	if auto_load_model:
+		load_model()
+
+func load_model() -> void:
+	if nft==null:
+		push_error("Couldnt find the NFT to load model of")
+		return
+	if nft.model_state!=null:
+		instantiate_model(nft.model_state)
+		return
+		
+	loading_template.visible=true
 	
-	var gltf_document:GLTFDocument = GLTFDocument.new()
+	await nft.load_model()
 	if nft.model_state!=null:
 		instantiate_model(nft.model_state)
 	else:
-		await nft.load_model()
-		if nft.model_state!=null:
-			instantiate_model(nft.model_state)
-		else:
-			print("Couldn't load the model for mint: %s" % nft.mint.get_value())
-	
+		print("Couldn't load the model for mint: %s" % nft.mint.get_value())
+		
 	loading_template.visible=false
 			
 			
 func instantiate_model(state:GLTFState) -> void:
 	var gltf_document:GLTFDocument = GLTFDocument.new()
-	print(state.json)
+	#print(state.json)
 	model = gltf_document.generate_scene(nft.model_state,30,true,true)
 	var error = convert_to_mesh_instance(model)
 	if error == OK:
 		add_child(model)
+		scale_model_to_target()
 		self.name = nft.metadata.get_token_name()
 	else:
 		model.queue_free()
@@ -76,3 +82,35 @@ func convert_to_mesh_instance(p_root: Node):
 		node_to_delete.queue_free()
 
 	return OK
+	
+func scale_model_to_target() -> void:
+	var meshes:Array[MeshInstance3D] = get_all_mesh_instances(model)
+	var combined_size = get_combined_aabb(meshes)
+	var max_dimension = max(combined_size.size.x, combined_size.size.y, combined_size.size.z)
+	var scale_factor = target_size / max_dimension
+	model.scale *= scale_factor
+
+func get_all_mesh_instances(parent_node: Node3D) -> Array[MeshInstance3D]:
+	var mesh_instances:Array[MeshInstance3D]
+
+	# Iterate through all child nodes
+	for child in parent_node.get_children():
+		# Check if the child is a MeshInstance3D
+		if child is MeshInstance3D:
+			mesh_instances.append(child)
+
+		# Recursively call the function for child nodes
+		mesh_instances += get_all_mesh_instances(child)
+
+	return mesh_instances
+	
+func get_combined_aabb(meshes:Array[MeshInstance3D]) -> AABB:
+	# Initialize an empty AABB
+	var combined_aabb = AABB()
+	# Iterate through all child nodes
+	for mesh in meshes:
+		# Get the AABB of the current mesh in global space
+		var mesh_aabb = mesh.global_transform * mesh.get_aabb()
+		# Expand the combined AABB to include the current mesh's AABB
+		combined_aabb = combined_aabb.merge(mesh_aabb)
+	return combined_aabb
