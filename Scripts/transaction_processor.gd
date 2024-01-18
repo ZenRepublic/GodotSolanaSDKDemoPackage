@@ -35,6 +35,8 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 	
 	for ix in instructions:
 		transaction.add_instruction(ix)
+		
+	print(transaction.get_instructions().size())
 	
 	if wallet.use_generated:
 		transaction.set_payer(wallet.keypair)
@@ -42,10 +44,12 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 		transaction.set_payer(wallet.wallet_adapter)
 
 	transaction.update_latest_blockhash("")
-	
+
 	transaction.connect("transaction_response",process_transaction_pass)
 	transaction.connect("sign_error",process_transaction_error)
+	print(transaction.serialize())
 	transaction.sign_and_send()
+	
 	
 func process_transaction_pass(response:Dictionary) -> void:	
 	if response.has("error"):

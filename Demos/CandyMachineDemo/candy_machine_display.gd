@@ -41,7 +41,7 @@ func try_mint(pressed_button:Button) -> void:
 			Pubkey.new_from_string(candy_machine_id),
 			Pubkey.new_from_string(candy_guard_id),
 			SolanaService.wallet,
-			SolanaService.wallet.get_pubkey(),
+			SolanaService.wallet.get_kp(),
 			guard_settings,
 			mint_groups[button_index]
 		)

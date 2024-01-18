@@ -73,6 +73,7 @@ offset_right = 1152.0
 offset_bottom = 648.0
 
 [node name="TextureRect" type="TextureRect" parent="UICanvas/UI"]
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = SubResource("ViewportTexture_c2omx")

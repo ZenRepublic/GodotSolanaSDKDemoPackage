@@ -40,7 +40,6 @@ func setup(nfts:Array[Nft]) -> void:
 func add_to_list(nft:Nft) -> void:
 	if !nft.is_3D_model():
 		return
-	print("TEST")
 	var model_nft:ModelNFT = model_nft_scn.instantiate()
 	model_spawn.add_child(model_nft)
 	model_nft.visible=false

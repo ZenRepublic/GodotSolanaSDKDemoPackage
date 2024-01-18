@@ -215,8 +215,5 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_yfb4m")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_avkrb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xvq3")
 text = "MINT"
-script = ExtResource("7_25l6n")
-path_to_scene = "res://Demos/DemoSelectScene.tscn"
 
 [connection signal="pressed" from="ReturnButton" to="ReturnButton" method="_on_pressed"]
-[connection signal="pressed" from="CMDisplay/MintDetails/MintDefault" to="CMDisplay/MintDetails/MintDefault" method="_on_pressed"]

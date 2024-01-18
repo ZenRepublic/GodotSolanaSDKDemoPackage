@@ -1,10 +1,10 @@
 res://Autoload/SolanaService.tscn
 res://Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres
-res://Demos/3DNFTShowcase/model_nft.gd
-res://Demos/3DNFTShowcase/nft_model_showcase_system.gd
-res://Demos/3DNFTShowcase/3DNFTShowcase.tscn
+res://Scripts/transaction_processor.gd
 res://Demos/LoginScene.tscn
+res://Demos/3DNFTShowcase/3DNFTShowcase.tscn
 res://Demos/3DNFTShowcase/ModelNFT.tscn
 res://Demos/CandyMachineDemo/CandyMachineDemo.tscn
 res://Demos/DemoSelectScene.tscn
 res://Demos/NFTListDemo/DisplayableNFT.tscn
+res://Scripts/candy_machine_manager.gd
