@@ -38,7 +38,6 @@ func setup(nfts:Array[Nft],clear_previous:bool=false) -> void:
 func add_to_list(nft:Nft) -> void:
 	var pass_collection_filter= (collection_filter.size()==0)
 	for collection in collection_filter:
-		print(collection.belongs_to_collection(nft))
 		if collection.belongs_to_collection(nft):
 			pass_collection_filter=true
 			break

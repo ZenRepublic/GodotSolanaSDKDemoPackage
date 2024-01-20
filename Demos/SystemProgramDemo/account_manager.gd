@@ -17,7 +17,8 @@ func _ready() -> void:
 		var balance:float
 		if balance_token_address.length()==0:
 			balance = solana_service.get_sol_balance(wallet_address)
+			print(balance)
+			balance_visualizer.set_token_data(balance)
 		else:
 			balance = solana_service.get_token_balance(wallet_address,balance_token_address)
-
-		balance_visualizer.set_token_data(Pubkey.new_from_string(balance_token_address),balance)
+			balance_visualizer.set_token_data(balance,Pubkey.new_from_string(balance_token_address))

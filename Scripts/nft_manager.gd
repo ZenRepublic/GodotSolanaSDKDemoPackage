@@ -78,8 +78,10 @@ func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 		return null
 	
 	var uri:String = metadata.get_uri()
+	#print(SolanaService.file_loader.test)
 	var offchain_metadata = await SolanaService.file_loader.load_token_metadata(uri)
 	#remove any token which is not an nft. spls dont have properties
+	print(offchain_metadata)
 	if !offchain_metadata.has("properties"):
 		return null
 

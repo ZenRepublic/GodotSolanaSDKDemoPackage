@@ -7,11 +7,11 @@ enum RpcCluster{Mainnet,Devnet}
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
 
-@onready var wallet = $OverlayLayer/WalletService
-@onready var transaction_processor = $OverlayLayer/TransactionProcessor
-@onready var nft_manager = $NFTManager
-@onready var file_loader = $FileLoader
-@onready var candy_machine_manager = $CandyMachineManager
+@onready var wallet:WalletService = $OverlayLayer/WalletService
+@onready var transaction_processor:TransactionProcessor = $OverlayLayer/TransactionProcessor
+@onready var nft_manager:NFTManager = $NFTManager
+@onready var file_loader:FileLoader = $FileLoader
+@onready var candy_machine_manager:CandyMachineManager = $CandyMachineManager
 
 var rpc:String
 
@@ -22,7 +22,7 @@ func _ready() -> void:
 	if devnet_rpc=="":
 		devnet_rpc=default_devnet
 		
-	SolanaClient.set_encoding("base64");
+	SolanaClient.set_encoding("base64");	
 	set_rpc_cluster(rpc_cluster)
 	
 	

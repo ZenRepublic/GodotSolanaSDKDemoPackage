@@ -14,7 +14,6 @@ func _ready() -> void:
 
 
 func on_input_confirm() -> void:
-	print("PRESS")
 	emit_signal("on_input_submit",get_fields_data())
 	
 

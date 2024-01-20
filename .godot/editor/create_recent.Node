@@ -1,14 +1,2 @@
-Label
 TextureRect
-SubViewport
-CanvasLayer
-TextureButton
 Control
-CandyMachineManager
-ProgressBar
-Node3D
-MeshInstance3D
-Panel
-Button
-PanelContainer
-VBoxContainer

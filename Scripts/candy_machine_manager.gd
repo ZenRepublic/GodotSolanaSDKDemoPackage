@@ -20,9 +20,10 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,payer:WalletService,recei
 	
 	var mint_ix:Instruction = MplCandyGuard.mint(
 		cm_id,
+		guard_id,
 		payer.get_kp(),
 		receiver,
-		mint_account.get_public_value(),
+		mint_account,
 		payer.get_kp(),
 		cm_data.collection_mint,
 		cm_data.authority,

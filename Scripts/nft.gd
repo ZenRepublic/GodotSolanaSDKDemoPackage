@@ -38,7 +38,6 @@ func get_category() -> String:
 		
 func get_collection_mint() -> Pubkey:
 	var nft_collection:MetaDataCollection = metadata.get_collection()[0]
-	print(metadata.get_collection().size())
 	return nft_collection.key
 	
 func is_3D_model() -> bool:

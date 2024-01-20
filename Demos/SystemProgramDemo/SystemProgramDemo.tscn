@@ -1,9 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://dw5exsao534ov"]
+[gd_scene load_steps=26 format=3 uid="uid://dw5exsao534ov"]
 
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_axnkw"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_4d5he"]
+[ext_resource type="Script" path="res://Scripts/token_visualizer.gd" id="3_8saln"]
 [ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://Fonts/PUSSS___.TTF" id="3_tibcp"]
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/token_transfer_manager.gd" id="4_3yw1o"]
+[ext_resource type="Texture2D" uid="uid://c7s56sayh028u" path="res://Textures/SolanaLogo.png" id="5_e5y8l"]
 [ext_resource type="Script" path="res://Scripts/Utility/input_field_system.gd" id="5_w7ap0"]
 [ext_resource type="Script" path="res://Scripts/Utility/input_field.gd" id="6_tc8i8"]
 [ext_resource type="Texture2D" uid="uid://cye2pbirpht4u" path="res://Textures/Buttons/b_green_pressed.PNG" id="7_nc228"]
@@ -58,11 +60,12 @@ offset_right = 1152.0
 offset_bottom = 648.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_7pi32")
 
-[node name="AccountPanel" type="Control" parent="."]
+[node name="AccountPanel" type="Control" parent="." node_paths=PackedStringArray("balance_visualizer")]
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 141.0
 script = ExtResource("1_axnkw")
+balance_visualizer = NodePath("SolBalance")
 
 [node name="AccountLabel" type="Label" parent="AccountPanel"]
 layout_mode = 1
@@ -94,16 +97,37 @@ theme_override_fonts/font = ExtResource("2_4d5he")
 theme_override_font_sizes/font_size = 50
 text = "SOL Balance"
 
-[node name="Balance" type="Label" parent="AccountPanel"]
+[node name="SolBalance" type="Control" parent="AccountPanel" node_paths=PackedStringArray("amount_label", "token_visual")]
+anchors_preset = 0
+offset_left = 43.0
+offset_top = 204.0
+offset_right = 161.0
+offset_bottom = 269.0
+script = ExtResource("3_8saln")
+amount_label = NodePath("Balance")
+token_visual = NodePath("Visual")
+sol_icon_path = "res://Textures/SolanaLogo.png"
+
+[node name="Balance" type="Label" parent="AccountPanel/SolBalance"]
 layout_mode = 0
 offset_left = 51.0
-offset_top = 202.0
+offset_top = -2.0
 offset_right = 189.0
-offset_bottom = 270.0
+offset_bottom = 66.0
 theme_override_fonts/font = ExtResource("3_tibcp")
 theme_override_font_sizes/font_size = 55
 text = "1.57"
 vertical_alignment = 1
+
+[node name="Visual" type="TextureRect" parent="AccountPanel/SolBalance"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 8.0
+offset_right = 35.0
+offset_bottom = 48.0
+texture = ExtResource("5_e5y8l")
+expand_mode = 4
+stretch_mode = 5
 
 [node name="SolTransactionPanel" type="Control" parent="." node_paths=PackedStringArray("input_field_system")]
 layout_mode = 1

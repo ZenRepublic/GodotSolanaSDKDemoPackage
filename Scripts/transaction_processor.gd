@@ -53,7 +53,7 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 	
 func process_transaction_pass(response:Dictionary) -> void:	
 	if response.has("error"):
-		print(response["error"])
+		print(response)
 		process_transaction_error()
 		return
 		

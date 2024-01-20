@@ -27,7 +27,7 @@ func get_hashlist_from_file(file_path: String) -> Array[String]:
 		# Read the entire file content
 		var json_content = file.get_as_text()
 		# Parse the JSON content
-		print(json_content)
+		#print(json_content)
 		var parsed_json = parse_json(json_content)
 		# Close the file
 		file.close()

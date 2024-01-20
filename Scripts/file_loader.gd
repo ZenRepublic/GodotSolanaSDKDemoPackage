@@ -1,10 +1,10 @@
 extends Node
 class_name FileLoader
-
+	
 func load_token_metadata(uri:String) -> Dictionary:
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	
+	print(uri)
 	# Perform a GET request. The URL below returns JSON as of writing.
 	var request = http_request.request(uri)
 	if request != OK:
@@ -134,7 +134,6 @@ func has_webp_signature(raw_image_data:PackedByteArray)->bool:
 	return true
 	
 func load_3d_model(model_link:String) -> GLTFState:
-	print(model_link)
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	
@@ -156,7 +155,7 @@ func load_3d_model(model_link:String) -> GLTFState:
 	var gltf_document:GLTFDocument = GLTFDocument.new()
 	var glb_load_request
 	var flags = 8	
-	flags |= EditorSceneFormatImporter.IMPORT_USE_NAMED_SKIN_BINDS
+	#flags |= EditorSceneFormatImporter.IMPORT_USE_NAMED_SKIN_BINDS
 	glb_load_request = gltf_document.append_from_buffer(response_dict["body"], "", state, flags)
 	
 	if glb_load_request != OK:
