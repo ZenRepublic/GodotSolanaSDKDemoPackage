@@ -39,7 +39,7 @@ func setup(cm_data:CandyMachineData) -> void:
 
 func try_mint(pressed_button:Button) -> void:
 	var button_index = mint_buttons.find(pressed_button,0)
-	SolanaService.transaction_processor.connect("on_transaction_finish",refresh_cm_data,CONNECT_ONE_SHOT)
+	SolanaService.transaction_processor.connect("on_transaction_finish",refresh_cm_data)
 	
 	if guard_settings!=null:
 		SolanaService.candy_machine_manager.mint_nft_with_guards(
@@ -53,6 +53,7 @@ func try_mint(pressed_button:Button) -> void:
 		)
 	
 func refresh_cm_data(transaction_id:String) -> void:
+	SolanaService.transaction_processor.disconnect("on_transaction_finish",refresh_cm_data)
 	if transaction_id=="":
 		return
 		
