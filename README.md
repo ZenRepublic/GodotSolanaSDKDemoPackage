@@ -11,11 +11,12 @@ Current features:
 - RPC API support, so you can fetch information on accounts, like their SOL balances and much more
 - System Program, allowing you to do transactions of SOL to another address
 - Token Program, allowing you to mint new SPL tokens and send them to other addresses
-- NFT fetching and parsing images/metadata. (3D NFTs and GIFs supported soon, we almost have that working)
+- NFT fetching and parsing images/metadata. (GIFs supported soon, we almost have that working)
+- Dynamically Loading 3D NFTs as GLBs
 - Wallet adapter. Currently supporting Phantom, Solflare and Backpack. Ultimate coming soon
+- Candymachine v3 minting (pNFTs and Candy guard groups supported)
 
 Coming Soon:
-- Candymachine v3 minting
 - Parsing Anchor Solana program IDL into GDScript
 
 Godot 4.1+ needed to run the project. Windows, Mac and Linux supported.
