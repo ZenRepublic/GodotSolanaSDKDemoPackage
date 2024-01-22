@@ -1,12 +1,16 @@
-[gd_resource type="CandyGuardAccessList" load_steps=2 format=3 uid="uid://d3dpiymsi5k6k"]
+[gd_resource type="CandyGuardAccessList" load_steps=3 format=3 uid="uid://bcl3w71l4bt5v"]
 
-[sub_resource type="Pubkey" id="Pubkey_vtrnf"]
+[sub_resource type="Pubkey" id="Pubkey_5rk7m"]
 type = "CUSTOM"
-value = "rbyDXhzsM2xXtV3t9aayYR3md9rY6gyBxbQBeLThtSC"
-bytes = PackedByteArray(12, 180, 255, 222, 188, 141, 204, 151, 145, 150, 177, 82, 38, 50, 225, 82, 227, 44, 35, 231, 190, 105, 164, 74, 5, 182, 151, 79, 31, 147, 143, 225)
+value = "devKak33fTumfvB547eEpGn2HYZstHZ9HjpFoLSELVH"
+bytes = PackedByteArray(9, 99, 200, 221, 213, 98, 136, 172, 205, 249, 96, 16, 237, 164, 59, 159, 249, 9, 132, 197, 171, 53, 207, 161, 184, 9, 183, 94, 78, 238, 155, 12)
+
+[sub_resource type="CandyGuardAccessList" id="CandyGuardAccessList_4cnea"]
+top_level = false
+label = "open"
+enable_token_burn = true
+token_burn_amount = 1000000000
+token_burn_mint = SubResource("Pubkey_5rk7m")
 
 [resource]
-label = "default"
-enable_sol_payment = true
-sol_payment_lamports = 100000000
-sol_payment_destination = SubResource("Pubkey_vtrnf")
+groups = Array[Object]([SubResource("CandyGuardAccessList_4cnea")])

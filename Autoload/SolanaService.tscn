@@ -21,6 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hwc3u")
+rpc_cluster = 1
 mainnet_rpc = "https://rpc.hellomoon.io/6b758f53-4b78-41a7-86a9-6b61c97711eb"
 devnet_rpc = "https://api.devnet.solana.com"
 
@@ -115,7 +116,8 @@ starting_panel = NodePath("../LoadingPanel")
 
 [node name="WalletService" type="Node" parent="OverlayLayer"]
 script = ExtResource("5_f327g")
-custom_pk_path = "C:\\Users\\thoma\\Desktop\\kp\\kp.txt"
+use_generated = true
+custom_pk_path = "C:\\Users\\Thomas\\Desktop\\kp\\kp.txt"
 wallet_adapter_ui_scn = ExtResource("6_uin7u")
 
 [node name="WalletAdapter" type="WalletAdapter" parent="OverlayLayer/WalletService"]

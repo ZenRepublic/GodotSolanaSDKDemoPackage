@@ -27,7 +27,9 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,payer:WalletService,recei
 		payer.get_kp(),
 		cm_data.collection_mint,
 		cm_data.authority,
-		guards
+		guards,
+		group
 		)
+		
 	instructions.append(mint_ix)
 	SolanaService.transaction_processor.try_sign_transaction(payer,instructions)
