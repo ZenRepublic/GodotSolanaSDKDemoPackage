@@ -1,7 +1,7 @@
 extends Button
 class_name ButtonLock
 
-@export var lock_active:bool
+@export var lock_active:bool=true
 @export var hide_if_locked:bool
 
 

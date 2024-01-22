@@ -14,12 +14,14 @@ var curr_model:ModelNFT
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	prev_arrow.disabled=true
+	next_arrow.disabled=true
 	prev_arrow.pressed.connect(show_previous)
 	next_arrow.pressed.connect(show_next)
 	
 	if !SolanaService.nft_manager.nfts_loaded:
 		SolanaService.nft_manager.connect("on_nft_loaded",add_to_list)
-		#SolanaService.nft_manager.connect("on_nft_load_finished",nft_load_finished)
+		SolanaService.nft_manager.connect("on_nft_load_finished",nft_load_finished)
 		SolanaService.nft_manager.load_nfts()
 	else:
 		setup(SolanaService.nft_manager.owned_nfts)
@@ -48,6 +50,9 @@ func add_to_list(nft:Nft) -> void:
 	models.append(model_nft)
 	if models.size()==1:
 		show_at_index(0)
+	if models.size()>=2:
+		prev_arrow.disabled=false
+		next_arrow.disabled=false
 	
 func show_at_index(index:int) -> void:
 	if curr_model!=null:
@@ -83,4 +88,8 @@ func clear_models() -> void:
 		model.queue_free()
 	
 	models.clear()
+	
+func nft_load_finished(owned_nfts:Array[Nft]) -> void:
+	if models.size()==0:
+		active_nft_name.text = "no 3D NFTs found..."
 

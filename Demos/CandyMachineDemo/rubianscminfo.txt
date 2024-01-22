@@ -6,6 +6,6 @@ guardid: 9JinvCj9dAESDfErBHLuybEBxy3gpZgEdw72sBS6VJf6
 
 devnet:
 	
-cmid: AyHSw2Xxra5zpf5ycsLFzjAYcDDLs4iGWuLMoXFR3bMA
-guardid: 4WfDeafjiz1Rt2DJvxc98Tv3yAm4cKVv4iU3xxKrgzJC
+cmid: EPDMTLPBkidL1fXamZUXG9Yp4ZSVsg4QpWdPsKuVUx32
+guardid: HSrVZzrTDa1HGeAFgWMehR37he4iPBVEriAozUhEA6xh
 

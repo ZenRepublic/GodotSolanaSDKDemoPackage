@@ -47,19 +47,20 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 
 	transaction.connect("transaction_response",process_transaction_pass)
 	transaction.connect("sign_error",process_transaction_error)
-	print(transaction.serialize())
 	transaction.sign_and_send()
 	
 	
 func process_transaction_pass(response:Dictionary) -> void:	
 	if response.has("error"):
-		print(response)
+		print(response["error"])
 		process_transaction_error()
 		return
 		
 	transaction.disconnect("transaction_response",process_transaction_pass)
 	transaction.disconnect("sign_error",process_transaction_error)
 	transaction=null
+	
+	print("Transaction ID: ",response["result"])
 	
 	screen_switcher.switch_active_panel(success_panel)
 	emit_signal("on_transaction_finish",response["result"])

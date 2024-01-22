@@ -1,2 +1,6 @@
+OptionButton
+CanvasLayer
+Label
+Panel
 TextureRect
 Control

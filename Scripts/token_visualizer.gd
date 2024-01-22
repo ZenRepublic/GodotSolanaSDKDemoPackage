@@ -19,6 +19,10 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 	
 	if token_mint!=null:
 		var onchain_metadata:MetaData = MplTokenMetadata.get_mint_metadata(token_mint)
+		if onchain_metadata==null:
+			push_error("Failed to fetch token metadata in a token visualizer!")
+			return
+			
 		var uri:String = onchain_metadata.get_uri()
 		var metadata_json:Dictionary = await SolanaService.file_loader.load_token_metadata(uri)
 		var token_image:Texture2D = await SolanaService.file_loader.load_token_image(metadata_json["image"])

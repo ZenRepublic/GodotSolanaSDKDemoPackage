@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dw5exsao534ov"]
+[gd_scene load_steps=27 format=3 uid="uid://dw5exsao534ov"]
 
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_axnkw"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_4d5he"]
@@ -14,6 +14,21 @@
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="10_d36ma"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="11_p225x"]
 [ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="12_7pjvr"]
+
+[sub_resource type="GDScript" id="GDScript_bnym2"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	SceneLoader.emit_signal(\"scene_loaded\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
@@ -53,6 +68,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_bnym2")
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 0

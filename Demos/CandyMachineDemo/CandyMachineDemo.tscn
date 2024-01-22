@@ -1,6 +1,5 @@
-[gd_scene load_steps=23 format=3 uid="uid://dvcf3y7hfwasq"]
+[gd_scene load_steps=24 format=3 uid="uid://dvcf3y7hfwasq"]
 
-[ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_x37jh"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_wxjie"]
 [ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://Fonts/PUSSS___.TTF" id="3_84blg"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="4_y63il"]
@@ -13,6 +12,22 @@
 [ext_resource type="CandyGuardAccessList" uid="uid://bcl3w71l4bt5v" path="res://Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres" id="9_x8gs6"]
 [ext_resource type="Texture2D" uid="uid://cye2pbirpht4u" path="res://Textures/Buttons/b_green_pressed.PNG" id="11_iirhe"]
 [ext_resource type="Texture2D" uid="uid://d4kauar2qc15y" path="res://Textures/Buttons/b_green_hover.PNG" id="12_8q8gn"]
+[ext_resource type="Script" path="res://Scripts/NFTGating/token_button_lock.gd" id="13_cx01u"]
+
+[sub_resource type="GDScript" id="GDScript_ixqxj"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	SceneLoader.emit_signal(\"scene_loaded\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
@@ -47,6 +62,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_ixqxj")
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 0
@@ -54,13 +70,12 @@ offset_right = 1152.0
 offset_bottom = 648.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_7pi32")
 
-[node name="AccountPanel" type="Control" parent="."]
+[node name="InfoPanel" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 141.0
-script = ExtResource("1_x37jh")
 
-[node name="AccountLabel" type="Label" parent="AccountPanel"]
+[node name="Attention" type="Label" parent="InfoPanel"]
 layout_mode = 1
 offset_left = 44.0
 offset_top = 17.0
@@ -68,9 +83,9 @@ offset_right = 818.0
 offset_bottom = 92.0
 theme_override_fonts/font = ExtResource("2_wxjie")
 theme_override_font_sizes/font_size = 60
-text = "Wallet Address"
+text = "ATTENTION"
 
-[node name="AccountAddress" type="Label" parent="AccountPanel"]
+[node name="Info" type="Label" parent="InfoPanel"]
 layout_mode = 1
 offset_left = 67.0
 offset_top = 89.0
@@ -78,7 +93,7 @@ offset_right = 841.0
 offset_bottom = 129.0
 theme_override_fonts/font = ExtResource("2_wxjie")
 theme_override_font_sizes/font_size = 23
-text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
+text = "This demo candymachine is made in devnet, so please switch the network to test it"
 
 [node name="ReturnButton" type="Button" parent="."]
 layout_mode = 1
@@ -112,15 +127,15 @@ offset_top = 134.0
 offset_right = 927.0
 offset_bottom = 585.0
 script = ExtResource("8_iq3ir")
-candy_machine_id = "AyHSw2Xxra5zpf5ycsLFzjAYcDDLs4iGWuLMoXFR3bMA"
-candy_guard_id = "4WfDeafjiz1Rt2DJvxc98Tv3yAm4cKVv4iU3xxKrgzJC"
+candy_machine_id = "EPDMTLPBkidL1fXamZUXG9Yp4ZSVsg4QpWdPsKuVUx32"
+candy_guard_id = "HSrVZzrTDa1HGeAFgWMehR37he4iPBVEriAozUhEA6xh"
 nft_display = NodePath("CollectionNFT")
 collection_desc = NodePath("MintDetails/Description")
 minted_amount = NodePath("MintDetails/MintedInfo")
 progress_bar = NodePath("MintDetails/ProgressBar")
 guard_settings = ExtResource("9_x8gs6")
-mint_groups = Array[String](["default", "open"])
-mint_buttons = [NodePath("MintDetails/MintDefault"), NodePath("MintDetails/MintExpensive")]
+mint_groups = Array[String](["open", "token"])
+mint_buttons = [NodePath("MintDetails/MintSol"), NodePath("MintDetails/MintToken")]
 
 [node name="CollectionNFT" type="Control" parent="CMDisplay" node_paths=PackedStringArray("visual", "name_label")]
 anchors_preset = 0
@@ -172,7 +187,7 @@ offset_right = 176.0
 offset_bottom = -33.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+text = "An awesome NFT collection, building the future of the future. Join to build the future together and let's vibe"
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -193,7 +208,7 @@ offset_bottom = 251.0
 max_value = 1.0
 step = 0.001
 
-[node name="MintDefault" type="Button" parent="CMDisplay/MintDetails"]
+[node name="MintSol" type="Button" parent="CMDisplay/MintDetails"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -214,9 +229,11 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_wv7wv")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_yfb4m")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_avkrb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xvq3")
-text = "MINT"
+text = "MINT (0.1 SOL)"
+script = ExtResource("13_cx01u")
+unlock_amount = 0.1
 
-[node name="MintExpensive" type="Button" parent="CMDisplay/MintDetails"]
+[node name="MintToken" type="Button" parent="CMDisplay/MintDetails"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -224,9 +241,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -129.0
-offset_top = 121.0
+offset_top = 133.0
 offset_right = 130.0
-offset_bottom = 173.0
+offset_bottom = 185.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -237,6 +254,9 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_wv7wv")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_yfb4m")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_avkrb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xvq3")
-text = "MINT EXPENSIVE"
+text = "TOKEN MINT"
+script = ExtResource("13_cx01u")
+token_address = "AgGbJJeE2Zm6mPs41YJAMpt27yZiq9EmeQPfmwnMohmn"
+unlock_amount = 1.0
 
 [connection signal="pressed" from="ReturnButton" to="ReturnButton" method="_on_pressed"]

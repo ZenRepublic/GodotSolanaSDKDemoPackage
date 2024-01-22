@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 SolanaService="*res://Autoload/SolanaService.tscn"
+SceneLoader="*res://Autoload/SceneLoader.tscn"
 
 [display]
 

@@ -74,6 +74,7 @@ func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 	var nft:Nft = Nft.new()
 	
 	var metadata = MplTokenMetadata.get_mint_metadata(nft_mint)
+	print(metadata)
 	if metadata==null:
 		return null
 	

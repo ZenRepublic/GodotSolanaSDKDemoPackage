@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://2ktq3vdndve"]
+[gd_scene load_steps=16 format=3 uid="uid://2ktq3vdndve"]
 
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="1_plclv"]
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="2_10qtm"]
 [ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://Fonts/PUSSS___.TTF" id="2_wfsl8"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://Textures/Buttons/b_orange_pressed.PNG" id="3_b8juh"]
+[ext_resource type="Script" path="res://Scripts/rpc_network_switcher.gd" id="3_lb3d3"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://Textures/Buttons/b_orange_hover.PNG" id="4_mglv1"]
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://Textures/Buttons/b_inactive.PNG" id="5_dpk8s"]
 [ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="7_agyvs"]
@@ -13,6 +14,7 @@ script/source = "extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	SceneLoader.emit_signal(\"scene_loaded\")
 	pass # Replace with function body.
 
 
@@ -59,30 +61,14 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -40.0
-offset_top = 6.0
-offset_right = 453.0
-offset_bottom = 126.0
+offset_left = 75.0
+offset_top = 109.0
+offset_right = 568.0
+offset_bottom = 229.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_plclv")
 theme_override_font_sizes/font_size = 80
 text = "SELECT DEMO"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="About" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 110.0
-offset_top = 110.0
-offset_right = 553.0
-offset_bottom = 170.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 45
-text = "and git gud"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -128,6 +114,31 @@ offset_bottom = 129.0
 theme_override_fonts/font = ExtResource("1_plclv")
 theme_override_font_sizes/font_size = 23
 text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
+
+[node name="SelectNetwork" type="Label" parent="."]
+layout_mode = 1
+offset_left = 32.0
+offset_top = 158.0
+offset_right = 183.0
+offset_bottom = 198.0
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 23
+text = "Select Network:"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 156.0
+offset_right = 288.0
+offset_bottom = 194.0
+item_count = 2
+selected = 0
+allow_reselect = true
+popup/item_0/text = "Mainnet"
+popup/item_0/id = 0
+popup/item_1/text = "Devnet"
+popup/item_1/id = 1
+script = ExtResource("3_lb3d3")
 
 [node name="DemoContainerPanel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -493,7 +504,7 @@ offset_bottom = 70.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_wfsl8")
 theme_override_font_sizes/font_size = 50
-text = "DEMO 4
+text = "DEMO 5
 "
 horizontal_alignment = 1
 autowrap_mode = 2

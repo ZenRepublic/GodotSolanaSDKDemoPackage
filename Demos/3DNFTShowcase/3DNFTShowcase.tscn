@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cwbo7ujwfaygi"]
+[gd_scene load_steps=25 format=3 uid="uid://cwbo7ujwfaygi"]
 
 [ext_resource type="Script" path="res://Demos/SystemProgramDemo/account_manager.gd" id="1_d1nih"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://Fonts/Circus Of Innocents.ttf" id="2_unrps"]
@@ -11,6 +11,21 @@
 [ext_resource type="PackedScene" uid="uid://b0iofagcqa64g" path="res://Demos/3DNFTShowcase/ModelNFT.tscn" id="9_6he2r"]
 [ext_resource type="Script" path="res://Scripts/Utility/scene_change_button.gd" id="9_r2b8r"]
 [ext_resource type="Script" path="res://Demos/3DNFTShowcase/asset_inspector.gd" id="10_0ihl4"]
+
+[sub_resource type="GDScript" id="GDScript_c4hgs"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	SceneLoader.emit_signal(\"scene_loaded\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_as8ny"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -56,6 +71,7 @@ height = 51.382
 radial_segments = 12
 
 [node name="3DNFTShowcase" type="Node3D"]
+script = SubResource("GDScript_c4hgs")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_17iql")
