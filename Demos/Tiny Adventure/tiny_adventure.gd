@@ -25,6 +25,8 @@ func _ready() -> void:
 	vault_pda = Pubkey.new_pda(["Vault1"],Pubkey.new_from_string(tiny_adventure_pid))
 	
 	start_button.pressed.connect(init_game)
+	left_button.pressed.connect(move_left)
+	
 	pass # Replace with function body.
 
 
@@ -33,7 +35,7 @@ func _process(delta: float) -> void:
 	pass
 	
 func init_game() -> void:
-	SolanaService.transaction_processor.connect("on_transaction_finish",try_start_game)
+	SolanaService.transaction_processor.connect("on_transaction_finish",start_game_callback)
 	var instructions:Array[Instruction]
 	var init_ix:Instruction = anchor_program.build_instruction("restart_level",[
 		level_pda, #gamedata
@@ -46,10 +48,36 @@ func init_game() -> void:
 	instructions.append(init_ix)
 	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
 
-func try_start_game(transaction_id:String) -> void:
+func start_game_callback(transaction_id:String) -> void:
 	if transaction_id=="":
 		push_error("Failed to start game")
 		return
 		
 	start_screen.visible=false
 	game_screen.visible=true
+	
+	
+func move_left() -> void:
+	move("move_left")
+func move_right() -> void:
+	move("move_right")
+	
+func move(move_dir:String) -> void:
+	SolanaService.transaction_processor.connect("on_transaction_finish",move_callback)
+	var instructions:Array[Instruction]
+	var move_ix:Instruction = anchor_program.build_instruction(move_dir,[
+		level_pda, #gamedata
+		vault_pda, #gamevault
+		SolanaService.wallet.get_kp(), #signer
+		Pubkey.new_from_string("11111111111111111111111111111111") #system program
+	],null)
+	
+	instructions.append(move_ix)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+
+func move_callback(transaction_id:String) -> void:
+	if transaction_id=="":
+		push_error("Failed to move")
+		return
+	
+	

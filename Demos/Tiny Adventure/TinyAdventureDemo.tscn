@@ -409,7 +409,7 @@ idl = {
 "name": "systemProgram"
 }],
 "args": [],
-"name": "moveRight"
+"name": "move_right"
 }, {
 "accounts": [{
 "isMut": true,
@@ -417,7 +417,7 @@ idl = {
 "name": "gameData"
 }],
 "args": [],
-"name": "moveLeft"
+"name": "move_left"
 }],
 "name": "tiny_adventure",
 "version": "0.1.0"
