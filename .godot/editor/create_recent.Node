@@ -1,6 +1,10 @@
+AnchorProgram
+TextureRect
+PanelContainer
+Panel
+CenterContainer
+TextureButton
+Control
 OptionButton
 CanvasLayer
 Label
-Panel
-TextureRect
-Control

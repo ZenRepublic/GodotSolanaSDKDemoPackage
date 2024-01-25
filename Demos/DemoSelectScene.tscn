@@ -569,8 +569,89 @@ text = "SELECT"
 script = ExtResource("7_agyvs")
 path_to_scene = "res://Demos/CandyMachineDemo/CandyMachineDemo.tscn"
 
+[node name="Demo6" type="Panel" parent="DemoContainerPanel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="DemoID" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 8.0
+offset_right = 114.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 50
+text = "DEMO 6"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoName2" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 65.0
+offset_right = 114.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 25
+text = "Tiny Adventure"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoDescription" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -29.0
+offset_right = 118.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 17
+text = "Simple onchain game interacting with custom anchor program"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -74.0
+offset_right = 84.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+text = "SELECT"
+script = ExtResource("7_agyvs")
+path_to_scene = "res://Demos/Tiny Adventure/TinyAdventureDemo.tscn"
+
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3/SelectButton" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4/SelectButton" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5/SelectButton" method="_on_pressed"]
+[connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6/SelectButton" method="_on_pressed"]

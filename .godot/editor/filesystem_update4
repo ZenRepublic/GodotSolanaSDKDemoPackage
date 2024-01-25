@@ -1,9 +1,5 @@
 res://Demos/LoginScene.tscn
-res://Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres
 res://Autoload/SolanaService.tscn
-res://Demos/CandyMachineDemo/CandyMachineDemo.tscn
-res://Autoload/SceneLoader.tscn
-res://Demos/DemoSelectScene.tscn
-res://Scripts/solana_service.gd
-res://Demos/CandyMachineDemo/candy_machine_display.gd
-res://Scripts/candy_machine_manager.gd
+res://Demos/Tiny Adventure/TinyAdventureDemo.tscn
+res://Demos/Tiny Adventure/tiny_adventure.gd
+res://Demos/Tiny Adventure/tiny_adventure_idl.json

@@ -47,6 +47,7 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 
 	transaction.connect("transaction_response",process_transaction_pass)
 	transaction.connect("sign_error",process_transaction_error)
+	print(transaction.serialize())
 	transaction.sign_and_send()
 	
 	
