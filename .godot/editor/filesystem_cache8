@@ -1,96 +1,96 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1706182036
-export_presets.cfg::TextFile::-1::1705947082::0::1::::<><>::
-icon.svg::CompressedTexture2D::8337803400720695138::1698484514::1706182037::1::::<><>::
-README.md::TextFile::-1::1705935897::0::1::::<><>::
-::res://Autoload/::1706181066
-SceneLoader.tscn::PackedScene::8718452938737271484::1705946788::0::1::::<><>::res://Scripts/Utility/scene_loader.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf
-SolanaService.tscn::PackedScene::4288474253152216185::1706181066::0::1::::<><>::res://Scripts/solana_service.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/transaction_processor.gd<>res://Scripts/Utility/screen_switcher.gd<>res://Scripts/wallet_service.gd<>res://Scripts/nft_manager.gd<>uid://be2rmdwqrqiw0::::res://Scripts/WalletAdapter/WalletAdapterUI.tscn<>res://Scripts/file_loader.gd<>res://Scripts/candy_machine_manager.gd
-::res://bin/::1706182031
-godot-solana-sdk.gdextension::GDExtension::-1::1700245802::0::1::::<><>::
-::res://bin/libgodot-solana-sdk.macos.template_debug.framework/::1705916353
-::res://bin/libgodot-solana-sdk.macos.template_release.framework/::1705916353
-::res://Demos/::1706181066
-DemoSelectScene.tscn::PackedScene::56380183958265618::1706181066::0::1::::<><>::uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Demos/SystemProgramDemo/account_manager.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>res://Scripts/rpc_network_switcher.gd<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd
-LoginScene.tscn::PackedScene::2795416145445268806::1705946788::0::1::::<><>::res://Scripts/login_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG
-::res://Demos/3DNFTShowcase/::1705926074
-3DNFTShowcase.tscn::PackedScene::6319968553857193092::1705925836::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Demos/3DNFTShowcase/nft_model_showcase_system.gd<>uid://3npcx8cx80ui::::res://Textures/Arrow.PNG<>uid://b0iofagcqa64g::::res://Demos/3DNFTShowcase/ModelNFT.tscn<>res://Scripts/Utility/scene_change_button.gd<>res://Demos/3DNFTShowcase/asset_inspector.gd
-asset_inspector.gd::GDScript::-1::1705420810::0::1::::<>Node3D<>::
-ModelNFT.tscn::PackedScene::4158515772925759388::1705766201::0::1::::<><>::res://Demos/3DNFTShowcase/model_nft.gd
-model_nft.gd::GDScript::-1::1705482262::0::1::::ModelNFT<>Node3D<>::
-nft_model_showcase_system.gd::GDScript::-1::1705926074::0::1::::<>Node<>::
-::res://Demos/CandyMachineDemo/::1705947072
-CandyMachineDemo.tscn::PackedScene::8637711420499011924::1705946788::0::1::::<><>::uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd<>uid://dq15ny3t87eog::::res://icon.svg<>res://Demos/CandyMachineDemo/candy_machine_display.gd<>res://Demos/NFTListDemo/displayable_nft.gd<>uid://bcl3w71l4bt5v::::res://Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>res://Scripts/NFTGating/token_button_lock.gd
-candy_machine_display.gd::GDScript::-1::1705947072::0::1::::CandyMachineDisplay<>Node<>::
-rubianscminfo.txt::TextFile::-1::1705920564::0::1::::<><>::
-::res://Demos/CandyMachineDemo/RubiansMintSettings/::1705943789
-rubians_default.tres::CandyGuardAccessList::2551247610977917205::1705943789::0::1::::<><>::
-::res://Demos/NFTListDemo/::1705925802
-DisplayableNFT.tscn::PackedScene::6999034881072166202::1705766201::0::1::::<><>::res://Demos/NFTListDemo/displayable_nft.gd<>uid://dkyfoudbohuqq::::res://Textures/missingicon.png
-displayable_nft.gd::GDScript::-1::1703875582::0::1::::DisplayableNFT<>Node<>::
-NftListDemo.tscn::PackedScene::3052210308847521881::1705925802::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://c6ync1x06vh2q::::res://Demos/NFTListDemo/DisplayableNFT.tscn<>res://Demos/NFTListDemo/nft_display_system.gd<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Scripts/Utility/scene_change_button.gd
-nft_display_system.gd::GDScript::-1::1705766979::0::1::::<>Node<>::
-::res://Demos/SystemProgramDemo/::1705925772
-account_manager.gd::GDScript::-1::1705920432::0::1::::<>Node<>::
-SystemProgramDemo.tscn::PackedScene::8765632831066310501::1705925772::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>res://Demos/SystemProgramDemo/token_transfer_manager.gd<>uid://c7s56sayh028u::::res://Textures/SolanaLogo.png<>res://Scripts/Utility/input_field_system.gd<>res://Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Scripts/Utility/scene_change_button.gd
-token_transfer_manager.gd::GDScript::-1::1703249790::0::1::::<>Node<>::
-::res://Demos/Tiny Adventure/::1706181066
-TinyAdventureDemo.tscn::PackedScene::4753307679216523453::1706181066::0::1::::<><>::res://Demos/Tiny Adventure/tiny_adventure.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://c7s56sayh028u::::res://Textures/SolanaLogo.png<>res://Scripts/NFTGating/token_button_lock.gd<>uid://3npcx8cx80ui::::res://Textures/Arrow.PNG<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>uid://dq15ny3t87eog::::res://icon.svg<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://bgbp0rixlgwes::::res://Textures/open-treasure-chest-icon-flat-style-vector.png<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Scripts/Utility/scene_change_button.gd<>res://Demos/Tiny Adventure/tiny_adventure_idl.json
-tiny_adventure.gd::GDScript::-1::1706181066::0::1::::<>Node<>::
-tiny_adventure_idl.json::JSON::-1::1706181066::0::1::::<><>::
-::res://Demos/TokenProgramDemo/::1705925791
-pubkey.gd::GDScript::-1::1704371624::0::1::::<>RefCounted<>::
-TokenProgramDemo.tscn::PackedScene::3253040214334531948::1705925791::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>res://Demos/SystemProgramDemo/token_transfer_manager.gd<>res://Scripts/Utility/input_field_system.gd<>uid://dkyfoudbohuqq::::res://Textures/missingicon.png<>res://Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>res://Scripts/Utility/scene_change_button.gd<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG
-::res://Fonts/::1705766377
-Circus Of Innocents.ttf::FontFile::589784106029012811::1700582088::1705766377::1::::<><>::
-PUSSS___.TTF::FontFile::7796887872950811298::1700582096::1705766377::1::::<><>::
-::res://Scripts/::1706181066
-candy_machine_manager.gd::GDScript::-1::1705946783::0::1::::CandyMachineManager<>Node<>::
-file_loader.gd::GDScript::-1::1705769138::0::1::::FileLoader<>Node<>::
-login_manager.gd::GDScript::-1::1705924989::0::1::::<>Node<>::
-nft.gd::GDScript::-1::1705767035::0::1::::Nft<>RefCounted<>::
-nft_manager.gd::GDScript::-1::1705930325::0::1::::NFTManager<>Node<>::
-rpc_network_switcher.gd::GDScript::-1::1705932630::0::1::::<>OptionButton<>::
-solana_service.gd::GDScript::-1::1705946340::0::1::::<>Control<>::
-token_visualizer.gd::GDScript::-1::1705930125::0::1::::TokenVisualizer<>Node<>::
-transaction_processor.gd::GDScript::-1::1706181066::0::1::::TransactionProcessor<>Node<>::
-wallet_service.gd::GDScript::-1::1704387301::0::1::::WalletService<>Node<>::
-::res://Scripts/NFTCollection/::1704036417
-nft_collection.gd::GDScript::-1::1704035198::0::1::::NFTCollection<>Resource<>::
-rubians_collection.tres::Resource/NFTCollection::1057874920309008043::1704032422::0::1::::<><>::res://Scripts/NFTCollection/nft_collection.gd
-::res://Scripts/NFTGating/::1705930306
-address_button_lock.gd::GDScript::-1::1705412509::0::1::::<>ButtonLock<>::
-button_lock.gd::GDScript::-1::1705930306::0::1::::ButtonLock<>Button<>::
-button_lock_manager.gd::GDScript::-1::1705412567::0::1::::ButtonLockManager<>Node<>::
-nft_button_lock.gd::GDScript::-1::1705413002::0::1::::<>ButtonLock<>::
-test_list.json::JSON::-1::1705411568::0::1::::<><>::
-token_button_lock.gd::GDScript::-1::1705920788::0::1::::<>ButtonLock<>::
-::res://Scripts/Utility/::1705925743
-input_field.gd::GDScript::-1::1703249790::0::1::::InputField<>LineEdit<>::
-input_field_system.gd::GDScript::-1::1705767001::0::1::::InputFieldSystem<>Node<>::
-scene_change_button.gd::GDScript::-1::1705924497::0::1::::<>Button<>::
-scene_loader.gd::GDScript::-1::1705925743::0::1::::<>Control<>::
-screen_switcher.gd::GDScript::-1::1703249790::0::1::::ScreenSwitcher<>Node<>::
-::res://Scripts/WalletAdapter/::1704387421
-WalletAdapterUI.tscn::PackedScene::2723968068314804149::1704387421::0::1::::<><>::res://Scripts/WalletAdapter/wallet_adapter_ui.gd<>uid://w27yxay7tghj::::res://Scripts/WalletAdapter/WalletSelectButton.tscn<>uid://0x1jjxnmbchx::::res://Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg<>uid://17u8fpx30rv3::::res://Scripts/WalletAdapter/WalletProviderLogos/solflarelogo.jpg<>uid://du7duuvlwpqlj::::res://Scripts/WalletAdapter/WalletProviderLogos/backpacklogo.jpg<>uid://denyhj5xo00he::::res://Scripts/WalletAdapter/WalletProviderLogos/ultimatelogo.jpg<>uid://b3003ar1uxa77::::res://Textures/closebutton.jpg.png
-WalletSelectButton.tscn::PackedScene::1601879771389590951::1704371624::0::1::::<><>::res://Scripts/WalletAdapter/wallet_adapter_button.gd<>uid://0x1jjxnmbchx::::res://Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg
-wallet_adapter_button.gd::GDScript::-1::1704371624::0::1::::WalletAdapterButton<>Node<>::
-wallet_adapter_ui.gd::GDScript::-1::1704372594::0::1::::WalletAdapterUI<>Node<>::
-::res://Scripts/WalletAdapter/WalletProviderLogos/::1705766378
-backpacklogo.jpg::CompressedTexture2D::8629317962263954103::1704371624::1705766378::1::::<><>::
-phantomlogo.jpg::CompressedTexture2D::1803797002098647861::1704371624::1705766378::1::::<><>::
-solflarelogo.jpg::CompressedTexture2D::1892243580645197778::1704371624::1705766378::1::::<><>::
-ultimatelogo.jpg::CompressedTexture2D::7468324564936958174::1704371624::1705766378::1::::<><>::
-::res://Textures/::1706181066
-Arrow.PNG::CompressedTexture2D::1993040118285522828::1705482751::1705766378::1::::<><>::
-closebutton.jpg.png::CompressedTexture2D::4404885703928628824::1704372190::1705766378::1::::<><>::
-missingicon.png::CompressedTexture2D::7911025194801421560::1703843060::1705766378::1::::<><>::
-open-treasure-chest-icon-flat-style-vector.png::CompressedTexture2D::2810574429329838130::1706181066::1706181066::1::::<><>::
-SolanaLogo.png::CompressedTexture2D::7057920979291482138::1703843060::1705766378::1::::<><>::
-::res://Textures/Buttons/::1705766378
-b_close.PNG::CompressedTexture2D::4884097321090393041::1703843060::1705766378::1::::<><>::
-b_green_hover.PNG::CompressedTexture2D::9215418037510860588::1703843060::1705766378::1::::<><>::
-b_green_pressed.PNG::CompressedTexture2D::6467297337103017218::1703843060::1705766378::1::::<><>::
-b_inactive.PNG::CompressedTexture2D::321576190872775564::1703843060::1705766378::1::::<><>::
-b_orange_hover.PNG::CompressedTexture2D::2114972546946510576::1703843060::1705766378::1::::<><>::
-b_orange_pressed.PNG::CompressedTexture2D::8104909326431868858::1703843060::1705766378::1::::<><>::
+::res://::1706253274
+export_presets.cfg::TextFile::-1::1704226262::0::1::::<><>::
+icon.svg::CompressedTexture2D::8337803400720695138::1704044121::1706213655::1::::<><>::
+README.md::TextFile::-1::1705954815::0::1::::<><>::
+::res://Autoload/::1706218667
+SceneLoader.tscn::PackedScene::8718452938737271484::1706128857::0::1::::<><>::res://Scripts/Utility/scene_loader.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf
+SolanaService.tscn::PackedScene::4288474253152216185::1706218667::0::1::::<><>::res://Scripts/solana_service.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/transaction_processor.gd<>res://Scripts/Utility/screen_switcher.gd<>res://Scripts/wallet_service.gd<>res://Scripts/nft_manager.gd<>uid://be2rmdwqrqiw0::::res://Scripts/WalletAdapter/WalletAdapterUI.tscn<>res://Scripts/file_loader.gd<>res://Scripts/candy_machine_manager.gd
+::res://bin/::1706253270
+godot-solana-sdk.gdextension::GDExtension::-1::1704044120::0::1::::<><>::
+::res://bin/libgodot-solana-sdk.macos.template_debug.framework/::1705954815
+::res://bin/libgodot-solana-sdk.macos.template_release.framework/::1705954815
+::res://Demos/::1706218667
+DemoSelectScene.tscn::PackedScene::56380183958265618::1706128857::0::1::::<><>::uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Demos/SystemProgramDemo/account_manager.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>res://Scripts/rpc_network_switcher.gd<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd
+LoginScene.tscn::PackedScene::2795416145445268806::1706218667::0::1::::<><>::res://Scripts/login_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG
+::res://Demos/3DNFTShowcase/::1705954815
+3DNFTShowcase.tscn::PackedScene::6319968553857193092::1705954814::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Demos/3DNFTShowcase/nft_model_showcase_system.gd<>uid://3npcx8cx80ui::::res://Textures/Arrow.PNG<>uid://b0iofagcqa64g::::res://Demos/3DNFTShowcase/ModelNFT.tscn<>res://Scripts/Utility/scene_change_button.gd<>res://Demos/3DNFTShowcase/asset_inspector.gd
+asset_inspector.gd::GDScript::-1::1705687350::0::1::::<>Node3D<>::
+ModelNFT.tscn::PackedScene::4158515772925759388::1705780059::0::1::::<><>::res://Demos/3DNFTShowcase/model_nft.gd
+model_nft.gd::GDScript::-1::1705687350::0::1::::ModelNFT<>Node3D<>::
+nft_model_showcase_system.gd::GDScript::-1::1705954815::0::1::::<>Node<>::
+::res://Demos/CandyMachineDemo/::1706128857
+CandyMachineDemo.tscn::PackedScene::8637711420499011924::1706128857::0::1::::<><>::uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>res://Scripts/Utility/scene_change_button.gd<>uid://dq15ny3t87eog::::res://icon.svg<>res://Demos/CandyMachineDemo/candy_machine_display.gd<>res://Demos/NFTListDemo/displayable_nft.gd<>uid://bcl3w71l4bt5v::::res://Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>res://Scripts/NFTGating/token_button_lock.gd
+candy_machine_display.gd::GDScript::-1::1705954815::0::1::::CandyMachineDisplay<>Node<>::
+rubianscminfo.txt::TextFile::-1::1705954815::0::1::::<><>::
+::res://Demos/CandyMachineDemo/RubiansMintSettings/::1706125474
+rubians_default.tres::CandyGuardAccessList::2551247610977917205::1706125474::0::1::::<><>::
+::res://Demos/NFTListDemo/::1705954815
+DisplayableNFT.tscn::PackedScene::6999034881072166202::1705780059::0::1::::<><>::res://Demos/NFTListDemo/displayable_nft.gd<>uid://dkyfoudbohuqq::::res://Textures/missingicon.png
+displayable_nft.gd::GDScript::-1::1704044120::0::1::::DisplayableNFT<>Node<>::
+NftListDemo.tscn::PackedScene::3052210308847521881::1705954815::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://c6ync1x06vh2q::::res://Demos/NFTListDemo/DisplayableNFT.tscn<>res://Demos/NFTListDemo/nft_display_system.gd<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Scripts/Utility/scene_change_button.gd
+nft_display_system.gd::GDScript::-1::1705780122::0::1::::<>Node<>::
+::res://Demos/SystemProgramDemo/::1706085855
+account_manager.gd::GDScript::-1::1705954815::0::1::::<>Node<>::
+SystemProgramDemo.tscn::PackedScene::8765632831066310501::1705954815::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>res://Demos/SystemProgramDemo/token_transfer_manager.gd<>uid://c7s56sayh028u::::res://Textures/SolanaLogo.png<>res://Scripts/Utility/input_field_system.gd<>res://Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Scripts/Utility/scene_change_button.gd
+token_transfer_manager.gd::GDScript::-1::1704044120::0::1::::<>Node<>::
+::res://Demos/Tiny Adventure/::1706218728
+TinyAdventureDemo.tscn::PackedScene::4753307679216523453::1706218728::0::1::::<><>::res://Demos/Tiny Adventure/tiny_adventure.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>uid://c7s56sayh028u::::res://Textures/SolanaLogo.png<>res://Scripts/NFTGating/token_button_lock.gd<>uid://3npcx8cx80ui::::res://Textures/Arrow.PNG<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>uid://dq15ny3t87eog::::res://icon.svg<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://bgbp0rixlgwes::::res://Textures/open-treasure-chest-icon-flat-style-vector.png<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG<>res://Scripts/Utility/scene_change_button.gd<>res://Demos/Tiny Adventure/tiny_adventure_idl.json
+tiny_adventure.gd::GDScript::-1::1706218640::0::1::::<>Node<>::
+tiny_adventure_idl.json::JSON::-1::1706218641::0::1::::<><>::
+::res://Demos/TokenProgramDemo/::1705954815
+pubkey.gd::GDScript::-1::1704296551::0::1::::<>RefCounted<>::
+TokenProgramDemo.tscn::PackedScene::3253040214334531948::1705954815::0::1::::<><>::res://Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://Fonts/Circus Of Innocents.ttf<>res://Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://Fonts/PUSSS___.TTF<>res://Demos/SystemProgramDemo/token_transfer_manager.gd<>res://Scripts/Utility/input_field_system.gd<>uid://dkyfoudbohuqq::::res://Textures/missingicon.png<>res://Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://Textures/Buttons/b_orange_pressed.PNG<>res://Scripts/Utility/scene_change_button.gd<>uid://5erj253phx4s::::res://Textures/Buttons/b_orange_hover.PNG
+::res://Fonts/::1704044120
+Circus Of Innocents.ttf::FontFile::589784106029012811::1704044120::1704044120::1::::<><>::
+PUSSS___.TTF::FontFile::7796887872950811298::1704044120::1704044120::1::::<><>::
+::res://Scripts/::1706217861
+candy_machine_manager.gd::GDScript::-1::1705954815::0::1::::CandyMachineManager<>Node<>::
+file_loader.gd::GDScript::-1::1705780122::0::1::::FileLoader<>Node<>::
+login_manager.gd::GDScript::-1::1705954815::0::1::::<>Node<>::
+nft.gd::GDScript::-1::1705780122::0::1::::Nft<>RefCounted<>::
+nft_manager.gd::GDScript::-1::1705954815::0::1::::NFTManager<>Node<>::
+rpc_network_switcher.gd::GDScript::-1::1705954815::0::1::::<>OptionButton<>::
+solana_service.gd::GDScript::-1::1706128425::0::1::::<>Control<>::
+token_visualizer.gd::GDScript::-1::1706216743::0::1::::TokenVisualizer<>Node<>::
+transaction_processor.gd::GDScript::-1::1706217861::0::1::::TransactionProcessor<>Node<>::
+wallet_service.gd::GDScript::-1::1705780059::0::1::::WalletService<>Node<>::
+::res://Scripts/NFTCollection/::1704044120
+nft_collection.gd::GDScript::-1::1704044120::0::1::::NFTCollection<>Resource<>::
+rubians_collection.tres::Resource/Resource::1057874920309008043::1704044120::0::1::::<><>::res://Scripts/NFTCollection/nft_collection.gd
+::res://Scripts/NFTGating/::1705954815
+address_button_lock.gd::GDScript::-1::1705687350::0::1::::<>ButtonLock<>::
+button_lock.gd::GDScript::-1::1705954815::0::1::::ButtonLock<>Button<>::
+button_lock_manager.gd::GDScript::-1::1705687350::0::1::::ButtonLockManager<>Node<>::
+nft_button_lock.gd::GDScript::-1::1705687350::0::1::::<>ButtonLock<>::
+test_list.json::JSON::-1::1705687350::0::1::::<><>::
+token_button_lock.gd::GDScript::-1::1705954815::0::1::::<>ButtonLock<>::
+::res://Scripts/Utility/::1705954815
+input_field.gd::GDScript::-1::1704044120::0::1::::InputField<>LineEdit<>::
+input_field_system.gd::GDScript::-1::1705780122::0::1::::InputFieldSystem<>Node<>::
+scene_change_button.gd::GDScript::-1::1705954815::0::1::::<>Button<>::
+scene_loader.gd::GDScript::-1::1705954815::0::1::::<>Control<>::
+screen_switcher.gd::GDScript::-1::1704044120::0::1::::ScreenSwitcher<>Node<>::
+::res://Scripts/WalletAdapter/::1704556627
+WalletAdapterUI.tscn::PackedScene::2723968068314804149::1704556627::0::1::::<><>::res://Scripts/WalletAdapter/wallet_adapter_ui.gd<>uid://w27yxay7tghj::::res://Scripts/WalletAdapter/WalletSelectButton.tscn<>uid://0x1jjxnmbchx::::res://Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg<>uid://17u8fpx30rv3::::res://Scripts/WalletAdapter/WalletProviderLogos/solflarelogo.jpg<>uid://du7duuvlwpqlj::::res://Scripts/WalletAdapter/WalletProviderLogos/backpacklogo.jpg<>uid://denyhj5xo00he::::res://Scripts/WalletAdapter/WalletProviderLogos/ultimatelogo.jpg<>uid://b3003ar1uxa77::::res://Textures/closebutton.jpg.png
+WalletSelectButton.tscn::PackedScene::1601879771389590951::1704321805::0::1::::<><>::res://Scripts/WalletAdapter/wallet_adapter_button.gd<>uid://0x1jjxnmbchx::::res://Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg
+wallet_adapter_button.gd::GDScript::-1::1704320029::0::1::::WalletAdapterButton<>Node<>::
+wallet_adapter_ui.gd::GDScript::-1::1704556627::0::1::::WalletAdapterUI<>Node<>::
+::res://Scripts/WalletAdapter/WalletProviderLogos/::1704321806
+backpacklogo.jpg::CompressedTexture2D::8629317962263954103::1704318118::1704321806::1::::<><>::
+phantomlogo.jpg::CompressedTexture2D::1803797002098647861::1704318118::1704321806::1::::<><>::
+solflarelogo.jpg::CompressedTexture2D::1892243580645197778::1704318118::1704321806::1::::<><>::
+ultimatelogo.jpg::CompressedTexture2D::7468324564936958174::1704318118::1704321806::1::::<><>::
+::res://Textures/::1706127180
+Arrow.PNG::CompressedTexture2D::1993040118285522828::1705687350::1705687350::1::::<><>::
+closebutton.jpg.png::CompressedTexture2D::4404885703928628824::1704556627::1704556627::1::::<><>::
+missingicon.png::CompressedTexture2D::7911025194801421560::1704044120::1704044120::1::::<><>::
+open-treasure-chest-icon-flat-style-vector.png::CompressedTexture2D::2810574429329838130::1706127179::1706127180::1::::<><>::
+SolanaLogo.png::CompressedTexture2D::7057920979291482138::1704044120::1704044120::1::::<><>::
+::res://Textures/Buttons/::1704044120
+b_close.PNG::CompressedTexture2D::4884097321090393041::1704044120::1704044120::1::::<><>::
+b_green_hover.PNG::CompressedTexture2D::9215418037510860588::1704044120::1704044120::1::::<><>::
+b_green_pressed.PNG::CompressedTexture2D::6467297337103017218::1704044120::1704044120::1::::<><>::
+b_inactive.PNG::CompressedTexture2D::321576190872775564::1704044120::1704044120::1::::<><>::
+b_orange_hover.PNG::CompressedTexture2D::2114972546946510576::1704044120::1704044120::1::::<><>::
+b_orange_pressed.PNG::CompressedTexture2D::8104909326431868858::1704044120::1704044120::1::::<><>::

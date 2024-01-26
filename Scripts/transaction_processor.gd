@@ -32,10 +32,13 @@ var transaction:Transaction
 func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) -> void:
 	enable_tx_loader()
 	transaction = Transaction.new()	
-	
+	#
 	for ix in instructions:
+		if ix == null:
+			push_error("One of the instructions is null, couldn't build a transaction!")
+			screen_switcher.close_active_panel()
+			return
 		transaction.add_instruction(ix)
-		
 	print(transaction.get_instructions().size())
 	
 	if wallet.use_generated:
