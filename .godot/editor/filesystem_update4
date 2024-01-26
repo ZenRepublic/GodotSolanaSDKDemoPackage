@@ -1,5 +1,1 @@
-res://Demos/LoginScene.tscn
-res://Autoload/SolanaService.tscn
 res://Demos/Tiny Adventure/TinyAdventureDemo.tscn
-res://Demos/Tiny Adventure/tiny_adventure.gd
-res://Scripts/token_visualizer.gd
