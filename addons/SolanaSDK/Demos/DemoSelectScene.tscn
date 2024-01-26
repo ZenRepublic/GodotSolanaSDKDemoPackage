@@ -1,0 +1,657 @@
+[gd_scene load_steps=16 format=3 uid="uid://2ktq3vdndve"]
+
+[ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf" id="1_plclv"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd" id="2_10qtm"]
+[ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://addons/SolanaSDK/Fonts/PUSSS___.TTF" id="2_wfsl8"]
+[ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="3_b8juh"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/rpc_network_switcher.gd" id="3_lb3d3"]
+[ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="4_mglv1"]
+[ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="5_dpk8s"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd" id="7_agyvs"]
+
+[sub_resource type="GDScript" id="GDScript_syc7x"]
+script/source = "extends Control
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	SceneLoader.emit_signal(\"scene_loaded\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bume7"]
+bg_color = Color(0.937255, 0.682353, 0.341176, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y3x8p"]
+texture = ExtResource("3_b8juh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6yw5e"]
+texture = ExtResource("4_mglv1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5y8r4"]
+texture = ExtResource("3_b8juh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tt47o"]
+texture = ExtResource("5_dpk8s")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tft61"]
+
+[node name="DemoSelectScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_syc7x")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bume7")
+
+[node name="IntroText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 75.0
+offset_top = 109.0
+offset_right = 568.0
+offset_bottom = 229.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 80
+text = "SELECT DEMO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tag" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 328.0
+offset_top = 581.0
+offset_right = 571.0
+offset_bottom = 641.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 30
+text = "Made by Zen Republic"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AccountPanel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 141.0
+script = ExtResource("2_10qtm")
+
+[node name="AccountLabel" type="Label" parent="AccountPanel"]
+layout_mode = 1
+offset_left = 44.0
+offset_top = 17.0
+offset_right = 818.0
+offset_bottom = 92.0
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 60
+text = "Welcome back,"
+
+[node name="AccountAddress" type="Label" parent="AccountPanel"]
+layout_mode = 1
+offset_left = 67.0
+offset_top = 89.0
+offset_right = 841.0
+offset_bottom = 129.0
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 23
+text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
+
+[node name="SelectNetwork" type="Label" parent="."]
+layout_mode = 1
+offset_left = 32.0
+offset_top = 158.0
+offset_right = 183.0
+offset_bottom = 198.0
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 23
+text = "Select Network:"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 156.0
+offset_right = 288.0
+offset_bottom = 194.0
+item_count = 2
+selected = 0
+allow_reselect = true
+popup/item_0/text = "Mainnet"
+popup/item_0/id = 0
+popup/item_1/text = "Devnet"
+popup/item_1/id = 1
+script = ExtResource("3_lb3d3")
+
+[node name="DemoContainerPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -100.0
+offset_right = 576.0
+offset_bottom = 198.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DemoContainerPanel"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DemoContainerPanel/ScrollContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Demo1" type="Panel" parent="DemoContainerPanel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+
+[node name="DemoID" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -113.0
+offset_top = 8.86
+offset_right = 113.0
+offset_bottom = 70.86
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 50
+text = "DEMO 1
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoName2" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -113.0
+offset_top = 69.1
+offset_right = 113.0
+offset_bottom = 159.1
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 25
+text = "SYSTEM PROGRAM & RPC CALLS
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoDescription" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.5
+offset_top = -33.445
+offset_right = 117.5
+offset_bottom = 57.555
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 17
+text = "Fetch wallet information, display Solana balance and transfer some SOL to a desired address"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -74.955
+offset_right = 84.0
+offset_bottom = -32.9545
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+text = "SELECT"
+script = ExtResource("7_agyvs")
+path_to_scene = "res://addons/SolanaSDK/Demos/SystemProgramDemo/SystemProgramDemo.tscn"
+
+[node name="Demo2" type="Panel" parent="DemoContainerPanel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+
+[node name="DemoID" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -113.0
+offset_top = 8.86
+offset_right = 113.0
+offset_bottom = 70.86
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 50
+text = "DEMO 2
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoName2" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -113.0
+offset_top = 69.1
+offset_right = 113.0
+offset_bottom = 159.1
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 25
+text = "TOKEN PROGRAM
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoDescription" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.5
+offset_top = -33.445
+offset_right = 117.5
+offset_bottom = 57.555
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 17
+text = "display balance of custom SPL token and transfer any SPL token to an address"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -74.955
+offset_right = 84.0
+offset_bottom = -32.9545
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+text = "SELECT"
+script = ExtResource("7_agyvs")
+path_to_scene = "res://addons/SolanaSDK/Demos/TokenProgramDemo/TokenProgramDemo.tscn"
+
+[node name="Demo3" type="Panel" parent="DemoContainerPanel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="DemoID" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 8.0
+offset_right = 114.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 50
+text = "DEMO 3
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoName2" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 65.0
+offset_right = 114.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 25
+text = "NFT LOADER
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoDescription" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -29.0
+offset_right = 118.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 17
+text = "Load all owned NFTs and display them in a container"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -74.0
+offset_right = 84.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+text = "SELECT"
+script = ExtResource("7_agyvs")
+path_to_scene = "res://addons/SolanaSDK/Demos/NFTListDemo/NftListDemo.tscn"
+
+[node name="Demo4" type="Panel" parent="DemoContainerPanel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="DemoID" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 8.0
+offset_right = 114.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 50
+text = "DEMO 4
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoName2" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 65.0
+offset_right = 114.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 25
+text = "3D NFT SHOWCASE"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoDescription" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -29.0
+offset_right = 118.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 17
+text = "Parse NFTs that have glbs in their metadata and spawn them inside the game scene"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -74.0
+offset_right = 84.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+text = "SELECT"
+script = ExtResource("7_agyvs")
+path_to_scene = "res://addons/SolanaSDK/Demos/3DNFTShowcase/3DNFTShowcase.tscn"
+
+[node name="Demo5" type="Panel" parent="DemoContainerPanel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="DemoID" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 8.0
+offset_right = 114.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 50
+text = "DEMO 5
+"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoName2" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 65.0
+offset_right = 114.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 25
+text = "Candymachine Mint"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoDescription" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -29.0
+offset_right = 118.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 17
+text = "Fetch candymachine v3 info and mint from it. Candy guards and PNFTs supported"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -74.0
+offset_right = 84.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+text = "SELECT"
+script = ExtResource("7_agyvs")
+path_to_scene = "res://addons/SolanaSDK/Demos/CandyMachineDemo/CandyMachineDemo.tscn"
+
+[node name="Demo6" type="Panel" parent="DemoContainerPanel/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="DemoID" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 8.0
+offset_right = 114.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 50
+text = "DEMO 6"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoName2" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = 65.0
+offset_right = 114.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 25
+text = "Tiny Adventure"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="DemoDescription" type="Label" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -117.0
+offset_top = -29.0
+offset_right = 118.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_plclv")
+theme_override_font_sizes/font_size = 17
+text = "Simple onchain game interacting with custom anchor program"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -74.0
+offset_right = 84.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_wfsl8")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_y3x8p")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5y8r4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
+text = "SELECT"
+script = ExtResource("7_agyvs")
+path_to_scene = "res://addons/SolanaSDK/Demos/Tiny Adventure/TinyAdventureDemo.tscn"
+
+[connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" method="_on_pressed"]
+[connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" method="_on_pressed"]
+[connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo3/SelectButton" method="_on_pressed"]
+[connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo4/SelectButton" method="_on_pressed"]
+[connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo5/SelectButton" method="_on_pressed"]
+[connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo6/SelectButton" method="_on_pressed"]

@@ -11,18 +11,22 @@ config_version=5
 [application]
 
 config/name="GodotSolanaSDK"
-run/main_scene="res://Demos/LoginScene.tscn"
+run/main_scene="res://addons/SolanaSDK/Demos/LoginScene.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://addons/SolanaSDK/icon.svg"
 
 [autoload]
 
-SolanaService="*res://Autoload/SolanaService.tscn"
-SceneLoader="*res://Autoload/SceneLoader.tscn"
+SceneLoader="*res://addons/SolanaSDK/Autoload/SceneLoader.tscn"
+SolanaService="*res://addons/SolanaSDK/Autoload/SolanaService.tscn"
 
 [display]
 
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/SolanaSDK/plugin.cfg")
 
 [rendering]
 

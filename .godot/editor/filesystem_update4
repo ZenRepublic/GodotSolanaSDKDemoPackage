@@ -1,1 +1,4 @@
-res://Demos/Tiny Adventure/TinyAdventureDemo.tscn
+res://addons/SolanaSDK/Autoload/SolanaService.tscn
+res://addons/SolanaSDK/Autoload/solana_sdk_plugin.gd
+res://addons/SolanaSDK/plugin.cfg
+res://addons/SolanaSDK/solana_sdk_plugin.gd
