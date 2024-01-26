@@ -17,7 +17,7 @@ Test out the latest demo version in your browser: https://zenrepublic.github.io/
 - Candymachine v3 minting (pNFTs and Candy guard groups supported)
 - Custom Anchor smart contract support + IDL converter to GDScript
 
-**How to start?**
+**How to start?** \
 **Step 1.**\ Download the latest version of Solana SDK addon and import it it to your project. If you already have addons folder, then only import "SolanaSDK" folder into it\
 **Step 2.**\ Inside Godot engine, go to **Project -> Project Settings -> Plugins** and enable "SolanaSDK" plugin. It should add the autoload scenes, enabling easy access to **SolanaService** class\
 **Step 3.**\ Find "SolanaService.tscn" in **SolanaSDK -> Autoloads** and open it. This scene has all the settings you can adjust, like setting custom RPC links and your test wallet.\
