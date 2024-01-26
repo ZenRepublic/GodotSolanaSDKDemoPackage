@@ -18,7 +18,7 @@ Test out the latest demo version in your browser: https://zenrepublic.github.io/
 - Custom Anchor smart contract support + IDL converter to GDScript
 
 **How to start?**
-Step 1. Download the latest version of Solana SDK addon and import it it to your project. If you already have addons folder, then only import "SolanaSDK" folder into it'
+Step 1. Download the latest version of Solana SDK addon and import it it to your project. If you already have addons folder, then only import "SolanaSDK" folder into it \n
 Step 2. Inside Godot engine, go to **Project -> Project Settings -> Plugins** and enable "SolanaSDK" plugin. It should add the autoload scenes, enabling easy access to **SolanaService** class
 Step 3. Find "SolanaService.tscn" in **SolanaSDK -> Autoloads** and open it. This scene has all the settings you can adjust, like setting custom RPC links and your test wallet.
 To make the SDK work inside editor, you will need to make sure that in **SolanaService -> OverlayLayer -> WalletService** you have checked "Use Generated". This will generate a new wallet for you to test the game with.
