@@ -18,12 +18,12 @@ Test out the latest demo version in your browser: https://zenrepublic.github.io/
 - Custom Anchor smart contract support + IDL converter to GDScript
 
 **How to start?** \
-**Step 1.**\ Download the latest version of Solana SDK addon and import it it to your project. If you already have addons folder, then only import "SolanaSDK" folder into it\
-**Step 2.**\ Inside Godot engine, go to **Project -> Project Settings -> Plugins** and enable "SolanaSDK" plugin. It should add the autoload scenes, enabling easy access to **SolanaService** class\
-**Step 3.**\ Find "SolanaService.tscn" in **SolanaSDK -> Autoloads** and open it. This scene has all the settings you can adjust, like setting custom RPC links and your test wallet.\
+**Step 1.** \ Download the latest version of Solana SDK addon and import it it to your project. If you already have addons folder, then only import "SolanaSDK" folder into it\
+**Step 2.** \ Inside Godot engine, go to **Project -> Project Settings -> Plugins** and enable "SolanaSDK" plugin. It should add the autoload scenes, enabling easy access to **SolanaService** class\
+**Step 3.** \ Find "SolanaService.tscn" in **SolanaSDK -> Autoloads** and open it. This scene has all the settings you can adjust, like setting custom RPC links and your test wallet.\
 To make the SDK work inside editor, you will need to make sure that in **SolanaService -> OverlayLayer -> WalletService** you have checked "Use Generated". This will generate a new wallet for you to test the game with.\
 Optionally, you can use your own keypair by creating a .txt with your wallet's private key in it anywhere in your computer and link the path in the "custom pk path" variable.\
-**Step 4.**\ Inside **SolanaSDK -> Demos** there is "LoginScene.tscn". Launch it and check different demos we have prepared for you to learn the most crucial features the SDK provides\
+**Step 4.** \ Inside **SolanaSDK -> Demos** there is "LoginScene.tscn". Launch it and check different demos we have prepared for you to learn the most crucial features the SDK provides\
 
 Godot 4.1+ needed to run the project. Windows, Mac and Linux supported.
 
