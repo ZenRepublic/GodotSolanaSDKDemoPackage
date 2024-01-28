@@ -39,7 +39,6 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 			screen_switcher.close_active_panel()
 			return
 		transaction.add_instruction(ix)
-	print(transaction.get_instructions().size())
 	
 	if wallet.use_generated:
 		transaction.set_payer(wallet.keypair)

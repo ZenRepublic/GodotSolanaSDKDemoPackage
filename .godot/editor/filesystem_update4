@@ -1,5 +1,6 @@
 res://Demos/LoginScene.tscn
+res://Demos/HighscoreDemo/HighscoreDemo.tscn
+res://Scripts/SOAR/SoarProgram.tscn
 res://Autoload/SolanaService.tscn
 res://Demos/Tiny Adventure/TinyAdventureDemo.tscn
-res://Demos/Tiny Adventure/tiny_adventure.gd
-res://Scripts/token_visualizer.gd
+res://Scripts/transaction_processor.gd
