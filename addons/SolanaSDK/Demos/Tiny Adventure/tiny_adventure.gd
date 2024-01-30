@@ -45,7 +45,7 @@ func init_game() -> void:
 	SolanaService.transaction_processor.connect("on_transaction_finish",start_game_callback)
 	var prize_in_lamports:int = int(chest_prize*pow(10,9))
 	var instructions:Array[Instruction]
-	var init_ix:Instruction = anchor_program.build_instruction("restart_level",[
+	var init_ix:Instruction = anchor_program.build_instruction("restartLevel",[
 		level_pda, #gamedata
 		vault_pda, #gamevault
 		SolanaService.wallet.get_kp(), #signer
@@ -71,9 +71,9 @@ func start_game_callback(transaction_id:String) -> void:
 	
 	
 func move_left() -> void:
-	move("move_left")
+	move("moveLeft")
 func move_right() -> void:
-	move("move_right")
+	move("moveRight")
 	
 func move(move_dir:String) -> void:
 	SolanaService.transaction_processor.connect("on_transaction_finish",move_callback)

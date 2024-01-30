@@ -172,7 +172,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_m8hje")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b04j3")
 text = "Start game (0.1 SOL)"
 script = ExtResource("8_p878m")
-unlock_amount = 0.1
+unlock_amount = 0.01
 
 [node name="GameScreen" type="Control" parent="."]
 visible = false
@@ -417,7 +417,7 @@ idl = {
 "name": "chestPrice",
 "type": "u64"
 }],
-"name": "restart_level"
+"name": "restartLevel"
 }, {
 "accounts": [{
 "isMut": true,
@@ -437,7 +437,7 @@ idl = {
 "name": "systemProgram"
 }],
 "args": [],
-"name": "move_right"
+"name": "moveRight"
 }, {
 "accounts": [{
 "isMut": true,
@@ -457,7 +457,7 @@ idl = {
 "name": "systemProgram"
 }],
 "args": [],
-"name": "move_left"
+"name": "moveLeft"
 }],
 "name": "tiny_adventure",
 "version": "0.1.0"

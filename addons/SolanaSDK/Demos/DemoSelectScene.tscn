@@ -727,7 +727,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
 text = "SELECT"
 script = ExtResource("7_agyvs")
-path_to_scene = "res://Demos/HighscoreDemo/HighscoreDemo.tscn"
+path_to_scene = "res://addons/SolanaSDK/Demos/HighscoreDemo/HighscoreDemo.tscn"
 
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo1/SelectButton" method="_on_pressed"]
 [connection signal="pressed" from="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" to="DemoContainerPanel/ScrollContainer/HBoxContainer/Demo2/SelectButton" method="_on_pressed"]

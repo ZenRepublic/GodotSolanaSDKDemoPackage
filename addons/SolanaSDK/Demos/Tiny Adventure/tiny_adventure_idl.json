@@ -34,7 +34,7 @@
 	  ]
 	},
 	{
-	  "name": "restart_level",
+	  "name": "restartLevel",
 	  "accounts": [
 		{
 		  "name": "gameData",
@@ -65,7 +65,7 @@
 	  ]
 	},
 	{
-	  "name": "move_right",
+	  "name": "moveRight",
 	  "accounts": [
 		{
 		  "name": "gameData",
@@ -91,7 +91,7 @@
 	  "args": []
 	},
 	{
-	  "name": "move_left",
+	  "name": "moveLeft",
 	  "accounts": [
 		{
 		  "name": "gameData",
