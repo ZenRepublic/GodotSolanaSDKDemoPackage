@@ -5,6 +5,7 @@ extends Node
 
 #devnet Game account, created once using setup_game function
 var game_address:String = "8ewcHXrpmwGRAVU9TndiUXfEEFqVu7vbthPZzkW55CYD"
+#devned leaderboard No.1 created from the game. Players can submit their scores to it
 var leaderboard_address:String = "6iorenkNgoZvyMB1Vcyn4mkx5nxk8qMHTbGrPkTiBh98"
 #collection used as nft_meta for games and leaderboards. this is devnet Rubians
 var nft_collection:String = "EE1XTVRxVX5UtTLKRg7Y5bFQEKm2wm2nao9SGF27fypH"
@@ -20,6 +21,16 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+	
+func setup_game() -> void:
+	var game_attributes:SoarUtils.GameAttributes = SoarUtils.GameAttributes.new()
+	game_attributes.title="Test Game"
+	game_attributes.description="Best Game ever"
+	#game's collection nft. Rubians provided by default
+	game_attributes.nft_meta = Pubkey.new_from_string(nft_collection)
+	
+	soar_program.init_game(game_attributes)
+
 
 func register_leaderboard() -> void:
 	var leaderboard_data:SoarUtils.LeaderboardData = SoarUtils.LeaderboardData.new()
@@ -33,11 +44,9 @@ func register_leaderboard() -> void:
 	soar_program.add_leaderboard(game_address,leaderboard_data)
 	
 
-func setup_game() -> void:
-	var game_attributes:SoarUtils.GameAttributes = SoarUtils.GameAttributes.new()
-	game_attributes.title="Test Game"
-	game_attributes.description="Best Game ever"
-	#game's collection nft. Rubians provided by default
-	game_attributes.nft_meta = Pubkey.new_from_string(nft_collection)
+func initialize_player() -> void:
+	var username:String = "Rubian"
+	#devnet rubian nft example
+	var user_nft:Pubkey = Pubkey.new_from_string("9aNFiE6mdcQSGaytpoqpWvJMeA2h6vDa4sJttsyyKFPA")
 	
-	soar_program.init_game(game_attributes)
+	soar_program.initialize_player(username,user_nft)

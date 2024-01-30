@@ -1,108 +1,109 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1706527819
-export_presets.cfg::TextFile::-1::1704226262::0::1::::<><>::
-README.md::TextFile::-1::1706444903::0::1::::<><>::
-::res://addons/::1706444903
-::res://addons/SolanaSDK/::1706445010
-icon.svg::CompressedTexture2D::8337803400720695138::1706444904::1706445010::1::::<><>::
-plugin.cfg::TextFile::-1::1706444904::0::1::::<><>::
-solana_sdk_plugin.gd::GDScript::-1::1706444904::0::1::::<>EditorPlugin<>::
-::res://addons/SolanaSDK/Autoload/::1706526041
-SceneLoader.tscn::PackedScene::8718452938737271484::1706444903::0::1::::<><>::res://addons/SolanaSDK/Scripts/Utility/scene_loader.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf
-SolanaService.tscn::PackedScene::4288474253152216185::1706526041::0::1::::<><>::res://addons/SolanaSDK/Scripts/solana_service.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/transaction_processor.gd<>res://addons/SolanaSDK/Scripts/Utility/screen_switcher.gd<>res://addons/SolanaSDK/Scripts/wallet_service.gd<>res://addons/SolanaSDK/Scripts/nft_manager.gd<>uid://be2rmdwqrqiw0::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletAdapterUI.tscn<>res://addons/SolanaSDK/Scripts/file_loader.gd<>res://addons/SolanaSDK/Scripts/candy_machine_manager.gd
-::res://addons/SolanaSDK/bin/::1706527814
-godot-solana-sdk.gdextension::GDExtension::-1::1706444903::0::1::::<><>::
-::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_debug.framework/::1706444903
-::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_release.framework/::1706444903
-::res://addons/SolanaSDK/Demos/::1706526041
-DemoSelectScene.tscn::PackedScene::56380183958265618::1706526041::0::1::::<><>::uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>res://addons/SolanaSDK/Scripts/rpc_network_switcher.gd<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
-LoginScene.tscn::PackedScene::2795416145445268806::1706526041::0::1::::<><>::res://addons/SolanaSDK/Scripts/login_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG
-::res://addons/SolanaSDK/Demos/3DNFTShowcase/::1706444903
-3DNFTShowcase.tscn::PackedScene::6319968553857193092::1706444903::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Demos/3DNFTShowcase/nft_model_showcase_system.gd<>uid://3npcx8cx80ui::::res://addons/SolanaSDK/Textures/Arrow.PNG<>uid://b0iofagcqa64g::::res://addons/SolanaSDK/Demos/3DNFTShowcase/ModelNFT.tscn<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>res://addons/SolanaSDK/Demos/3DNFTShowcase/asset_inspector.gd
-asset_inspector.gd::GDScript::-1::1706444903::0::1::::<>Node3D<>::
-ModelNFT.tscn::PackedScene::4158515772925759388::1706444903::0::1::::<><>::res://addons/SolanaSDK/Demos/3DNFTShowcase/model_nft.gd
-model_nft.gd::GDScript::-1::1706444903::0::1::::ModelNFT<>Node3D<>::
-nft_model_showcase_system.gd::GDScript::-1::1706444903::0::1::::<>Node<>::
-::res://addons/SolanaSDK/Demos/CandyMachineDemo/::1706444903
-CandyMachineDemo.tscn::PackedScene::8637711420499011924::1706444903::0::1::::<><>::uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>uid://dq15ny3t87eog::::res://addons/SolanaSDK/icon.svg<>res://addons/SolanaSDK/Demos/CandyMachineDemo/candy_machine_display.gd<>res://addons/SolanaSDK/Demos/NFTListDemo/displayable_nft.gd<>uid://bcl3w71l4bt5v::::res://addons/SolanaSDK/Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd
-candy_machine_display.gd::GDScript::-1::1706444903::0::1::::CandyMachineDisplay<>Node<>::
-rubianscminfo.txt::TextFile::-1::1706444903::0::1::::<><>::
-::res://addons/SolanaSDK/Demos/CandyMachineDemo/RubiansMintSettings/::1706444903
-rubians_default.tres::CandyGuardAccessList::2551247610977917205::1706444903::0::1::::<><>::
-::res://addons/SolanaSDK/Demos/HighscoreDemo/::1706526041
-game_manager.gd::GDScript::-1::1706522578::0::1::::<>Node<>::
-HighscoreDemo.tscn::PackedScene::1524995871215344936::1706526041::0::1::::<><>::res://addons/SolanaSDK/Demos/HighscoreDemo/game_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://c7s56sayh028u::::res://addons/SolanaSDK/Textures/SolanaLogo.png<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd<>uid://kb5sk8ykb617::::res://addons/SolanaSDK/Scripts/SOAR/SoarProgram.tscn<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
-::res://addons/SolanaSDK/Demos/NFTListDemo/::1706444903
-DisplayableNFT.tscn::PackedScene::6999034881072166202::1706444903::0::1::::<><>::res://addons/SolanaSDK/Demos/NFTListDemo/displayable_nft.gd<>uid://dkyfoudbohuqq::::res://addons/SolanaSDK/Textures/missingicon.png
-displayable_nft.gd::GDScript::-1::1706444903::0::1::::DisplayableNFT<>Node<>::
-NftListDemo.tscn::PackedScene::3052210308847521881::1706444903::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://c6ync1x06vh2q::::res://addons/SolanaSDK/Demos/NFTListDemo/DisplayableNFT.tscn<>res://addons/SolanaSDK/Demos/NFTListDemo/nft_display_system.gd<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
-nft_display_system.gd::GDScript::-1::1706444903::0::1::::<>Node<>::
-::res://addons/SolanaSDK/Demos/SystemProgramDemo/::1706444903
-account_manager.gd::GDScript::-1::1706444903::0::1::::<>Node<>::
-SystemProgramDemo.tscn::PackedScene::8765632831066310501::1706444903::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>res://addons/SolanaSDK/Demos/SystemProgramDemo/token_transfer_manager.gd<>uid://c7s56sayh028u::::res://addons/SolanaSDK/Textures/SolanaLogo.png<>res://addons/SolanaSDK/Scripts/Utility/input_field_system.gd<>res://addons/SolanaSDK/Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
-token_transfer_manager.gd::GDScript::-1::1706444903::0::1::::<>Node<>::
-::res://addons/SolanaSDK/Demos/Tiny Adventure/::1706467242
-TinyAdventureDemo.tscn::PackedScene::4753307679216523453::1706467242::0::1::::<><>::res://addons/SolanaSDK/Demos/Tiny Adventure/tiny_adventure.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://c7s56sayh028u::::res://addons/SolanaSDK/Textures/SolanaLogo.png<>res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd<>uid://3npcx8cx80ui::::res://addons/SolanaSDK/Textures/Arrow.PNG<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://dq15ny3t87eog::::res://addons/SolanaSDK/icon.svg<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://bgbp0rixlgwes::::res://addons/SolanaSDK/Textures/open-treasure-chest-icon-flat-style-vector.png<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>res://addons/SolanaSDK/Demos/Tiny Adventure/tiny_adventure_idl.json
-tiny_adventure.gd::GDScript::-1::1706467062::0::1::::<>Node<>::
-tiny_adventure_idl.json::JSON::-1::1706466910::0::1::::<><>::
-::res://addons/SolanaSDK/Demos/TokenProgramDemo/::1706444903
-pubkey.gd::GDScript::-1::1706444903::0::1::::<>RefCounted<>::
-TokenProgramDemo.tscn::PackedScene::3253040214334531948::1706444903::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>res://addons/SolanaSDK/Demos/SystemProgramDemo/token_transfer_manager.gd<>res://addons/SolanaSDK/Scripts/Utility/input_field_system.gd<>uid://dkyfoudbohuqq::::res://addons/SolanaSDK/Textures/missingicon.png<>res://addons/SolanaSDK/Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG
-::res://addons/SolanaSDK/Fonts/::1706444903
-Circus Of Innocents.ttf::FontFile::589784106029012811::1706444903::1706444903::1::::<><>::
-PUSSS___.TTF::FontFile::7796887872950811298::1706444903::1706444903::1::::<><>::
-::res://addons/SolanaSDK/Scripts/::1706467849
-candy_machine_manager.gd::GDScript::-1::1706444903::0::1::::CandyMachineManager<>Node<>::
-file_loader.gd::GDScript::-1::1706444903::0::1::::FileLoader<>Node<>::
-login_manager.gd::GDScript::-1::1706444903::0::1::::<>Node<>::
-nft.gd::GDScript::-1::1706444903::0::1::::Nft<>RefCounted<>::
-nft_manager.gd::GDScript::-1::1706444903::0::1::::NFTManager<>Node<>::
-rpc_network_switcher.gd::GDScript::-1::1706444903::0::1::::<>OptionButton<>::
-solana_service.gd::GDScript::-1::1706444903::0::1::::<>Control<>::
-token_visualizer.gd::GDScript::-1::1706444903::0::1::::TokenVisualizer<>Node<>::
-transaction_processor.gd::GDScript::-1::1706467849::0::1::::TransactionProcessor<>Node<>::
-wallet_service.gd::GDScript::-1::1706444903::0::1::::WalletService<>Node<>::
-::res://addons/SolanaSDK/Scripts/NFTCollection/::1706444903
-nft_collection.gd::GDScript::-1::1706444903::0::1::::NFTCollection<>Resource<>::
-rubians_collection.tres::Resource/Resource::1057874920309008043::1706444903::0::1::::<><>::res://addons/SolanaSDK/Scripts/NFTCollection/nft_collection.gd
-::res://addons/SolanaSDK/Scripts/NFTGating/::1706444903
-address_button_lock.gd::GDScript::-1::1706444903::0::1::::<>ButtonLock<>::
-button_lock.gd::GDScript::-1::1706444903::0::1::::ButtonLock<>Button<>::
-button_lock_manager.gd::GDScript::-1::1706444903::0::1::::ButtonLockManager<>Node<>::
-nft_button_lock.gd::GDScript::-1::1706444903::0::1::::<>ButtonLock<>::
-test_list.json::JSON::-1::1706444903::0::1::::<><>::
-token_button_lock.gd::GDScript::-1::1706444903::0::1::::<>ButtonLock<>::
-::res://addons/SolanaSDK/Scripts/SOAR/::1706527793
-SoarProgram.tscn::PackedScene::705807045523602424::1706526816::0::1::::<><>::res://addons/SolanaSDK/Scripts/SOAR/soar_program.gd<>res://addons/SolanaSDK/Scripts/SOAR/soar_idl.json
-soar_idl.json::JSON::-1::1706466923::0::1::::<><>::
-soar_program.gd::GDScript::-1::1706526816::0::1::::SoarProgram<>Node<>::
-soar_utils.gd::GDScript::-1::1706527793::0::1::::SoarUtils<>Node<>::
-::res://addons/SolanaSDK/Scripts/Utility/::1706444903
-input_field.gd::GDScript::-1::1706444903::0::1::::InputField<>LineEdit<>::
-input_field_system.gd::GDScript::-1::1706444903::0::1::::InputFieldSystem<>Node<>::
-scene_change_button.gd::GDScript::-1::1706444903::0::1::::<>Button<>::
-scene_loader.gd::GDScript::-1::1706444903::0::1::::<>Control<>::
-screen_switcher.gd::GDScript::-1::1706444903::0::1::::ScreenSwitcher<>Node<>::
-::res://addons/SolanaSDK/Scripts/WalletAdapter/::1706444903
-WalletAdapterUI.tscn::PackedScene::2723968068314804149::1706444903::0::1::::<><>::res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_ui.gd<>uid://w27yxay7tghj::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletSelectButton.tscn<>uid://0x1jjxnmbchx::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg<>uid://17u8fpx30rv3::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/solflarelogo.jpg<>uid://du7duuvlwpqlj::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/backpacklogo.jpg<>uid://denyhj5xo00he::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/ultimatelogo.jpg<>uid://b3003ar1uxa77::::res://addons/SolanaSDK/Textures/closebutton.jpg.png
-WalletSelectButton.tscn::PackedScene::1601879771389590951::1706444903::0::1::::<><>::res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_button.gd<>uid://0x1jjxnmbchx::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg
-wallet_adapter_button.gd::GDScript::-1::1706444903::0::1::::WalletAdapterButton<>Node<>::
-wallet_adapter_ui.gd::GDScript::-1::1706444903::0::1::::WalletAdapterUI<>Node<>::
-::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/::1706444903
-backpacklogo.jpg::CompressedTexture2D::8629317962263954103::1706444903::1706444903::1::::<><>::
-phantomlogo.jpg::CompressedTexture2D::1803797002098647861::1706444903::1706444903::1::::<><>::
-solflarelogo.jpg::CompressedTexture2D::1892243580645197778::1706444903::1706444903::1::::<><>::
-ultimatelogo.jpg::CompressedTexture2D::7468324564936958174::1706444903::1706444903::1::::<><>::
-::res://addons/SolanaSDK/Textures/::1706444903
-Arrow.PNG::CompressedTexture2D::1993040118285522828::1706444903::1706444903::1::::<><>::
-closebutton.jpg.png::CompressedTexture2D::4404885703928628824::1706444903::1706444903::1::::<><>::
-missingicon.png::CompressedTexture2D::7911025194801421560::1706444903::1706444903::1::::<><>::
-open-treasure-chest-icon-flat-style-vector.png::CompressedTexture2D::2810574429329838130::1706444903::1706444903::1::::<><>::
-SolanaLogo.png::CompressedTexture2D::7057920979291482138::1706444903::1706444903::1::::<><>::
-::res://addons/SolanaSDK/Textures/Buttons/::1706444903
-b_close.PNG::CompressedTexture2D::4884097321090393041::1706444903::1706444903::1::::<><>::
-b_green_hover.PNG::CompressedTexture2D::9215418037510860588::1706444903::1706444903::1::::<><>::
-b_green_pressed.PNG::CompressedTexture2D::6467297337103017218::1706444903::1706444903::1::::<><>::
-b_inactive.PNG::CompressedTexture2D::321576190872775564::1706444903::1706444903::1::::<><>::
-b_orange_hover.PNG::CompressedTexture2D::2114972546946510576::1706444903::1706444903::1::::<><>::
-b_orange_pressed.PNG::CompressedTexture2D::8104909326431868858::1706444903::1706444903::1::::<><>::
+::res://::1706617269
+export_presets.cfg::TextFile::-1::1705947082::0::1::::<><>::
+README.md::TextFile::-1::1706283788::0::1::::<><>::
+::res://addons/::1706273760
+::res://addons/SolanaSDK/::1706617271
+icon.svg::CompressedTexture2D::8337803400720695138::1698484514::1706617271::1::::<><>::
+plugin.cfg::TextFile::-1::1706272161::0::1::::<><>::
+solana_sdk_plugin.gd::GDScript::-1::1706273109::0::1::::<>EditorPlugin<>::
+::res://addons/SolanaSDK/Autoload/::1706617258
+SceneLoader.tscn::PackedScene::8718452938737271484::1706270983::0::1::::<><>::res://addons/SolanaSDK/Scripts/Utility/scene_loader.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf
+SolanaService.tscn::PackedScene::4288474253152216185::1706617258::0::1::::<><>::res://addons/SolanaSDK/Scripts/solana_service.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/transaction_processor.gd<>res://addons/SolanaSDK/Scripts/Utility/screen_switcher.gd<>res://addons/SolanaSDK/Scripts/wallet_service.gd<>res://addons/SolanaSDK/Scripts/nft_manager.gd<>uid://be2rmdwqrqiw0::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletAdapterUI.tscn<>res://addons/SolanaSDK/Scripts/file_loader.gd<>res://addons/SolanaSDK/Scripts/candy_machine_manager.gd
+::res://addons/SolanaSDK/bin/::1706617265
+godot-solana-sdk.gdextension::GDExtension::-1::1700245802::0::1::::<><>::
+::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_debug.framework/::1706273760
+::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_release.framework/::1706273760
+::res://addons/SolanaSDK/Demos/::1706617258
+DemoSelectScene.tscn::PackedScene::56380183958265618::1706617258::0::1::::<><>::uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>res://addons/SolanaSDK/Scripts/rpc_network_switcher.gd<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
+LoginScene.tscn::PackedScene::2795416145445268806::1706548437::0::1::::<><>::res://addons/SolanaSDK/Scripts/login_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG
+::res://addons/SolanaSDK/Demos/3DNFTShowcase/::1706273760
+3DNFTShowcase.tscn::PackedScene::6319968553857193092::1706271293::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Demos/3DNFTShowcase/nft_model_showcase_system.gd<>uid://3npcx8cx80ui::::res://addons/SolanaSDK/Textures/Arrow.PNG<>uid://b0iofagcqa64g::::res://addons/SolanaSDK/Demos/3DNFTShowcase/ModelNFT.tscn<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>res://addons/SolanaSDK/Demos/3DNFTShowcase/asset_inspector.gd
+asset_inspector.gd::GDScript::-1::1705420810::0::1::::<>Node3D<>::
+ModelNFT.tscn::PackedScene::4158515772925759388::1706270983::0::1::::<><>::res://addons/SolanaSDK/Demos/3DNFTShowcase/model_nft.gd
+model_nft.gd::GDScript::-1::1705482262::0::1::::ModelNFT<>Node3D<>::
+nft_model_showcase_system.gd::GDScript::-1::1705926074::0::1::::<>Node<>::
+::res://addons/SolanaSDK/Demos/CandyMachineDemo/::1706273760
+CandyMachineDemo.tscn::PackedScene::8637711420499011924::1706271282::0::1::::<><>::uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>uid://dq15ny3t87eog::::res://addons/SolanaSDK/icon.svg<>res://addons/SolanaSDK/Demos/CandyMachineDemo/candy_machine_display.gd<>res://addons/SolanaSDK/Demos/NFTListDemo/displayable_nft.gd<>uid://bcl3w71l4bt5v::::res://addons/SolanaSDK/Demos/CandyMachineDemo/RubiansMintSettings/rubians_default.tres<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd
+candy_machine_display.gd::GDScript::-1::1705947072::0::1::::CandyMachineDisplay<>Node<>::
+rubianscminfo.txt::TextFile::-1::1705920564::0::1::::<><>::
+::res://addons/SolanaSDK/Demos/CandyMachineDemo/RubiansMintSettings/::1706273760
+rubians_default.tres::CandyGuardAccessList::2551247610977917205::1706271119::0::1::::<><>::
+::res://addons/SolanaSDK/Demos/HighscoreDemo/::1706626756
+game_manager.gd::GDScript::-1::1706626755::0::1::::<>Node<>::
+HighscoreDemo.tscn::PackedScene::1524995871215344936::1706617258::0::1::::<><>::res://addons/SolanaSDK/Demos/HighscoreDemo/game_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://c7s56sayh028u::::res://addons/SolanaSDK/Textures/SolanaLogo.png<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd<>uid://kb5sk8ykb617::::res://addons/SolanaSDK/Scripts/SOAR/SoarProgram.tscn<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
+::res://addons/SolanaSDK/Demos/NFTListDemo/::1706273760
+DisplayableNFT.tscn::PackedScene::6999034881072166202::1706270983::0::1::::<><>::res://addons/SolanaSDK/Demos/NFTListDemo/displayable_nft.gd<>uid://dkyfoudbohuqq::::res://addons/SolanaSDK/Textures/missingicon.png
+displayable_nft.gd::GDScript::-1::1703875582::0::1::::DisplayableNFT<>Node<>::
+NftListDemo.tscn::PackedScene::3052210308847521881::1706271274::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://c6ync1x06vh2q::::res://addons/SolanaSDK/Demos/NFTListDemo/DisplayableNFT.tscn<>res://addons/SolanaSDK/Demos/NFTListDemo/nft_display_system.gd<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
+nft_display_system.gd::GDScript::-1::1705766979::0::1::::<>Node<>::
+::res://addons/SolanaSDK/Demos/SystemProgramDemo/::1706273760
+account_manager.gd::GDScript::-1::1705920432::0::1::::<>Node<>::
+SystemProgramDemo.tscn::PackedScene::8765632831066310501::1706271262::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>res://addons/SolanaSDK/Demos/SystemProgramDemo/token_transfer_manager.gd<>uid://c7s56sayh028u::::res://addons/SolanaSDK/Textures/SolanaLogo.png<>res://addons/SolanaSDK/Scripts/Utility/input_field_system.gd<>res://addons/SolanaSDK/Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
+token_transfer_manager.gd::GDScript::-1::1703249790::0::1::::<>Node<>::
+::res://addons/SolanaSDK/Demos/Tiny Adventure/::1706617258
+TinyAdventureDemo.tscn::PackedScene::4753307679216523453::1706617258::0::1::::<><>::res://addons/SolanaSDK/Demos/Tiny Adventure/tiny_adventure.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://c7s56sayh028u::::res://addons/SolanaSDK/Textures/SolanaLogo.png<>res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd<>uid://3npcx8cx80ui::::res://addons/SolanaSDK/Textures/Arrow.PNG<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://dq15ny3t87eog::::res://addons/SolanaSDK/icon.svg<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://bgbp0rixlgwes::::res://addons/SolanaSDK/Textures/open-treasure-chest-icon-flat-style-vector.png<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>res://addons/SolanaSDK/Demos/Tiny Adventure/tiny_adventure_idl.json
+tiny_adventure.gd::GDScript::-1::1706617258::0::1::::<>Node<>::
+tiny_adventure_idl.json::JSON::-1::1706617258::0::1::::<><>::
+::res://addons/SolanaSDK/Demos/TokenProgramDemo/::1706273760
+pubkey.gd::GDScript::-1::1704371624::0::1::::<>RefCounted<>::
+TokenProgramDemo.tscn::PackedScene::3253040214334531948::1706271237::0::1::::<><>::res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Scripts/token_visualizer.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>res://addons/SolanaSDK/Demos/SystemProgramDemo/token_transfer_manager.gd<>res://addons/SolanaSDK/Scripts/Utility/input_field_system.gd<>uid://dkyfoudbohuqq::::res://addons/SolanaSDK/Textures/missingicon.png<>res://addons/SolanaSDK/Scripts/Utility/input_field.gd<>uid://cye2pbirpht4u::::res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG<>uid://d4kauar2qc15y::::res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG
+::res://addons/SolanaSDK/Fonts/::1706273760
+Circus Of Innocents.ttf::FontFile::589784106029012811::1700582088::1706270996::1::::<><>::
+PUSSS___.TTF::FontFile::7796887872950811298::1700582096::1706270996::1::::<><>::
+::res://addons/SolanaSDK/Scripts/::1706617258
+candy_machine_manager.gd::GDScript::-1::1705946783::0::1::::CandyMachineManager<>Node<>::
+file_loader.gd::GDScript::-1::1705769138::0::1::::FileLoader<>Node<>::
+login_manager.gd::GDScript::-1::1705924989::0::1::::<>Node<>::
+nft.gd::GDScript::-1::1705767035::0::1::::Nft<>RefCounted<>::
+nft_manager.gd::GDScript::-1::1705930325::0::1::::NFTManager<>Node<>::
+rpc_network_switcher.gd::GDScript::-1::1705932630::0::1::::<>OptionButton<>::
+solana_service.gd::GDScript::-1::1705946340::0::1::::<>Control<>::
+token_visualizer.gd::GDScript::-1::1706270024::0::1::::TokenVisualizer<>Node<>::
+transaction_processor.gd::GDScript::-1::1706617258::0::1::::TransactionProcessor<>Node<>::
+wallet_service.gd::GDScript::-1::1704387301::0::1::::WalletService<>Node<>::
+::res://addons/SolanaSDK/Scripts/NFTCollection/::1706273760
+nft_collection.gd::GDScript::-1::1704035198::0::1::::NFTCollection<>Resource<>::
+rubians_collection.tres::Resource/NFTCollection::1057874920309008043::1706270983::0::1::::<><>::res://addons/SolanaSDK/Scripts/NFTCollection/nft_collection.gd
+::res://addons/SolanaSDK/Scripts/NFTGating/::1706273760
+address_button_lock.gd::GDScript::-1::1705412509::0::1::::<>ButtonLock<>::
+button_lock.gd::GDScript::-1::1705930306::0::1::::ButtonLock<>Button<>::
+button_lock_manager.gd::GDScript::-1::1705412567::0::1::::ButtonLockManager<>Node<>::
+nft_button_lock.gd::GDScript::-1::1705413002::0::1::::<>ButtonLock<>::
+test_list.json::JSON::-1::1705411568::0::1::::<><>::
+token_button_lock.gd::GDScript::-1::1705920788::0::1::::<>ButtonLock<>::
+::res://addons/SolanaSDK/Scripts/SOAR/::1706626755
+soar_pdas.gd::GDScript::-1::1706627130::0::1::::SoarPDA<>Node<>::
+SoarProgram.tscn::PackedScene::705807045523602424::1706627130::0::1::::<><>::res://addons/SolanaSDK/Scripts/SOAR/soar_program.gd<>res://addons/SolanaSDK/Scripts/SOAR/soar_idl.json
+soar_idl.json::JSON::-1::1706617258::0::1::::<><>::
+soar_program.gd::GDScript::-1::1706627098::0::1::::SoarProgram<>Node<>::
+soar_utils.gd::GDScript::-1::1706627098::0::1::::SoarUtils<>Node<>::
+::res://addons/SolanaSDK/Scripts/Utility/::1706273760
+input_field.gd::GDScript::-1::1703249790::0::1::::InputField<>LineEdit<>::
+input_field_system.gd::GDScript::-1::1705767001::0::1::::InputFieldSystem<>Node<>::
+scene_change_button.gd::GDScript::-1::1705924497::0::1::::<>Button<>::
+scene_loader.gd::GDScript::-1::1705925743::0::1::::<>Control<>::
+screen_switcher.gd::GDScript::-1::1703249790::0::1::::ScreenSwitcher<>Node<>::
+::res://addons/SolanaSDK/Scripts/WalletAdapter/::1706273760
+WalletAdapterUI.tscn::PackedScene::2723968068314804149::1706270983::0::1::::<><>::res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_ui.gd<>uid://w27yxay7tghj::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletSelectButton.tscn<>uid://0x1jjxnmbchx::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg<>uid://17u8fpx30rv3::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/solflarelogo.jpg<>uid://du7duuvlwpqlj::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/backpacklogo.jpg<>uid://denyhj5xo00he::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/ultimatelogo.jpg<>uid://b3003ar1uxa77::::res://addons/SolanaSDK/Textures/closebutton.jpg.png
+WalletSelectButton.tscn::PackedScene::1601879771389590951::1706270983::0::1::::<><>::res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_button.gd<>uid://0x1jjxnmbchx::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg
+wallet_adapter_button.gd::GDScript::-1::1704371624::0::1::::WalletAdapterButton<>Node<>::
+wallet_adapter_ui.gd::GDScript::-1::1704372594::0::1::::WalletAdapterUI<>Node<>::
+::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/::1706273760
+backpacklogo.jpg::CompressedTexture2D::8629317962263954103::1704371624::1706270996::1::::<><>::
+phantomlogo.jpg::CompressedTexture2D::1803797002098647861::1704371624::1706270996::1::::<><>::
+solflarelogo.jpg::CompressedTexture2D::1892243580645197778::1704371624::1706270996::1::::<><>::
+ultimatelogo.jpg::CompressedTexture2D::7468324564936958174::1704371624::1706270996::1::::<><>::
+::res://addons/SolanaSDK/Textures/::1706273760
+Arrow.PNG::CompressedTexture2D::1993040118285522828::1705482751::1706270996::1::::<><>::
+closebutton.jpg.png::CompressedTexture2D::4404885703928628824::1704372190::1706270996::1::::<><>::
+missingicon.png::CompressedTexture2D::7911025194801421560::1703843060::1706270996::1::::<><>::
+open-treasure-chest-icon-flat-style-vector.png::CompressedTexture2D::2810574429329838130::1706181066::1706270996::1::::<><>::
+SolanaLogo.png::CompressedTexture2D::7057920979291482138::1703843060::1706270996::1::::<><>::
+::res://addons/SolanaSDK/Textures/Buttons/::1706273760
+b_close.PNG::CompressedTexture2D::4884097321090393041::1703843060::1706270996::1::::<><>::
+b_green_hover.PNG::CompressedTexture2D::9215418037510860588::1703843060::1706270996::1::::<><>::
+b_green_pressed.PNG::CompressedTexture2D::6467297337103017218::1703843060::1706270996::1::::<><>::
+b_inactive.PNG::CompressedTexture2D::321576190872775564::1703843060::1706270996::1::::<><>::
+b_orange_hover.PNG::CompressedTexture2D::2114972546946510576::1703843060::1706270996::1::::<><>::
+b_orange_pressed.PNG::CompressedTexture2D::8104909326431868858::1703843060::1706270996::1::::<><>::

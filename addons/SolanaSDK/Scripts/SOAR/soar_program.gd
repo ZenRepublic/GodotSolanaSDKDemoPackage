@@ -13,9 +13,23 @@ class_name SoarProgram
 
 signal on_game_initialized
 signal on_leaderboard_added
+signal on_player_initialized
+signal on_score_submitted
 
 func get_pid() -> Pubkey:
 		return Pubkey.new_from_string(soar_program.get_pid())
+		
+func fetch_game_data(game_account:Pubkey) -> Dictionary:
+	return soar_program.fetch_account("Game",game_account)
+	
+func fetch_leaderboard_data(leaderboard_account:Pubkey) -> Dictionary:
+	return soar_program.fetch_account("Leaderboard",leaderboard_account)
+	
+func fetch_player(player_pda:Pubkey) -> Dictionary:
+	return soar_program.fetch_account("Player",player_pda)
+
+func fetch_player_scores(player_scores_pda:Pubkey):
+	return soar_program.fetch_account("PlayerScoresList",player_scores_pda)
 
 func init_game(game_attributes:SoarUtils.GameAttributes) -> void:
 	var game_account:Keypair = SolanaService.generate_keypair()
@@ -39,20 +53,19 @@ func init_game_response(transaction_id:String) -> void:
 	if transaction_id!="":
 		emit_signal("on_game_initialized")
 		
-func get_game_data(game_key:Pubkey) -> Dictionary:
-	return soar_program.fetch_account("Game",game_key)
+
 	
 func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardData) -> void:
 	var game_account:Pubkey=Pubkey.new_from_string(game_address)
-	var game_data:Dictionary = get_game_data(game_account)
+	var game_data:Dictionary = fetch_game_data(game_account)
 	
 	if game_data.size() == 0:
 		push_error("Failed to fetch the game data")
 		return
 		
 	var leaderboard_id:int = game_data["leaderboardCount"]+1
-	var leaderboard:Pubkey = get_leaderboard_pda(game_account,leaderboard_id)
-	var leaderboard_top_entries:Pubkey = get_leaderboard_scores_pda(leaderboard)
+	var leaderboard:Pubkey = SoarPDA.get_leaderboard_pda(game_account,leaderboard_id,get_pid())
+	var leaderboard_top_entries:Pubkey = SoarPDA.get_leaderboard_scores_pda(leaderboard, get_pid())
 	
 	var instructions:Array[Instruction]
 	var add_leaderboard_ix:Instruction = soar_program.build_instruction("addLeaderboard",[
@@ -68,27 +81,85 @@ func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardD
 	print("Creating Leaderboard with ID: %s"%leaderboard.get_value())
 	
 	instructions.append(add_leaderboard_ix)
-	SolanaService.transaction_processor.connect("on_transaction_finish",register_leaderboard_callback)
+	SolanaService.transaction_processor.connect("on_transaction_finish",add_leaderboard_callback)
 	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
 	
-func get_leaderboard_pda(game_account:Pubkey,leaderboard_id:int) -> Pubkey:
-	var name_bytes = "leaderboard".to_utf8_buffer()
-	var game_bytes = game_account.get_bytes()
-	var id_bytes := PackedByteArray()
-	id_bytes.resize(8)
-	id_bytes.encode_u64(0, leaderboard_id)
-	return Pubkey.new_pda_bytes([name_bytes,game_bytes,id_bytes],get_pid())
-	
-func get_leaderboard_scores_pda(leaderboard_pda:Pubkey) -> Pubkey:
-	var name_bytes = "top-scores".to_utf8_buffer()
-	var scores_bytes = leaderboard_pda.get_bytes()
-	return Pubkey.new_pda_bytes([name_bytes,scores_bytes],get_pid())
-	
-	
-func register_leaderboard_callback(transaction_id:String) -> void:
-	SolanaService.transaction_processor.disconnect("on_transaction_finish",register_leaderboard_callback)
+func add_leaderboard_callback(transaction_id:String) -> void:
+	SolanaService.transaction_processor.disconnect("on_transaction_finish",add_leaderboard_callback)
 	if transaction_id!="":
 		emit_signal("on_leaderboard_added")
 	
 func update_leaderboard() -> void:
 	pass
+	
+
+func initialize_player(username:String, user_nft:Pubkey) -> void:
+	var player_account:Pubkey = SoarPDA.get_player_pda(SolanaService.wallet.get_pubkey(),get_pid())
+	var instructions:Array[Instruction]
+	var init_player_ix:Instruction = soar_program.build_instruction("initializePlayer",[
+		SolanaService.wallet.get_kp(), #payer
+		SolanaService.wallet.get_kp(), #user
+		player_account, #player PDA
+		Pubkey.new_from_string("11111111111111111111111111111111") #system program
+	],{
+		"username":username,
+		"nftMeta":user_nft
+	})
+	
+	print("Initializing Player account with ID: %s"%player_account.get_value())
+	instructions.append(init_player_ix)
+	SolanaService.transaction_processor.connect("on_transaction_finish",initialize_player_response)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	
+	
+func initialize_player_response(transaction_id:String) -> void:
+	SolanaService.transaction_processor.disconnect("on_transaction_finish",initialize_player_response)
+	if transaction_id!="":
+		emit_signal("on_player_initialized")
+		
+
+func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,score:int):
+	var player_account:Pubkey = SoarPDA.get_player_pda(SolanaService.wallet.get_pubkey(),get_pid())
+	var player_scores:Pubkey = SoarPDA.get_player_scores_pda(SolanaService.wallet.get_pubkey(),leaderboard_account,get_pid())
+	var instructions:Array[Instruction]
+	
+	#check if player already has a scores account for this leaderboard and if not, add ix of registering them
+	var player_scores_list:Dictionary = fetch_player_scores(player_scores)
+	if player_scores_list.size()==0:
+		var register_player_ix:Instruction = soar_program.build_instruction("registerPlayer",[
+		SolanaService.wallet.get_kp(), #payer
+		SolanaService.wallet.get_kp(), #user
+		player_account, #player PDA
+		game_account, #game account 
+		leaderboard_account, #leaderboard pda
+		player_scores, #new list of scores pda for the player
+		Pubkey.new_from_string("11111111111111111111111111111111") #system program
+		],null)
+		
+		instructions.append(register_player_ix)
+		
+	var leaderboard_data:Dictionary = fetch_leaderboard_data(leaderboard_account)
+	var leaderboard_top_entries = SoarPDA.get_leaderboard_scores_pda(leaderboard_account,get_pid())
+	var player_score = AnchorProgram.u64(score * pow(10,leaderboard_data["decimals"]))
+	
+	var submit_score_ix:Instruction = soar_program.build_instruction("submitScore",[
+		SolanaService.wallet.get_kp(), #payer
+		SolanaService.wallet.get_kp(), #authority
+		player_account, #player PDA
+		game_account, #game account 
+		leaderboard_account, #leaderboard pda
+		leaderboard_top_entries, #nleaderboard's score sheet to add the player's score to
+		Pubkey.new_from_string("11111111111111111111111111111111") #system program
+		],player_score)
+		
+	instructions.append(submit_score_ix)
+	SolanaService.transaction_processor.connect("on_transaction_finish",initialize_player_response)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	
+
+func submit_score_to_leaderboard_response(transaction_id:String) -> void:
+	SolanaService.transaction_processor.disconnect("on_transaction_finish",initialize_player_response)
+	if transaction_id!="":
+		emit_signal("on_score_submitted")
+	
+
