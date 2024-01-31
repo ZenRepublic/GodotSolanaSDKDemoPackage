@@ -10,10 +10,10 @@ static func get_leaderboard_pda(game_account:Pubkey,leaderboard_id:int, pid:Pubk
 	return Pubkey.new_pda_bytes([name_bytes,game_bytes,id_bytes],pid)
 	
 	
-static func get_leaderboard_scores_pda(leaderboard_pda:Pubkey, pid:Pubkey) -> Pubkey:
+static func get_leaderboard_scores_pda(leaderboard_account:Pubkey, pid:Pubkey) -> Pubkey:
 	var name_bytes = "top-scores".to_utf8_buffer()
-	var scores_bytes = leaderboard_pda.get_bytes()
-	return Pubkey.new_pda_bytes([name_bytes,scores_bytes],pid)
+	var leaderboard_bytes = leaderboard_account.get_bytes()
+	return Pubkey.new_pda_bytes([name_bytes,leaderboard_bytes],pid)
 	
 	
 static func get_player_pda(user_key:Pubkey, pid:Pubkey) -> Pubkey:
@@ -21,9 +21,9 @@ static func get_player_pda(user_key:Pubkey, pid:Pubkey) -> Pubkey:
 	var user_bytes = user_key.get_bytes()
 	return Pubkey.new_pda_bytes([name_bytes,user_bytes],pid)
 	
-static func get_player_scores_pda(user_key:Pubkey,leaderboard_id:Pubkey, pid:Pubkey) -> Pubkey:
+static func get_player_scores_pda(user_key:Pubkey,leaderboard_account:Pubkey, pid:Pubkey) -> Pubkey:
 	var name_bytes = "player-scores-list".to_utf8_buffer()
 	var user_bytes = user_key.get_bytes()
-	var leaderboard_bytes = leaderboard_id.get_bytes()
+	var leaderboard_bytes = leaderboard_account.get_bytes()
 	return Pubkey.new_pda_bytes([name_bytes,user_bytes,leaderboard_bytes],pid)
 

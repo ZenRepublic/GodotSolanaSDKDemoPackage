@@ -49,7 +49,7 @@ func init_game() -> void:
 		level_pda, #gamedata
 		vault_pda, #gamevault
 		SolanaService.wallet.get_kp(), #signer
-		Pubkey.new_from_string("11111111111111111111111111111111") #system program
+		SystemProgram.get_pid() #system program
 	],
 	AnchorProgram.u64(prize_in_lamports))
 	
@@ -82,7 +82,7 @@ func move(move_dir:String) -> void:
 		level_pda, #gamedata
 		vault_pda, #gamevault
 		SolanaService.wallet.get_kp(), #signer
-		Pubkey.new_from_string("11111111111111111111111111111111") #system program
+		SystemProgram.get_pid() #system program
 	],null)
 	
 	instructions.append(move_ix)

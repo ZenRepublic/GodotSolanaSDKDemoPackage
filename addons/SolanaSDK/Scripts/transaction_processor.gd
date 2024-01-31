@@ -33,20 +33,22 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 	enable_tx_loader()
 	transaction = Transaction.new()	
 	#
-	for ix in instructions:
-		if ix == null:
-			push_error("One of the instructions is null, couldn't build a transaction!")
+	for idx in range(instructions.size()):
+		if instructions[idx] == null:
+			push_error("instruction %s is null, couldn't build a transaction!"%idx)
 			screen_switcher.close_active_panel()
 			return
-		transaction.add_instruction(ix)
+		transaction.add_instruction(instructions[idx])
+	
+	print(instructions.size())
 	
 	if wallet.use_generated:
 		transaction.set_payer(wallet.keypair)
 	else:
 		transaction.set_payer(wallet.wallet_adapter)
 
+	SolanaClient.set_commitment("finalized")
 	transaction.update_latest_blockhash("")
-
 	transaction.connect("transaction_response",process_transaction_pass)
 	transaction.connect("sign_error",process_transaction_error)
 	print(transaction.serialize())
