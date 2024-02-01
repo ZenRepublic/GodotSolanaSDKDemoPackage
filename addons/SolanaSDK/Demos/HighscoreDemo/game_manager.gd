@@ -33,7 +33,7 @@ var game_authority:String = "E2Tf3ws9uekoVC5ZGxRKXzpchShT7GHhiphmzJxEjvFRTnBXT8y
 func _ready() -> void:
 	SceneLoader.emit_signal("scene_loaded")
 	
-	start_game_button.pressed.connect(initialize_player)
+	start_game_button.pressed.connect(start_game)
 	submit_score_button.pressed.connect(submit_score)
 	leaderboard_button.pressed.connect(show_leaderboard)
 

@@ -41,7 +41,6 @@ func fetch_player_data_from_pda(player_pda:Pubkey) -> Dictionary:
 func fetch_player_scores(user_account:Pubkey,leaderboard_account:Pubkey) -> Dictionary:
 	var player_account_pda:Pubkey = SoarPDA.get_player_pda(user_account,get_pid())
 	var player_scores_pda:Pubkey = SoarPDA.get_player_scores_pda(player_account_pda,leaderboard_account,get_pid())
-	print(player_scores_pda.get_value())
 	return soar_program.fetch_account("PlayerScoresList",player_scores_pda)
 
 func init_game(game_attributes:SoarUtils.GameAttributes) -> void:
