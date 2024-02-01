@@ -22,7 +22,7 @@ func refresh(scores_data:Dictionary, player_scores:Dictionary) -> void:
 	var index=1
 	for entry in scores_data["topScores"]:
 		#if reached -1, means end of filled scores, following ones will be empty
-		if entry["entry"]["score"] == -1:
+		if entry["entry"]["score"] == 0:
 			break
 			
 		var player_data:Dictionary = soar_program.fetch_player_data_from_pda(entry["player"])

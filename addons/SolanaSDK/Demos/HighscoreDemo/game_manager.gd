@@ -15,9 +15,11 @@ extends Node
 var player_score:int
 
 #devnet Game account, created once using setup_game function
-var game_address:String = "8ewcHXrpmwGRAVU9TndiUXfEEFqVu7vbthPZzkW55CYD"
+#var old_game_address:String = "8ewcHXrpmwGRAVU9TndiUXfEEFqVu7vbthPZzkW55CYD"
+var game_address:String = "AfQ9P7ihTcLCs5Gu1jNrA3x1yAftxZKXKD7inqjMS5sq"
 #devned leaderboard No.1 created from the game. Players can submit their scores to it
-var leaderboard_address:String = "6iorenkNgoZvyMB1Vcyn4mkx5nxk8qMHTbGrPkTiBh98"
+#var old_leaderboard_address:String = "6iorenkNgoZvyMB1Vcyn4mkx5nxk8qMHTbGrPkTiBh98"
+var leaderboard_address:String = "DerZ2gbSSLHvivumtKzgsztE7HnCPmwHqgvrUbwTfpLN"
 #collection used as nft_meta for games and leaderboards. this is devnet Rubians
 var nft_collection:String = "EE1XTVRxVX5UtTLKRg7Y5bFQEKm2wm2nao9SGF27fypH"
 
@@ -49,7 +51,6 @@ func start_game() -> void:
 	#if not, initialize and then start
 	
 	var player_data:Dictionary = soar_program.fetch_player_data(SolanaService.wallet.get_pubkey())
-	print(player_data)
 	if player_data.size()==0:
 		initialize_player()
 	else:
@@ -64,8 +65,8 @@ func play() -> void:
 	
 func setup_game() -> void:
 	var game_attributes:SoarUtils.GameAttributes = SoarUtils.GameAttributes.new()
-	game_attributes.title="Test Game"
-	game_attributes.description="Best Game ever"
+	game_attributes.title="Dev Game"
+	game_attributes.description="Best Game ever by Zen Republic"
 	#game's collection nft. Rubians provided by default
 	game_attributes.nft_meta = Pubkey.new_from_string(nft_collection)
 	
@@ -74,11 +75,11 @@ func setup_game() -> void:
 
 func register_leaderboard() -> void:
 	var leaderboard_data:SoarUtils.LeaderboardData = SoarUtils.LeaderboardData.new()
-	leaderboard_data.description="The first leaderboard win big in 24 hours!"
+	leaderboard_data.description="Mega leaderboard win big in 24 hours!"
 	leaderboard_data.nft_meta = Pubkey.new_from_string(nft_collection)
 	leaderboard_data.set_decimals(0)
 	leaderboard_data.set_scores_to_retain(10)
-	leaderboard_data.is_ascending=true
+	leaderboard_data.is_ascending=false
 	leaderboard_data.allow_multiple_scores=true
 	
 	soar_program.add_leaderboard(game_address,leaderboard_data)
