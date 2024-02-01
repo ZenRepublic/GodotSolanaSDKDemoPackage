@@ -187,7 +187,7 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 	
 	#check if player already has a scores account for this leaderboard and if not, add ix of registering them
 	#player scores list returns info on player's score on a specific leaderboard. even if it's empty, the account may exists
-	var player_scores_list:Dictionary = fetch_player_scores(player_scores_pda,leaderboard_account)
+	var player_scores_list:Dictionary = fetch_player_scores(SolanaService.wallet.get_pubkey(),leaderboard_account)
 	#for result in player_scores_list["scores"]:
 		#print(int(result["score"]))
 
