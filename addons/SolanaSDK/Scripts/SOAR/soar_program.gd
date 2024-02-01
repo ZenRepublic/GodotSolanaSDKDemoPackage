@@ -30,10 +30,16 @@ func fetch_leaderboard_scores(leaderboard_account:Pubkey) -> Dictionary:
 	return soar_program.fetch_account("LeaderTopEntries",leaderboard_top_entries_pda)
 	
 func fetch_player_data(user_account:Pubkey) -> Dictionary:
-	var player_pda = SoarPDA.get_player_pda(user_account,get_pid())
+	var player_pda:Pubkey = SoarPDA.get_player_pda(user_account,get_pid())
+	return soar_program.fetch_account("Player",player_pda)
+	
+func fetch_player_data_from_pda(player_pda:Pubkey) -> Dictionary:
 	return soar_program.fetch_account("Player",player_pda)
 
-func fetch_player_scores(player_scores_pda:Pubkey):
+func fetch_player_scores(user_account:Pubkey,leaderboard_account:Pubkey) -> Dictionary:
+	var player_account_pda:Pubkey = SoarPDA.get_player_pda(user_account,get_pid())
+	var player_scores_pda:Pubkey = SoarPDA.get_player_scores_pda(player_account_pda,leaderboard_account,get_pid())
+	print(player_scores_pda.get_value())
 	return soar_program.fetch_account("PlayerScoresList",player_scores_pda)
 
 func init_game(game_attributes:SoarUtils.GameAttributes) -> void:
@@ -130,10 +136,9 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 	
 	#check if player already has a scores account for this leaderboard and if not, add ix of registering them
 	#player scores list returns info on player's score on a specific leaderboard. even if it's empty, the account may exists
-	var player_scores_list:Dictionary = fetch_player_scores(player_scores_pda)
-	print(player_scores_list)
-	for result in player_scores_list["scores"]:
-		print(int(result["score"]))
+	var player_scores_list:Dictionary = fetch_player_scores(player_scores_pda,leaderboard_account)
+	#for result in player_scores_list["scores"]:
+		#print(int(result["score"]))
 
 	if player_scores_list.size()==0:
 		var register_player_ix:Instruction = soar_program.build_instruction("registerPlayer",[
@@ -150,9 +155,6 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		
 	var leaderboard_data:Dictionary = fetch_leaderboard_data(leaderboard_account)
 	var leaderboard_top_entries_pda:Pubkey = SoarPDA.get_leaderboard_scores_pda(leaderboard_account,get_pid())
-	
-	print(leaderboard_data)
-	return
 	var player_score = AnchorProgram.u64(score * pow(10,leaderboard_data["decimals"]))
 	
 	var submit_score_ix:Instruction = soar_program.build_instruction("submitScore",[
@@ -169,12 +171,12 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		})
 		
 	instructions.append(submit_score_ix)
-	SolanaService.transaction_processor.connect("on_transaction_finish",initialize_player_response)
+	SolanaService.transaction_processor.connect("on_transaction_finish",submit_score_to_leaderboard_response)
 	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
 	
 
 func submit_score_to_leaderboard_response(transaction_id:String) -> void:
-	SolanaService.transaction_processor.disconnect("on_transaction_finish",initialize_player_response)
+	SolanaService.transaction_processor.disconnect("on_transaction_finish",submit_score_to_leaderboard_response)
 	if transaction_id!="":
 		emit_signal("on_score_submitted")
 	

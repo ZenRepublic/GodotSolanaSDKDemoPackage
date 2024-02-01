@@ -3,10 +3,14 @@ extends Node
 @onready var soar_program:SoarProgram=$SoarProgram
 @onready var start_screen=$StartingScreen
 @onready var play_screen = $PlayScreen
+@onready var leaderboard_screen=$LeaderboardScreen
 
 @export var start_game_button:Button
 @export var score_label:Label
 @export var submit_score_button:Button
+@export var leaderboard_button:Button
+
+@export var leaderboard_system:LeaderboardSystem
 
 var player_score:int
 
@@ -31,6 +35,7 @@ func _ready() -> void:
 	
 	start_game_button.pressed.connect(start_game)
 	submit_score_button.pressed.connect(submit_score)
+	leaderboard_button.pressed.connect(show_leaderboard)
 
 	pass # Replace with function body.
 
@@ -100,3 +105,10 @@ func return_to_menu() -> void:
 	soar_program.on_score_submitted.disconnect(return_to_menu)
 	start_screen.visible=true
 	play_screen.visible=false
+	
+func show_leaderboard() -> void:
+	var leaderboard_scores:Dictionary = soar_program.fetch_leaderboard_scores(Pubkey.new_from_string(leaderboard_address))
+	var player_scores:Dictionary = soar_program.fetch_player_scores(SolanaService.wallet.get_pubkey(),Pubkey.new_from_string(leaderboard_address))
+	leaderboard_system.refresh(leaderboard_scores,player_scores)
+	start_screen.visible=false
+	leaderboard_screen.visible=true
