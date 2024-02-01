@@ -33,7 +33,7 @@ var game_authority:String = "E2Tf3ws9uekoVC5ZGxRKXzpchShT7GHhiphmzJxEjvFRTnBXT8y
 func _ready() -> void:
 	SceneLoader.emit_signal("scene_loaded")
 	
-	start_game_button.pressed.connect(start_game)
+	start_game_button.pressed.connect(update_leaderboard)
 	submit_score_button.pressed.connect(submit_score)
 	leaderboard_button.pressed.connect(show_leaderboard)
 
@@ -82,6 +82,15 @@ func register_leaderboard() -> void:
 	leaderboard_data.allow_multiple_scores=true
 	
 	soar_program.add_leaderboard(game_address,leaderboard_data)
+	
+func update_leaderboard() -> void:
+	var leaderboard_data:SoarUtils.LeaderboardData = SoarUtils.LeaderboardData.new()
+	leaderboard_data.description="Brand new leaderboard, win big in 24 hours!"
+	leaderboard_data.nft_meta = Pubkey.new_from_string(nft_collection)
+	leaderboard_data.is_ascending=false
+	leaderboard_data.allow_multiple_scores=true
+	
+	soar_program.update_leaderboard(game_address,leaderboard_address,leaderboard_data)
 	
 
 func initialize_player() -> void:
