@@ -33,7 +33,7 @@ var game_authority:String = "E2Tf3ws9uekoVC5ZGxRKXzpchShT7GHhiphmzJxEjvFRTnBXT8y
 func _ready() -> void:
 	SceneLoader.emit_signal("scene_loaded")
 	
-	start_game_button.pressed.connect(update_leaderboard)
+	start_game_button.pressed.connect(initialize_player)
 	submit_score_button.pressed.connect(submit_score)
 	leaderboard_button.pressed.connect(show_leaderboard)
 
@@ -94,12 +94,13 @@ func update_leaderboard() -> void:
 	
 
 func initialize_player() -> void:
-	var username:String = "Rubian"
+	var username:String = "RedTriangleGuy"
 	#devnet rubian nft example
 	var user_nft:Pubkey = Pubkey.new_from_string("9aNFiE6mdcQSGaytpoqpWvJMeA2h6vDa4sJttsyyKFPA")
 	
-	soar_program.on_player_initialized.connect(play)
-	soar_program.initialize_player(username,user_nft)
+	#soar_program.on_player_initialized.connect(play)
+	#soar_program.initialize_player(username,user_nft)
+	soar_program.update_player(username,user_nft)
 	
 func submit_score() -> void:
 	var game_account:Pubkey = Pubkey.new_from_string(game_address)

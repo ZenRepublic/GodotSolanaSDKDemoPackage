@@ -15,6 +15,7 @@ signal on_game_initialized
 signal on_leaderboard_added
 signal on_leaderboard_updated
 signal on_player_initialized
+signal on_player_updated
 signal on_score_submitted
 
 func get_pid() -> Pubkey:
@@ -105,20 +106,20 @@ func update_leaderboard(game_address:String,leaderboard_address:String,leaderboa
 	var game_account:Pubkey=Pubkey.new_from_string(game_address)
 	var leaderboard_account:Pubkey = Pubkey.new_from_string(leaderboard_address)
 	var leaderboard_top_entries:Pubkey = SoarPDA.get_leaderboard_scores_pda(leaderboard_account, get_pid())
-	
+
 	var instructions:Array[Instruction]
-	var update_leaderboard_ix:Instruction = soar_program.build_instruction("addLeaderboard",[
+	var update_leaderboard_ix:Instruction = soar_program.build_instruction("updateLeaderboard",[
 		SolanaService.wallet.get_kp(), #game authority
 		game_account, #game
 		leaderboard_account, #leaderboard 
-		leaderboard_top_entries, #top entries PDA
+		leaderboard_top_entries #top entries PDA
 	],{
-		"newDescription":leaderboard_data.get_value()["description"],
-		"newNftMeta":leaderboard_data.get_value()["nft_meta"],
+		"newDescription":AnchorProgram.option(leaderboard_data.get_value()["description"]),
+		"newNftMeta":AnchorProgram.option(leaderboard_data.get_value()["nft_meta"]),
 		"newMinScore":leaderboard_data.get_value()["min_score"],
 		"newMaxScore":leaderboard_data.get_value()["max_score"],
-		"newIsAscending":leaderboard_data.get_value()["is_ascending"],
-		"newAllowMultipleScores":leaderboard_data.get_value()["allow_multiple_scores"]
+		"newIsAscending":AnchorProgram.option(leaderboard_data.get_value()["is_ascending"]),
+		"newAllowMultipleScores":AnchorProgram.option(leaderboard_data.get_value()["allow_multiple_scores"])
 	})
 	
 	print("Updating Leaderboard with ID: %s"%leaderboard_account.get_value())
@@ -156,6 +157,28 @@ func initialize_player_response(transaction_id:String) -> void:
 	SolanaService.transaction_processor.disconnect("on_transaction_finish",initialize_player_response)
 	if transaction_id!="":
 		emit_signal("on_player_initialized")
+		
+func update_player(username:String, user_nft:Pubkey) -> void:
+	var player_account:Pubkey = SoarPDA.get_player_pda(SolanaService.wallet.get_pubkey(),get_pid())
+	
+	var instructions:Array[Instruction]
+	var update_player_ix:Instruction = soar_program.build_instruction("updatePlayer",[
+		SolanaService.wallet.get_kp(), #user
+		player_account, #player PDA
+	],{
+		"username":AnchorProgram.option(username),
+		"nftMeta":AnchorProgram.option(user_nft)
+	})
+	
+	print("Updating Player account with ID: %s"%player_account.get_value())
+	instructions.append(update_player_ix)
+	SolanaService.transaction_processor.connect("on_transaction_finish",update_player_response)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+
+func update_player_response(transaction_id:String) -> void:
+	SolanaService.transaction_processor.disconnect("on_transaction_finish",update_player_response)
+	if transaction_id!="":
+		emit_signal("on_player_updated")
 		
 
 func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,game_auth:Keypair,score:int):
