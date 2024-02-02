@@ -1,1 +1,10 @@
 res://addons/SolanaSDK/Autoload/SolanaService.tscn
+res://addons/SolanaSDK/Demos/LoginScene.tscn
+res://addons/SolanaSDK/Demos/HighscoreDemo/HighscoreDemo.tscn
+res://addons/SolanaSDK/Demos/DemoSelectScene.tscn
+res://addons/SolanaSDK/Demos/Tiny Adventure/TinyAdventureDemo.tscn
+res://addons/SolanaSDK/Scripts/SOAR/SoarProgram.tscn
+res://addons/SolanaSDK/Demos/3DNFTShowcase/3DNFTShowcase.tscn
+res://addons/SolanaSDK/Scripts/transaction_processor.gd
+res://addons/SolanaSDK/Demos/Tiny Adventure/tiny_adventure.gd
+res://addons/SolanaSDK/Scripts/SOAR/soar_program.gd

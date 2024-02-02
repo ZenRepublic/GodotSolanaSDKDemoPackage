@@ -28,9 +28,11 @@ func enable_tx_loader() -> void:
 	screen_switcher.switch_active_panel(loading_panel)
 	
 var transaction:Transaction
+var commitment:String
 
-func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) -> void:
+func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction], tx_commitment:String="confirmed") -> void:
 	enable_tx_loader()
+	commitment=tx_commitment
 	transaction = Transaction.new()	
 	#
 	for idx in range(instructions.size()):
@@ -47,7 +49,6 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction]) 
 	else:
 		transaction.set_payer(wallet.wallet_adapter)
 
-	SolanaClient.set_commitment("finalized")
 	transaction.update_latest_blockhash("")
 	transaction.connect("transaction_response",process_transaction_pass)
 	transaction.connect("sign_error",process_transaction_error)
@@ -60,6 +61,14 @@ func process_transaction_pass(response:Dictionary) -> void:
 		print(response["error"])
 		process_transaction_error()
 		return
+		
+	match commitment:
+		"confirmed":	
+			while !transaction.is_confirmed():
+				await get_tree().create_timer(0.1).timeout
+		"finalized":	
+			while !transaction.is_finalized():
+				await get_tree().create_timer(0.1).timeout	
 		
 	transaction.disconnect("transaction_response",process_transaction_pass)
 	transaction.disconnect("sign_error",process_transaction_error)

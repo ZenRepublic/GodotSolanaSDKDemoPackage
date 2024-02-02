@@ -84,18 +84,15 @@ vertical_alignment = 1
 
 [node name="description" type="Label" parent="StartingScreen"]
 layout_mode = 1
-offset_left = 96.0
+offset_left = 250.0
 offset_top = 249.0
-offset_right = 1047.0
+offset_right = 866.0
 offset_bottom = 404.0
 theme_override_fonts/font = ExtResource("2_oia5t")
 theme_override_font_sizes/font_size = 23
-text = "This demo is a carcass for setting players highscores into onchain leaderboard.
-Start by initializing an account. Then a random number will be generated as your score.
-You will be able to submit it into the leaderboard.
-
-Caution: Devnet only!"
+text = "This demo is a carcass for setting players highscores into onchain leaderboard. Start by initializing an account. Then a random number will be generated as your score. You will be able to submit it into the leaderboard. Caution: Devnet only!"
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="StartButton" type="Button" parent="StartingScreen"]
 layout_mode = 1

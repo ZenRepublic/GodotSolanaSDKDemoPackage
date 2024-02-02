@@ -149,7 +149,7 @@ func initialize_player(username:String, user_nft:Pubkey) -> void:
 	print("Initializing Player account with ID: %s"%player_account.get_value())
 	instructions.append(init_player_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",initialize_player_response)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions,"finalized")
 	
 	
 func initialize_player_response(transaction_id:String) -> void:
@@ -223,7 +223,7 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		
 	instructions.append(submit_score_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",submit_score_to_leaderboard_response)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions,"finalized")
 	
 
 func submit_score_to_leaderboard_response(transaction_id:String) -> void:

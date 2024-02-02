@@ -95,16 +95,15 @@ vertical_alignment = 1
 
 [node name="AccountAddress" type="Label" parent="StartingScreen"]
 layout_mode = 1
-offset_left = 96.0
+offset_left = 142.0
 offset_top = 212.0
-offset_right = 870.0
-offset_bottom = 252.0
+offset_right = 1012.0
+offset_bottom = 305.0
 theme_override_fonts/font = ExtResource("2_yd21l")
 theme_override_font_sizes/font_size = 23
-text = "Simple onchain adventure game. Move a character left and right on a path, try to reach a chest and claim the stashed SOL
-To begin, initialize a new game and send some SOL, which will be the reward of the chest.
-Caution: Devnet Only!"
+text = "Simple onchain adventure game. Move a character left and right on a path, try to reach a chest and claim the stashed SOL To begin, initialize a new game and send some SOL, which will be the reward of the chest. Caution: Devnet Only!"
 horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="BalanceLabel" type="Label" parent="StartingScreen"]
 layout_mode = 0
