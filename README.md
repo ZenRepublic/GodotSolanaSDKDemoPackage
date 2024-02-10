@@ -6,6 +6,7 @@ The main repository, containing libs and backend code can be found here: https:/
 It is open source, so everyone can help out as we progress.
 
 Test out the latest demo version in your browser: https://zenrepublic.github.io/GodotSolanaSDKDemos/
+Read the documentation: https://zenwiki.gitbook.io/solana-godot-sdk-docs/
 
 **Current features:**
 - RPC API support, so you can fetch information on accounts, like their SOL balances and much more
