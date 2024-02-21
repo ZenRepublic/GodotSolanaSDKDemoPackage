@@ -5,6 +5,7 @@ project.godot
 *.zip
 
 # Godot 4+ specific ignores
+*.cfg
 .godot/
 
 # Docs specic ignores
