@@ -1,1 +1,14 @@
-.godot
+.tmp
+.DS_Store
+project.godot
+.idea/
+*.zip
+
+# Godot 4+ specific ignores
+.godot/
+
+# Docs specic ignores
+#/docs/
+node_modules
+cache
+dist
