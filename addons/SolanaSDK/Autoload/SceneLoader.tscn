@@ -6,25 +6,19 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmph0"]
 bg_color = Color(0.878431, 0.807843, 0.647059, 1)
 
-[node name="SceneLoader" type="Control" node_paths=PackedStringArray("loading_panel")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="SceneLoader" type="Node"]
 script = ExtResource("1_8u5j2")
-loading_panel = NodePath("CanvasLayer/LoadingPanel")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="LoadingCanvas" type="CanvasLayer" parent="."]
 layer = 99
+visible = false
 
-[node name="LoadingPanel" type="Panel" parent="CanvasLayer"]
+[node name="LoadingPanel" type="Panel" parent="LoadingCanvas"]
 offset_right = 1152.0
 offset_bottom = 648.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mmph0")
 
-[node name="Label" type="Label" parent="CanvasLayer/LoadingPanel"]
+[node name="Label" type="Label" parent="LoadingCanvas/LoadingPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

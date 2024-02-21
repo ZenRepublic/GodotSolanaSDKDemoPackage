@@ -7,17 +7,15 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjeht"]
 bg_color = Color(0.34902, 0.360784, 0.482353, 1)
 
-[node name="TransactionOverlayUI" type="CanvasLayer" node_paths=PackedStringArray("loading_panel", "fail_panel", "success_panel")]
+[node name="TransactionOverlayUI" type="CanvasLayer"]
 layer = 99
 script = ExtResource("1_nrydi")
-loading_panel = NodePath("LoadingPanel")
-fail_panel = NodePath("FailPanel")
-success_panel = NodePath("SuccessPanel")
 time_to_close = 2.0
 
-[node name="ScreenSwitcher" type="Node" parent="." node_paths=PackedStringArray("starting_panel")]
+[node name="ScreenSwitcher" type="Node" parent="." node_paths=PackedStringArray("starting_panel", "screens")]
 script = ExtResource("2_l6gvy")
 starting_panel = NodePath("../LoadingPanel")
+screens = [NodePath("../LoadingPanel"), NodePath("../FailPanel"), NodePath("../SuccessPanel")]
 
 [node name="LoadingPanel" type="Panel" parent="."]
 visible = false

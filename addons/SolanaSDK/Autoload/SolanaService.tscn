@@ -7,14 +7,9 @@
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/file_loader.gd" id="7_4sv1b"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/candy_machine_manager.gd" id="9_pob61"]
 
-[node name="SolanaService" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="SolanaService" type="Node"]
 script = ExtResource("1_hwc3u")
+rpc_cluster = 1
 mainnet_rpc = "https://rpc.hellomoon.io/6b758f53-4b78-41a7-86a9-6b61c97711eb"
 devnet_rpc = "https://api.devnet.solana.com"
 
@@ -23,6 +18,7 @@ script = ExtResource("2_v3adq")
 
 [node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
+use_generated = true
 custom_pk_path = "C:\\Users\\thoma\\Desktop\\kp\\kp.txt"
 
 [node name="WalletAdapter" type="WalletAdapter" parent="WalletService"]
