@@ -11,10 +11,11 @@ class_name WalletService
 var adapter_instance:WalletAdapterUI
 
 @onready var wallet_adapter:WalletAdapter = $WalletAdapter
-@onready var login_overlay = $LoginPanel
 
 var keypair:Keypair
 
+signal on_login_begin
+signal on_login_cancel
 signal on_logged_in
 
 # Called when the node enters the scene tree for the first time.
@@ -24,7 +25,7 @@ func _ready() -> void:
 
 
 func try_login() -> void:
-	login_overlay.visible=true
+	emit_signal("on_login_begin")
 	
 	if use_generated:
 		login_game_wallet()
@@ -52,10 +53,10 @@ func pop_adapter() -> void:
 	adapter_instance.connect("on_adapter_cancel",cancel_adapter_login)
 	
 func cancel_adapter_login() -> void:
+	emit_signal("on_login_cancel")
 	adapter_instance.disconnect("on_provider_selected",login_adapter)
 	adapter_instance.disconnect("on_adapter_cancel",cancel_adapter_login)
 	adapter_instance=null
-	login_overlay.visible=false
 
 func login_adapter(provider_id:int) -> void:
 	adapter_instance.disconnect("on_provider_selected",login_adapter)
@@ -72,14 +73,12 @@ func log_in_success() -> void:
 		wallet_adapter.disconnect("connection_established",log_in_success)
 		wallet_adapter.disconnect("connection_error",log_in_fail)
 	emit_signal("on_logged_in",true)
-	login_overlay.visible=false
 	
 func log_in_fail() -> void:
 	if !use_generated:
 		wallet_adapter.disconnect("connection_established",log_in_success)
 		wallet_adapter.disconnect("connection_error",log_in_fail)
 	emit_signal("on_logged_in",false)
-	login_overlay.visible=false
 
 func get_pubkey() -> Pubkey:
 	var key:Pubkey

@@ -1,3 +1,5 @@
+CanvasLayer
+Control
 VBoxContainer
 PanelContainer
 CenterContainer
@@ -10,5 +12,3 @@ Node
 AnchorProgram
 TextureRect
 Panel
-TextureButton
-Control
