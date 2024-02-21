@@ -1,4 +1,4 @@
-extends Control
+extends Node
 enum RpcCluster{Mainnet,Devnet}
 @export var rpc_cluster:RpcCluster=RpcCluster.Mainnet
 @export var mainnet_rpc:String

@@ -1,6 +1,6 @@
 extends Node
 
-@export var loading_canvas:Node
+@onready var loading_canvas:CanvasLayer = $LoadingCanvas
 
 signal scene_loaded
 # Called when the node enters the scene tree for the first time.
