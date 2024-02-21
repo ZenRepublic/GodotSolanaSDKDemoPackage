@@ -12,7 +12,7 @@ extends Node
 func _ready() -> void:
 	loading_panel.visible=false
 	fail_panel.visible=false
-	success_panel.visible=false
+	success_panel.visible=false	
 	SolanaService.transaction_processor.on_transaction_init.connect(enable_tx_screen)
 	SolanaService.transaction_processor.on_transaction_finish.connect(process_tx_finish)
 

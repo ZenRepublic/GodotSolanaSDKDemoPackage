@@ -7,8 +7,8 @@ enum RpcCluster{Mainnet,Devnet}
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
 
-@onready var wallet:WalletService = $OverlayLayer/WalletService
-@onready var transaction_processor:TransactionProcessor = $OverlayLayer/TransactionProcessor
+@onready var wallet:WalletService = $WalletService
+@onready var transaction_processor:TransactionProcessor = $TransactionProcessor
 @onready var nft_manager:NFTManager = $NFTManager
 @onready var file_loader:FileLoader = $FileLoader
 @onready var candy_machine_manager:CandyMachineManager = $CandyMachineManager

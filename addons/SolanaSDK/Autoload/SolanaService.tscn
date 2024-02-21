@@ -1,11 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2dmsrk6j12y4"]
+[gd_scene load_steps=7 format=3 uid="uid://b2dmsrk6j12y4"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/solana_service.gd" id="1_hwc3u"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/TransactionProcessor/transaction_processor.gd" id="2_v3adq"]
-[ext_resource type="PackedScene" uid="uid://blmw46he11fxs" path="res://addons/SolanaSDK/Scripts/TransactionProcessor/TransactionOverlayUI.tscn" id="3_rxntw"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/wallet_service.gd" id="5_f327g"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/nft_manager.gd" id="6_b1bp1"]
-[ext_resource type="PackedScene" uid="uid://be2rmdwqrqiw0" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletAdapterUI.tscn" id="6_uin7u"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/file_loader.gd" id="7_4sv1b"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/candy_machine_manager.gd" id="9_pob61"]
 
@@ -20,20 +18,14 @@ script = ExtResource("1_hwc3u")
 mainnet_rpc = "https://rpc.hellomoon.io/6b758f53-4b78-41a7-86a9-6b61c97711eb"
 devnet_rpc = "https://api.devnet.solana.com"
 
-[node name="UILayer" type="CanvasLayer" parent="."]
-layer = 10
-
-[node name="TransactionProcessor" type="Node" parent="UILayer"]
+[node name="TransactionProcessor" type="Node" parent="."]
 script = ExtResource("2_v3adq")
-transaction_ui_scn = ExtResource("3_rxntw")
 
-[node name="WalletService" type="Node" parent="UILayer"]
+[node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
-use_generated = true
 custom_pk_path = "C:\\Users\\thoma\\Desktop\\kp\\kp.txt"
-wallet_adapter_ui_scn = ExtResource("6_uin7u")
 
-[node name="WalletAdapter" type="WalletAdapter" parent="UILayer/WalletService"]
+[node name="WalletAdapter" type="WalletAdapter" parent="WalletService"]
 
 [node name="NFTManager" type="Node" parent="."]
 script = ExtResource("6_b1bp1")

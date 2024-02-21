@@ -1,7 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1708511847
+::res://::1708513449
 export_presets.cfg::TextFile::-1::1706873905::0::1::::<><>::
-README.md::TextFile::-1::1706283788::0::1::::<><>::
+README.md::TextFile::-1::1708511951::0::1::::<><>::
 ::res://addons/::1706273760
 ::res://addons/SolanaSDK/::1706807093
 icon.svg::CompressedTexture2D::8337803400720695138::1698484514::1706807093::1::::<><>::
@@ -10,10 +10,10 @@ solana_sdk_plugin.gd::GDScript::-1::1706273109::0::1::::<>EditorPlugin<>::
 ::res://addons/SolanaSDK/Autoload/::1707744779
 SceneLoader.tscn::PackedScene::8718452938737271484::1706270983::0::1::::<><>::res://addons/SolanaSDK/Scripts/Utility/scene_loader.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf
 SolanaService.tscn::PackedScene::4288474253152216185::1707744779::0::1::::<><>::res://addons/SolanaSDK/Scripts/solana_service.gd<>res://addons/SolanaSDK/Scripts/TransactionProcessor/transaction_processor.gd<>uid://blmw46he11fxs::::res://addons/SolanaSDK/Scripts/TransactionProcessor/TransactionOverlayUI.tscn<>res://addons/SolanaSDK/Scripts/wallet_service.gd<>res://addons/SolanaSDK/Scripts/nft_manager.gd<>uid://be2rmdwqrqiw0::::res://addons/SolanaSDK/Scripts/WalletAdapter/WalletAdapterUI.tscn<>res://addons/SolanaSDK/Scripts/file_loader.gd<>res://addons/SolanaSDK/Scripts/candy_machine_manager.gd
-::res://addons/SolanaSDK/bin/::1708511843
+::res://addons/SolanaSDK/bin/::1708513445
 godot-solana-sdk.gdextension::GDExtension::-1::1706862732::0::1::::<><>::
-::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_debug.framework/::1706806146
-::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_release.framework/::1706806146
+::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_debug.framework/::1708511911
+::res://addons/SolanaSDK/bin/libgodot-solana-sdk.macos.template_release.framework/::1708511911
 ::res://addons/SolanaSDK/Demos/::1707744617
 DemoSelectScene.tscn::PackedScene::56380183958265618::1707152909::0::1::::<><>::uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>res://addons/SolanaSDK/Scripts/rpc_network_switcher.gd<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG<>res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd
 LoginScene.tscn::PackedScene::2795416145445268806::1707744617::0::1::::<><>::res://addons/SolanaSDK/Scripts/login_manager.gd<>uid://inxwmykjoa5p::::res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf<>uid://djc4usmv5o2u5::::res://addons/SolanaSDK/Fonts/PUSSS___.TTF<>uid://dnqcw4msg2uow::::res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG<>uid://5erj253phx4s::::res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG<>uid://et1kvxp5bprg::::res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG

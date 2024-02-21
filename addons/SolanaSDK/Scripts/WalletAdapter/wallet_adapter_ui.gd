@@ -22,6 +22,8 @@ func _process(delta: float) -> void:
 	pass
 	
 func setup(available_wallets) -> void:
+	for i in selection_spawn.get_children():
+		i.queue_free()
 	for i in range(available_wallets.size()):
 		var provider_id = available_wallets[i]
 		var button_instance:WalletAdapterButton = provider_button_scn.instantiate()
@@ -32,11 +34,9 @@ func setup(available_wallets) -> void:
 		
 func on_button_pressed(id_selected:int) -> void:
 	emit_signal("on_provider_selected",id_selected)
-	queue_free()
 
 func cancel_login() -> void:
 	emit_signal("on_adapter_cancel")
-	queue_free()
 		
 		
 		

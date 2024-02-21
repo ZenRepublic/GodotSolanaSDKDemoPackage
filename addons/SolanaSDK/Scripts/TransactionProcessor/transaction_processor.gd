@@ -1,16 +1,13 @@
 extends Node
 class_name TransactionProcessor
 
-@export var transaction_ui_scn:PackedScene
 var wallet_adapter:WalletAdapter
 
 signal on_transaction_init
 signal on_transaction_finish
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if transaction_ui_scn!=null:
-		var tx_ui_instance = transaction_ui_scn.instantiate()
-		add_child(tx_ui_instance)
+	pass
 	
 func setup(adapter:WalletAdapter) -> void:
 	wallet_adapter = adapter
