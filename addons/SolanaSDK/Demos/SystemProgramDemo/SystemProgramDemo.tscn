@@ -62,7 +62,7 @@ texture = ExtResource("9_1yhps")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xvq3"]
 
-[node name="TokenTransactionDemo" type="Control"]
+[node name="SystemProgramDemo" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

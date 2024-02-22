@@ -58,7 +58,7 @@ func init_game(game_attributes:SoarUtils.GameAttributes) -> void:
 	print("Creating Game Account with ID: %s"%game_account.get_public_value())
 	instructions.append(init_game_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",init_game_response)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions)
 	
 func init_game_response(transaction_id:String) -> void:
 	SolanaService.transaction_processor.disconnect("on_transaction_finish",init_game_response)
@@ -94,7 +94,7 @@ func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardD
 	
 	instructions.append(add_leaderboard_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",add_leaderboard_callback)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions)
 	
 func add_leaderboard_callback(transaction_id:String) -> void:
 	SolanaService.transaction_processor.disconnect("on_transaction_finish",add_leaderboard_callback)
@@ -125,7 +125,7 @@ func update_leaderboard(game_address:String,leaderboard_address:String,leaderboa
 	
 	instructions.append(update_leaderboard_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",update_leaderboard_callback)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions)
 	
 func update_leaderboard_callback(transaction_id:String) -> void:
 	SolanaService.transaction_processor.disconnect("on_transaction_finish",update_leaderboard_callback)
@@ -149,7 +149,7 @@ func initialize_player(username:String, user_nft:Pubkey) -> void:
 	print("Initializing Player account with ID: %s"%player_account.get_value())
 	instructions.append(init_player_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",initialize_player_response)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions,"finalized")
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	
 	
 func initialize_player_response(transaction_id:String) -> void:
@@ -172,7 +172,7 @@ func update_player(username:String, user_nft:Pubkey) -> void:
 	print("Updating Player account with ID: %s"%player_account.get_value())
 	instructions.append(update_player_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",update_player_response)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions)
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions)
 
 func update_player_response(transaction_id:String) -> void:
 	SolanaService.transaction_processor.disconnect("on_transaction_finish",update_player_response)
@@ -223,7 +223,7 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		
 	instructions.append(submit_score_ix)
 	SolanaService.transaction_processor.connect("on_transaction_finish",submit_score_to_leaderboard_response)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet,instructions,"finalized")
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	
 
 func submit_score_to_leaderboard_response(transaction_id:String) -> void:

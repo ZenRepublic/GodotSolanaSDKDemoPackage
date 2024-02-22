@@ -18,10 +18,11 @@ func setup(adapter:WalletAdapter) -> void:
 var transaction:Transaction
 var commitment:String
 
-func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction], tx_commitment:String="confirmed") -> void:
+func try_sign_transaction(wallet,instructions:Array[Instruction], tx_commitment:String="confirmed") -> void:
 	emit_signal("on_transaction_init")
 	commitment=tx_commitment
 	transaction = Transaction.new()	
+	add_child(transaction)
 	#
 	for idx in range(instructions.size()):
 		if instructions[idx] == null:
@@ -30,18 +31,14 @@ func try_sign_transaction(wallet:WalletService,instructions:Array[Instruction], 
 			return
 		transaction.add_instruction(instructions[idx])
 	
-	print(instructions.size())
-	
-	if wallet.use_generated:
-		transaction.set_payer(wallet.keypair)
-	else:
-		transaction.set_payer(wallet.wallet_adapter)
+	transaction.set_payer(wallet)
 
 	transaction.update_latest_blockhash("")
 	transaction.connect("transaction_response",process_transaction_pass)
 	transaction.connect("sign_error",process_transaction_error)
-	print(transaction.serialize())
+	#print(transaction.serialize())
 	transaction.sign_and_send()
+	#var response:Dictionary = await transaction.transaction_response
 	
 	
 func process_transaction_pass(response:Dictionary) -> void:	
@@ -57,21 +54,21 @@ func process_transaction_pass(response:Dictionary) -> void:
 		"finalized":	
 			while !transaction.is_finalized():
 				await get_tree().create_timer(0.1).timeout	
-		
-	transaction.disconnect("transaction_response",process_transaction_pass)
-	transaction.disconnect("sign_error",process_transaction_error)
-	transaction=null
 	
 	print("Transaction ID: ",response["result"])
 	emit_signal("on_transaction_finish",response["result"])
+	cleanup()
 	
 
 func process_transaction_error(signer_index:int=0) -> void:	
+	emit_signal("on_transaction_finish","")
+	cleanup()
+	
+func cleanup()->void:
 	transaction.disconnect("transaction_response",process_transaction_pass)
 	transaction.disconnect("sign_error",process_transaction_error)
+	transaction.queue_free()
 	transaction=null
-	
-	emit_signal("on_transaction_finish","")
 
 	
 	

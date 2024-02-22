@@ -12,6 +12,7 @@ func _ready() -> void:
 	account_address.text = wallet_address
 	
 	if balance_visualizer!=null:
+		#SolanaClient.account_subscribe(SolanaService.wallet.get_pubkey(),Callable(self,"update_balance"))
 		var balance:float
 		if balance_token_address.length()==0:
 			balance = SolanaService.get_sol_balance(wallet_address)
@@ -19,3 +20,6 @@ func _ready() -> void:
 		else:
 			balance = SolanaService.get_token_balance(wallet_address,balance_token_address)
 			balance_visualizer.set_token_data(balance,Pubkey.new_from_string(balance_token_address))
+
+#func update_balance(account_data:Dictionary) -> void:
+	#print(account_data)

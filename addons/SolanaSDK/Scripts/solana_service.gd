@@ -85,18 +85,23 @@ func generate_keypair(derive_from_machine:bool=false) -> Keypair:
 		seed.append(random_value)
 #	seed.resize(32)
 	keypair.set_seed(seed);
-	
 	return keypair
 	
 func generate_keypair_from_pk(pk:String) -> Keypair:
 	var seed = SolanaSDK.bs58_decode(pk)
 	var keypair = Keypair.new_from_seed(seed)
+	#var keypair = Keypair.new_from_file("C:\\Users\\thoma\\Desktop\\kp\\kp.json")
 	return keypair
 
-func transfer_sol_to_address(receiver:String,amount:float) -> void:
+func transfer_sol_to_address(receiver:String,amount:float, sender:Keypair=null) -> void:
 	var instructions:Array[Instruction]
 	
+	var sender_keypair = wallet.get_kp()
 	var sender_account:Pubkey = wallet.get_pubkey()
+	if sender!=null:
+		sender_keypair = sender
+		sender_account = Pubkey.new_from_string(sender.get_public_value())
+	
 	var receiver_account:Pubkey = Pubkey.new_from_string(receiver)  
 	
 	var amount_in_lamports = int(amount*1000000000)
@@ -104,12 +109,17 @@ func transfer_sol_to_address(receiver:String,amount:float) -> void:
 	var sol_transfer_ix:Instruction = SystemProgram.transfer(sender_account,receiver_account,amount_in_lamports)
 	instructions.append(sol_transfer_ix)
 	
-	transaction_processor.try_sign_transaction(wallet,instructions)
+	transaction_processor.try_sign_transaction(sender_keypair,instructions)
 	
-func transfer_spl_to_address(token_address:String,receiver:String,amount:float) -> void:
+func transfer_spl_to_address(token_address:String,receiver:String,amount:float,sender:Keypair=null) -> void:
 	var instructions:Array[Instruction]
 	
+	var sender_keypair = wallet.get_kp()
 	var sender_account:Pubkey = wallet.get_pubkey()
+	if sender!=null:
+		sender_keypair = sender
+		sender_account = Pubkey.new_from_string(sender.get_public_value())
+		
 	var receiver_account:Pubkey = Pubkey.new_from_string(receiver) 
 	var token_mint:Pubkey = Pubkey.new_from_string(token_address) 
 	var token_program_id:Pubkey = Pubkey.new_from_string("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL")
@@ -133,6 +143,6 @@ func transfer_spl_to_address(token_address:String,receiver:String,amount:float) 
 	var transfer_ix:Instruction = TokenProgram.transfer_checked(sender_ata,token_mint,receiver_ata,sender_account,amount,token_decimals)
 	instructions.append(transfer_ix)
 	
-	transaction_processor.try_sign_transaction(wallet,instructions)
+	transaction_processor.try_sign_transaction(sender_keypair,instructions)
 	pass
 

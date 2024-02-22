@@ -26,7 +26,6 @@ func transfer_tokens(input_data:Array[String]) -> void:
 
 
 func transaction_finish_callback(transaction_id:String) -> void:
-	print(transaction_id)
 	if transaction_id != "":
 		input_field_system.clear_fields()
 		

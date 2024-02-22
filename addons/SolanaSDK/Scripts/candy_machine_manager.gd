@@ -31,4 +31,4 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,
 		)
 		
 	instructions.append(mint_ix)
-	SolanaService.transaction_processor.try_sign_transaction(payer,instructions)
+	SolanaService.transaction_processor.try_sign_transaction(payer.get_kp(),instructions)
