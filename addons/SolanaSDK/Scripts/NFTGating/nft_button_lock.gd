@@ -8,6 +8,11 @@ enum NFTLockType {HELD_AMOUNT,MINT_MATCH}
 @export var unlock_amount:int
 @export_file("*.json") var mint_list_path:String
 
+func _ready() -> void:
+	super()
+	if lock_active:
+		SolanaService.nft_manager.connect("on_nft_load_finished",try_unlock)
+		
 
 func try_unlock() -> void:
 	super()

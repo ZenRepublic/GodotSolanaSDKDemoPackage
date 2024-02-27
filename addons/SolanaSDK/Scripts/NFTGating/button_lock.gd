@@ -9,7 +9,6 @@ func _ready() -> void:
 	if lock_active:
 		set_interactable(false)
 		try_unlock()
-		SolanaService.nft_manager.connect("on_nft_load_finished",try_unlock)
 
 func set_interactable(state:bool) -> void:
 	disabled = !state

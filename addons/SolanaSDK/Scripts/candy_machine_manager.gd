@@ -13,8 +13,10 @@ func _process(delta: float) -> void:
 func fetch_candy_machine(cm_id:Pubkey) -> CandyMachineData:
 	return MplCandyMachine.get_candy_machine_info(cm_id)
 	
-func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,payer:WalletService,receiver,guards:CandyGuardAccessList,group:String) -> void:
-	var mint_account:Keypair = SolanaService.generate_keypair()
+func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,payer:WalletService,receiver,guards:CandyGuardAccessList,group:String,custom_mint_account:Keypair=null) -> void:
+	var mint_account:Keypair = custom_mint_account
+	if mint_account==null:
+		mint_account = SolanaService.generate_keypair()
 	var instructions:Array[Instruction]
 	
 	var mint_ix:Instruction = MplCandyGuard.mint(
@@ -31,4 +33,4 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,
 		)
 		
 	instructions.append(mint_ix)
-	SolanaService.transaction_processor.try_sign_transaction(payer.get_kp(),instructions)
+	SolanaService.transaction_processor.try_sign_transaction(payer.get_kp(),instructions,"finalized")

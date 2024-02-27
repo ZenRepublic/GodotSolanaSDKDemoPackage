@@ -57,19 +57,21 @@ func log_in_fail() -> void:
 	emit_signal("on_logged_in",false)
 
 func get_pubkey() -> Pubkey:
-	var key:Pubkey
 	if use_generated:
-		key = Pubkey.new_from_string(keypair.get_public_value())
+		return Pubkey.new_from_string(keypair.get_public_value())
 	else:
-		var address = SolanaSDK.bs58_encode(wallet_adapter.get_connected_key())
-		key = Pubkey.new_from_string(address)
-	return key
+		return wallet_adapter.get_connected_key()
 	
 func get_kp():
 	if use_generated:
 		return keypair
 	else:
 		return wallet_adapter
+		
+func is_logged_in() -> bool:
+	if use_generated:
+		return true
+	return wallet_adapter.get_connected_key().get_value()!=""
 		
 
 #func read_kp_from_file(file_path: String) -> Keypair:
