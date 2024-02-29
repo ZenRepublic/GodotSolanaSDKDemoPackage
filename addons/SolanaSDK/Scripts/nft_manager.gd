@@ -27,7 +27,7 @@ func try_load_nfts(logged_in:bool) -> void:
 func load_nfts()->void:
 	var token_program_id = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
 	var connected_wallet:Pubkey = SolanaService.wallet.get_pubkey()
-	var raw_response:Dictionary = SolanaClient.get_token_accounts_by_owner(connected_wallet.get_value(),"",token_program_id)
+	var raw_response:Dictionary = SolanaService.client.get_token_accounts_by_owner(connected_wallet.get_value(),"",token_program_id)
 	var nft_mints:Array[Pubkey]
 	for token in raw_response["result"]["value"]:
 		var token_byte_data = SolanaSDK.bs64_decode(token["account"]["data"][0])

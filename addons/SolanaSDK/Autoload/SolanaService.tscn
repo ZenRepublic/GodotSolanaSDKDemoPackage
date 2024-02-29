@@ -9,15 +9,17 @@
 
 [node name="SolanaService" type="Node"]
 script = ExtResource("1_hwc3u")
-rpc_cluster = 1
 mainnet_rpc = "https://rpc.hellomoon.io/6b758f53-4b78-41a7-86a9-6b61c97711eb"
 devnet_rpc = "https://api.devnet.solana.com"
+
+[node name="SolanaClient" type="SolanaClient" parent="."]
 
 [node name="TransactionProcessor" type="Node" parent="."]
 script = ExtResource("2_v3adq")
 
 [node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
+use_generated = true
 custom_wallet_path = "C:\\Users\\thoma\\Desktop\\kp\\dev2gUnXyMLh6WyV9NTBaXeNfo1DTn2R4b69VTGNidF.json"
 
 [node name="WalletAdapter" type="WalletAdapter" parent="WalletService"]

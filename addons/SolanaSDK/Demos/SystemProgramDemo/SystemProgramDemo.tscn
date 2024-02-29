@@ -82,6 +82,7 @@ anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 141.0
 script = ExtResource("1_axnkw")
+balance_token_address = null
 balance_visualizer = NodePath("SolBalance")
 
 [node name="AccountLabel" type="Label" parent="AccountPanel"]
@@ -123,6 +124,8 @@ offset_bottom = 269.0
 script = ExtResource("3_8saln")
 amount_label = NodePath("Balance")
 token_visual = NodePath("Visual")
+load_on_ready = null
+token_to_load = null
 sol_icon_path = "res://addons/SolanaSDK/Textures/SolanaLogo.png"
 
 [node name="Balance" type="Label" parent="AccountPanel/SolBalance"]

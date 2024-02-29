@@ -7,6 +7,7 @@ enum RpcCluster{Mainnet,Devnet}
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
 
+@onready var client:SolanaClient = $SolanaClient
 @onready var wallet:WalletService = $WalletService
 @onready var transaction_processor:TransactionProcessor = $TransactionProcessor
 @onready var nft_manager:NFTManager = $NFTManager
@@ -15,30 +16,31 @@ var default_mainnet = "https://api.mainnet-beta.solana.com"
 
 var rpc:String
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if mainnet_rpc=="":
 		mainnet_rpc=default_mainnet
 	if devnet_rpc=="":
 		devnet_rpc=default_devnet
 		
-	SolanaClient.set_encoding("base64");	
 	set_rpc_cluster(rpc_cluster)
 	
 	
 func set_rpc_cluster(new_cluster:RpcCluster)->void:
 	match new_cluster:
 		RpcCluster.Mainnet:
-			SolanaClient.set_url(mainnet_rpc)
+			client.set_url(mainnet_rpc)
 		RpcCluster.Devnet:
-			SolanaClient.set_url(devnet_rpc)
+			client.set_url(devnet_rpc)
 	
 #	SolanaClient.set_url("https://api.mainnet-beta.solana.com")
 #	print(SolanaClient.get_latest_blockhash())
 	
 	
 func get_sol_balance(address_to_check:String) -> float:
-	var response_dict:Dictionary = SolanaClient.get_balance(address_to_check)
+	print(address_to_check)
+	var response_dict:Dictionary = client.get_balance(address_to_check)
+	print(response_dict)
 	var balance = response_dict["result"]["value"] / 1000000000
 	return balance
 	
@@ -48,18 +50,18 @@ func get_token_balance(address_to_check:String,token_address:String)->float:
 	if token_account == null:
 		return 0	
 
-	var response_dict:Dictionary = SolanaClient.get_token_account_balance(token_account.get_value())
+	var response_dict:Dictionary = client.get_token_account_balance(token_account.get_value())
 	var lamport_balance = response_dict["result"]["value"]["amount"]
 	var token_decimals = response_dict["result"]["value"]["decimals"]
 	return float(lamport_balance)/(10**token_decimals)
 	
 func get_token_decimals(token_address:String)->int:
-	var response_dict:Dictionary = SolanaClient.get_token_supply(token_address)
+	var response_dict:Dictionary = client.get_token_supply(token_address)
 	return response_dict["result"]["value"]["decimals"]
 	
 func get_associated_token_account(address_to_check:String,token_address:String) -> Pubkey:
 	var token_program_id = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
-	var response_dict:Dictionary = SolanaClient.get_token_accounts_by_owner(address_to_check,token_address,token_program_id)
+	var response_dict:Dictionary = client.get_token_accounts_by_owner(address_to_check,token_address,token_program_id)
 	var ata:String
 	
 	if response_dict.has("error"):
