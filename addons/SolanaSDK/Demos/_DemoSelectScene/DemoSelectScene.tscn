@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd" id="2_10qtm"]
 [ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://addons/SolanaSDK/Fonts/PUSSS___.TTF" id="2_wfsl8"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="3_b8juh"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/rpc_network_switcher.gd" id="3_lb3d3"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_DemoSelectScene/rpc_network_switcher.gd" id="3_lb3d3"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="4_mglv1"]
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="5_dpk8s"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd" id="7_agyvs"]
@@ -94,7 +94,6 @@ anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 141.0
 script = ExtResource("2_10qtm")
-balance_token_address = null
 
 [node name="AccountLabel" type="Label" parent="AccountPanel"]
 layout_mode = 1

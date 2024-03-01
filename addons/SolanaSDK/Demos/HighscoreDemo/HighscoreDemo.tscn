@@ -163,7 +163,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_avkrb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xvq3")
 text = "RETURN"
 script = ExtResource("15_py4m4")
-path_to_scene = "res://addons/SolanaSDK/Demos/DemoSelectScene.tscn"
+path_to_scene = "res://addons/SolanaSDK/Demos/_DemoSelectScene/DemoSelectScene.tscn"
 
 [node name="PlayScreen" type="Control" parent="."]
 visible = false

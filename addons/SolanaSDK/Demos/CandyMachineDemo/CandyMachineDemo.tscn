@@ -118,7 +118,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_avkrb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xvq3")
 text = "RETURN"
 script = ExtResource("7_25l6n")
-path_to_scene = "res://addons/SolanaSDK/Demos/DemoSelectScene.tscn"
+path_to_scene = "res://addons/SolanaSDK/Demos/_DemoSelectScene/DemoSelectScene.tscn"
 
 [node name="CMDisplay" type="Control" parent="." node_paths=PackedStringArray("nft_display", "collection_desc", "minted_amount", "progress_bar", "mint_buttons")]
 anchors_preset = 0

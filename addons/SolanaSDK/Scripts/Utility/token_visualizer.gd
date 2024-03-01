@@ -16,10 +16,10 @@ func load_token() -> void:
 	var balance:float
 	var user_wallet:String = SolanaService.wallet.get_pubkey().get_value()
 	if token_to_load.length()==0:
-		balance = SolanaService.get_sol_balance(user_wallet)
+		balance = await SolanaService.get_sol_balance(user_wallet)
 		set_token_data(balance)
 	else:
-		balance = SolanaService.get_token_balance(user_wallet,token_to_load)
+		balance = await SolanaService.get_token_balance(user_wallet,token_to_load)
 		set_token_data(balance,Pubkey.new_from_string(token_to_load))
 		
 func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:

@@ -17,12 +17,12 @@ func transfer_tokens(input_data:Array[String]) -> void:
 		TokenType.SOL:
 			var receiver = input_data[0]
 			var amount = float(input_data[1])
-			solana_service.transfer_sol_to_address(receiver,amount)
+			await solana_service.transfer_sol_to_address(receiver,amount)
 		TokenType.SPL:
 			var token_address = input_data[0]
 			var receiver = input_data[1]
 			var amount = float(input_data[2])
-			solana_service.transfer_spl_to_address(token_address,receiver,amount)
+			await solana_service.transfer_spl_to_address(token_address,receiver,amount)
 
 
 func transaction_finish_callback(transaction_id:String) -> void:

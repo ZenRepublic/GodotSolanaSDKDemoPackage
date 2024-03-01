@@ -1,14 +1,15 @@
 [gd_scene load_steps=7 format=3 uid="uid://b2dmsrk6j12y4"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/solana_service.gd" id="1_hwc3u"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Managers/solana_service.gd" id="1_hwc3u"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/TransactionProcessor/transaction_processor.gd" id="2_v3adq"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/wallet_service.gd" id="5_f327g"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/nft_manager.gd" id="6_b1bp1"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/file_loader.gd" id="7_4sv1b"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/candy_machine_manager.gd" id="9_pob61"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Managers/wallet_service.gd" id="5_f327g"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Managers/nft_manager.gd" id="6_b1bp1"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/file_loader.gd" id="7_4sv1b"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Managers/candy_machine_manager.gd" id="9_pob61"]
 
 [node name="SolanaService" type="Node"]
 script = ExtResource("1_hwc3u")
+rpc_cluster = 1
 mainnet_rpc = "https://rpc.hellomoon.io/6b758f53-4b78-41a7-86a9-6b61c97711eb"
 devnet_rpc = "https://api.devnet.solana.com"
 

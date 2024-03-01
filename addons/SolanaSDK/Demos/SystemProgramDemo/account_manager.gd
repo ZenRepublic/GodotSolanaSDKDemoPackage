@@ -15,10 +15,10 @@ func _ready() -> void:
 		#SolanaClient.account_subscribe(SolanaService.wallet.get_pubkey(),Callable(self,"update_balance"))
 		var balance:float
 		if balance_token_address.length()==0:
-			balance = SolanaService.get_sol_balance(wallet_address)
+			balance = await SolanaService.get_sol_balance(wallet_address)
 			balance_visualizer.set_token_data(balance)
 		else:
-			balance = SolanaService.get_token_balance(wallet_address,balance_token_address)
+			balance = await SolanaService.get_token_balance(wallet_address,balance_token_address)
 			balance_visualizer.set_token_data(balance,Pubkey.new_from_string(balance_token_address))
 
 #func update_balance(account_data:Dictionary) -> void:

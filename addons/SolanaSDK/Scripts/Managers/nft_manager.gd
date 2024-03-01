@@ -25,25 +25,12 @@ func try_load_nfts(logged_in:bool) -> void:
 		load_nfts()
 	
 func load_nfts()->void:
-	var token_program_id = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
 	var connected_wallet:Pubkey = SolanaService.wallet.get_pubkey()
-	var raw_response:Dictionary = SolanaService.client.get_token_accounts_by_owner(connected_wallet.get_value(),"",token_program_id)
-	var nft_mints:Array[Pubkey]
-	for token in raw_response["result"]["value"]:
-		var token_byte_data = SolanaSDK.bs64_decode(token["account"]["data"][0])
-		var token_data:Dictionary = parse_solana_token_data(token_byte_data)
-		
-		#remove token accounts which no longer hold an NFT
-		#also remove all tokens with amount bigger than 1, it indicates that its an spl token
-		#there might also be some spls left which the user hold 1 of. those will be removed later
-		if token_data["amount"] == 0 || token_data["amount"] > 1:
-			continue
-		nft_mints.append(Pubkey.new_from_string(token_data["mint"]))
+	var wallet_tokens:Array[Pubkey] = await SolanaService.get_wallet_tokens(connected_wallet.get_value())
+	emit_signal("on_nft_load_started",wallet_tokens.size())
 	
-	emit_signal("on_nft_load_started",nft_mints.size())
-	
-	for i in range(nft_mints.size()):	
-		var nft:Nft = await get_nft_from_mint(nft_mints[i],load_textures)
+	for i in range(wallet_tokens.size()):	
+		var nft:Nft = await get_nft_from_mint(wallet_tokens[i],load_textures)
 		if nft == null:
 			continue
 		owned_nfts.append(nft)
@@ -53,22 +40,6 @@ func load_nfts()->void:
 	emit_signal("on_nft_load_finished",owned_nfts)
 	nfts_loaded=true
 
-	
-func parse_solana_token_data(data: PackedByteArray) -> Dictionary:
-	# Ensure that the data has a minimum length
-	if data.size() < 64:
-		print("Invalid token data")
-		return {}
-	
-	# Extract the mint address (first 32 bytes)
-	var mint_address = SolanaSDK.bs58_encode(data.slice(0, 32))
-	var owner_address = SolanaSDK.bs58_encode(data.slice(32, 64))
-
-	# Extract the amount (next 8 bytes) and convert it to a 64-bit integer
-	var amount_bytes = data.slice(64, 72)
-	var amount = amount_bytes.decode_u64(0)
-	
-	return {"mint":mint_address,"owner":owner_address,"amount":amount}
 	
 func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 	var nft:Nft = Nft.new()
