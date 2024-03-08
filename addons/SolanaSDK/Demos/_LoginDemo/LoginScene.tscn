@@ -120,6 +120,7 @@ text = "CONNECT WALLET"
 
 [node name="LoginOverlay" type="CanvasLayer" parent="."]
 layer = 2
+visible = false
 
 [node name="LoginPanel" type="Panel" parent="LoginOverlay"]
 offset_right = 1152.0

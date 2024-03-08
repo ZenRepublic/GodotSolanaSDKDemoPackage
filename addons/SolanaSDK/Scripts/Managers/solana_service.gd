@@ -38,10 +38,8 @@ func set_rpc_cluster(new_cluster:RpcCluster)->void:
 	
 	
 func get_sol_balance(address_to_check:String) -> float:
-	print(address_to_check)
 	var response_dict:Dictionary = client.get_balance(address_to_check)
 	response_dict = await client.http_response
-	print(response_dict)
 	var balance = response_dict["result"]["value"] / 1000000000
 	return balance
 	
@@ -67,7 +65,6 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	var token_program_id = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
 	var response_dict:Dictionary = client.get_token_accounts_by_owner(address_to_check,token_address,token_program_id)
 	response_dict = await client.http_response
-	print(response_dict)
 	var ata:String
 	
 	if response_dict.has("error"):
@@ -80,11 +77,9 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	
 func get_wallet_tokens(wallet_address:String) -> Array[Pubkey]:
 	var token_program_id = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
-	
 	var response_dict:Dictionary = client.get_token_accounts_by_owner(wallet_address,"",token_program_id)
-	response_dict = await client.http_response
+	#response_dict = await client.http_response
 	print(response_dict)
-	
 	var wallet_tokens:Array[Pubkey]
 	for token in response_dict["result"]["value"]:
 		var token_byte_data = SolanaSDK.bs64_decode(token["account"]["data"][0])

@@ -11,6 +11,8 @@ class_name TokenVisualizer
 func _ready() -> void:
 	if load_on_ready:
 		load_token()
+	
+	#SolanaService.transaction_processor.connect("on_transaction_finish",update_token)
 			
 func load_token() -> void:
 	var balance:float
@@ -44,3 +46,9 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 		var token_image:Texture2D = await SolanaService.file_loader.load_token_image(metadata_json["image"])
 
 		token_visual.texture = token_image
+		
+func update_token(transaction_id:String)->void:
+	if transaction_id=="":
+		return
+	
+	load_token()

@@ -22,6 +22,7 @@ func try_sign_transaction(wallet,instructions:Array[Instruction], tx_commitment:
 	emit_signal("on_transaction_init")
 	commitment=tx_commitment
 	transaction = Transaction.new()	
+	transaction.set_url(SolanaService.client.url)
 	add_child(transaction)
 	#
 	for idx in range(instructions.size()):
@@ -42,6 +43,7 @@ func try_sign_transaction(wallet,instructions:Array[Instruction], tx_commitment:
 	
 	
 func process_transaction_pass(response:Dictionary) -> void:	
+	print("TEST")
 	if response.has("error"):
 		print(response["error"])
 		process_transaction_error()
@@ -61,6 +63,7 @@ func process_transaction_pass(response:Dictionary) -> void:
 	
 
 func process_transaction_error(signer_index:int=0) -> void:	
+	print("TEST2")
 	emit_signal("on_transaction_finish","")
 	cleanup()
 	

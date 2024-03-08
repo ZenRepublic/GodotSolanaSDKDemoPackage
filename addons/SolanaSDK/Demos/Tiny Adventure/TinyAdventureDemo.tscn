@@ -135,7 +135,7 @@ offset_right = 189.0
 offset_bottom = 66.0
 theme_override_fonts/font = ExtResource("4_f8otw")
 theme_override_font_sizes/font_size = 55
-text = "1.57"
+text = "..."
 vertical_alignment = 1
 
 [node name="Visual" type="TextureRect" parent="StartingScreen/SolBalance"]
@@ -208,7 +208,7 @@ offset_right = 189.0
 offset_bottom = 66.0
 theme_override_fonts/font = ExtResource("4_f8otw")
 theme_override_font_sizes/font_size = 55
-text = "1.57"
+text = "..."
 vertical_alignment = 1
 
 [node name="Visual" type="TextureRect" parent="GameScreen/SolBalance2"]
