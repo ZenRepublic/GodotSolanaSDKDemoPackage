@@ -9,8 +9,6 @@
 
 [node name="SolanaService" type="Node"]
 script = ExtResource("1_hwc3u")
-mainnet_rpc = "https://rpc.hellomoon.io/6b758f53-4b78-41a7-86a9-6b61c97711eb"
-devnet_rpc = "https://api.devnet.solana.com"
 
 [node name="SolanaClient" type="SolanaClient" parent="."]
 
