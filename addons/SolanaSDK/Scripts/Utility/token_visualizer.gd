@@ -37,7 +37,7 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 	if token_mint!=null:
 		token_to_load = token_mint.get_value()
 		var mpl_metadata:MplTokenMetadata = MplTokenMetadata.new()
-		mpl_metadata.url = SolanaService.client.url
+		mpl_metadata.url = SolanaService.active_rpc
 		add_child(mpl_metadata)
 		mpl_metadata.get_mint_metadata(token_mint)
 		var onchain_metadata:MetaData = await mpl_metadata.metadata_fetched

@@ -7,10 +7,11 @@ enum RpcCluster{Mainnet,Devnet}
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
 
+var active_rpc:String
+
 var token_pid:String = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
 var associated_token_pid:String = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
 
-@onready var client:SolanaClient = $SolanaClient
 @onready var wallet:WalletService = $WalletService
 @onready var transaction_processor:TransactionProcessor = $TransactionProcessor
 @onready var nft_manager:NFTManager = $NFTManager
@@ -32,19 +33,26 @@ func _ready() -> void:
 func set_rpc_cluster(new_cluster:RpcCluster)->void:
 	match new_cluster:
 		RpcCluster.Mainnet:
-			client.set_url(mainnet_rpc)
+			active_rpc = mainnet_rpc
 		RpcCluster.Devnet:
-			client.set_url(devnet_rpc)
+			active_rpc = devnet_rpc
 	
 	rpc_cluster = new_cluster
 	
 #	SolanaClient.set_url("https://api.mainnet-beta.solana.com")
 #	print(SolanaClient.get_latest_blockhash())
+func spawn_client_instance()->SolanaClient:
+	var sol_client:SolanaClient = SolanaClient.new()
+	add_child(sol_client)
+	sol_client.set_url(active_rpc) 
+	return sol_client
 	
 	
 func get_sol_balance(address_to_check:String) -> float:
+	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_balance(address_to_check)
 	response_dict = await client.http_response
+	client.queue_free()
 	var balance = response_dict["result"]["value"] / 1000000000
 	return balance
 	
@@ -52,22 +60,30 @@ func get_token_balance(address_to_check:String,token_address:String)->float:
 	var token_account:Pubkey = await get_associated_token_account(address_to_check,token_pid)
 	if token_account == null:
 		return 0	
-
+	
+	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_token_account_balance(token_account.get_value())
 	response_dict = await client.http_response
+	client.queue_free()
 	
 	var lamport_balance = response_dict["result"]["value"]["amount"]
 	var token_decimals = response_dict["result"]["value"]["decimals"]
 	return float(lamport_balance)/(10**token_decimals)
 	
 func get_token_decimals(token_address:String)->int:
+	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_token_supply(token_address)
 	response_dict = await client.http_response
+	client.queue_free()
+	
 	return response_dict["result"]["value"]["decimals"]
 	
 func get_associated_token_account(address_to_check:String,token_address:String) -> Pubkey:
+	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_token_accounts_by_owner(address_to_check,token_address,associated_token_pid)
 	response_dict = await client.http_response
+	client.queue_free()
+	
 	var ata:String
 	
 	if response_dict.has("error"):
@@ -79,8 +95,10 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	return Pubkey.new_from_string(response_dict["result"]["value"][0]["pubkey"])
 	
 func get_wallet_tokens(wallet_address:String) -> Array[Pubkey]:
+	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_token_accounts_by_owner(wallet_address,"",token_pid)
 	response_dict = await client.http_response
+	client.queue_free()
 
 	var wallet_tokens:Array[Pubkey]
 	for token in response_dict["result"]["value"]:

@@ -21,7 +21,7 @@ func try_sign_transaction(wallet,instructions:Array[Instruction],use_priority_fe
 	emit_signal("on_transaction_init")
 	commitment=tx_commitment
 	transaction = Transaction.new()	
-	transaction.set_url(SolanaService.client.url)
+	transaction.set_url(SolanaService.active_rpc)
 	add_child(transaction)
 	#
 	for idx in range(instructions.size()):

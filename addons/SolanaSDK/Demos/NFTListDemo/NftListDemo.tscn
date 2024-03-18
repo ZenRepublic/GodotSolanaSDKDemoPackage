@@ -1,12 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://bjqrptjpy2k3b"]
+[gd_scene load_steps=20 format=3 uid="uid://bjqrptjpy2k3b"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/SystemProgramDemo/account_manager.gd" id="1_p5vq2"]
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf" id="2_0upel"]
 [ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://addons/SolanaSDK/Fonts/PUSSS___.TTF" id="3_2qwlk"]
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="9_0s3rn"]
 [ext_resource type="PackedScene" uid="uid://c6ync1x06vh2q" path="res://addons/SolanaSDK/Demos/NFTListDemo/DisplayableNFT.tscn" id="10_1bsb3"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/token_visualizer.gd" id="10_7xxk1"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/NFTListDemo/nft_display_system.gd" id="10_m65q0"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="10_xwtt3"]
+[ext_resource type="Texture2D" uid="uid://c7s56sayh028u" path="res://addons/SolanaSDK/Textures/SolanaLogo.png" id="11_jfbip"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="11_kb74x"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd" id="12_aui6t"]
 
@@ -153,5 +155,39 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_0upel")
 theme_override_font_sizes/font_size = 31
 text = "NO NFTS FOUND IN WALLET..."
+
+[node name="SolBalance" type="Control" parent="." node_paths=PackedStringArray("amount_label", "token_visual")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 621.0
+offset_top = 35.0
+offset_right = 739.0
+offset_bottom = 100.0
+script = ExtResource("10_7xxk1")
+amount_label = NodePath("Balance")
+token_visual = NodePath("Visual")
+load_on_ready = true
+sol_icon_path = "res://addons/SolanaSDK/Textures/SolanaLogo.png"
+
+[node name="Balance" type="Label" parent="SolBalance"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -2.0
+offset_right = 189.0
+offset_bottom = 66.0
+theme_override_fonts/font = ExtResource("3_2qwlk")
+theme_override_font_sizes/font_size = 55
+text = "..."
+vertical_alignment = 1
+
+[node name="Visual" type="TextureRect" parent="SolBalance"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 8.0
+offset_right = 35.0
+offset_bottom = 48.0
+texture = ExtResource("11_jfbip")
+expand_mode = 4
+stretch_mode = 5
 
 [connection signal="pressed" from="ReturnButton" to="ReturnButton" method="_on_pressed"]

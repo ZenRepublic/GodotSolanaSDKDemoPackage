@@ -45,7 +45,7 @@ func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 	var nft:Nft = Nft.new()
 	
 	var mpl_metadata:MplTokenMetadata = MplTokenMetadata.new()
-	mpl_metadata.url = SolanaService.client.url
+	mpl_metadata.url = SolanaService.active_rpc
 	add_child(mpl_metadata)
 	mpl_metadata.get_mint_metadata(nft_mint)
 	var metadata:MetaData = await mpl_metadata.metadata_fetched
