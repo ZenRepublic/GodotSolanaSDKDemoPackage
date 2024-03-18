@@ -38,11 +38,20 @@ func try_sign_transaction(wallet,instructions:Array[Instruction],use_priority_fe
 		transaction.set_unit_price(priority_fee_lamports)
 
 	transaction.update_latest_blockhash()
-	transaction.connect("transaction_response",process_transaction_pass)	
-	transaction.connect("sign_error",process_transaction_error)
+	#transaction.connect("transaction_response",process_transaction_pass)	
+	#transaction.connect("sign_error",process_transaction_error)
 	#print(transaction.serialize())
 	transaction.sign_and_send()
 	var response:Dictionary = await transaction.transaction_response
+	
+	match commitment:
+		"confirmed":	
+			while !transaction.is_confirmed():
+				await get_tree().create_timer(0.1).timeout
+		"finalized":	
+			while !transaction.is_finalized():
+				await get_tree().create_timer(0.1).timeout	
+	
 	print(response)
 	
 	
