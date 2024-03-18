@@ -54,7 +54,7 @@ func init_game() -> void:
 	AnchorProgram.u64(prize_in_lamports))
 	
 	instructions.append(init_ix)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
 
 func start_game_callback(transaction_id:String) -> void:
 	SolanaService.transaction_processor.disconnect("on_transaction_finish",start_game_callback)
@@ -86,7 +86,7 @@ func move(move_dir:String) -> void:
 	],null)
 	
 	instructions.append(move_ix)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
+	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
 
 func move_callback(transaction_id:String) -> void:
 	SolanaService.transaction_processor.disconnect("on_transaction_finish",move_callback)
