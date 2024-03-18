@@ -203,7 +203,7 @@ offset_right = 487.0
 offset_bottom = 279.0
 placeholder_text = "Receiver SOL Address..."
 script = ExtResource("6_ac5cp")
-min_length = 44
+min_length = 32
 
 [node name="AmountInputField" type="LineEdit" parent="SplTransactionPanel"]
 layout_mode = 0

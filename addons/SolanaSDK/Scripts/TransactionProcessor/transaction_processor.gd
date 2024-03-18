@@ -3,6 +3,8 @@ class_name TransactionProcessor
 
 var wallet_adapter:WalletAdapter
 
+var priority_fee_lamports:float = 0.0005
+
 signal on_transaction_init
 signal on_transaction_finish
 # Called when the node enters the scene tree for the first time.
@@ -11,14 +13,11 @@ func _ready() -> void:
 	
 func setup(adapter:WalletAdapter) -> void:
 	wallet_adapter = adapter
-	wallet_adapter.connect("message_signed",process_transaction_pass)
-	wallet_adapter.connect("signing_error",process_transaction_error)
-	
 	
 var transaction:Transaction
 var commitment:String
 
-func try_sign_transaction(wallet,instructions:Array[Instruction], tx_commitment:String="confirmed") -> void:
+func try_sign_transaction(wallet,instructions:Array[Instruction],use_priority_fee:bool=true, tx_commitment:String="confirmed") -> void:
 	emit_signal("on_transaction_init")
 	commitment=tx_commitment
 	transaction = Transaction.new()	
@@ -33,22 +32,26 @@ func try_sign_transaction(wallet,instructions:Array[Instruction], tx_commitment:
 		transaction.add_instruction(instructions[idx])
 	
 	transaction.set_payer(wallet)
+	
+	if use_priority_fee:
+		transaction.set_unit_limit(priority_fee_lamports)
+		transaction.set_unit_price(priority_fee_lamports)
 
-	transaction.update_latest_blockhash("")
-	transaction.connect("transaction_response",process_transaction_pass)
+	transaction.update_latest_blockhash()
+	transaction.connect("transaction_response",process_transaction_pass)	
 	transaction.connect("sign_error",process_transaction_error)
 	#print(transaction.serialize())
 	transaction.sign_and_send()
-	#var response:Dictionary = await transaction.transaction_response
+	var response:Dictionary = await transaction.transaction_response
+	print(response)
 	
 	
 func process_transaction_pass(response:Dictionary) -> void:	
-	print("TEST")
 	if response.has("error"):
 		print(response["error"])
 		process_transaction_error()
 		return
-		
+
 	match commitment:
 		"confirmed":	
 			while !transaction.is_confirmed():
@@ -63,7 +66,6 @@ func process_transaction_pass(response:Dictionary) -> void:
 	
 
 func process_transaction_error(signer_index:int=0) -> void:	
-	print("TEST2")
 	emit_signal("on_transaction_finish","")
 	cleanup()
 	

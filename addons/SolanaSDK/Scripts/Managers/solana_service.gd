@@ -7,6 +7,9 @@ enum RpcCluster{Mainnet,Devnet}
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
 
+var token_pid:String = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+var associated_token_pid:String = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+
 @onready var client:SolanaClient = $SolanaClient
 @onready var wallet:WalletService = $WalletService
 @onready var transaction_processor:TransactionProcessor = $TransactionProcessor
@@ -33,6 +36,8 @@ func set_rpc_cluster(new_cluster:RpcCluster)->void:
 		RpcCluster.Devnet:
 			client.set_url(devnet_rpc)
 	
+	rpc_cluster = new_cluster
+	
 #	SolanaClient.set_url("https://api.mainnet-beta.solana.com")
 #	print(SolanaClient.get_latest_blockhash())
 	
@@ -44,8 +49,7 @@ func get_sol_balance(address_to_check:String) -> float:
 	return balance
 	
 func get_token_balance(address_to_check:String,token_address:String)->float:
-	var token_program_id = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
-	var token_account:Pubkey = await get_associated_token_account(address_to_check,token_address)
+	var token_account:Pubkey = await get_associated_token_account(address_to_check,token_pid)
 	if token_account == null:
 		return 0	
 
@@ -62,8 +66,7 @@ func get_token_decimals(token_address:String)->int:
 	return response_dict["result"]["value"]["decimals"]
 	
 func get_associated_token_account(address_to_check:String,token_address:String) -> Pubkey:
-	var token_program_id = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
-	var response_dict:Dictionary = client.get_token_accounts_by_owner(address_to_check,token_address,token_program_id)
+	var response_dict:Dictionary = client.get_token_accounts_by_owner(address_to_check,token_address,associated_token_pid)
 	response_dict = await client.http_response
 	var ata:String
 	
@@ -76,10 +79,9 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	return Pubkey.new_from_string(response_dict["result"]["value"][0]["pubkey"])
 	
 func get_wallet_tokens(wallet_address:String) -> Array[Pubkey]:
-	var token_program_id = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
-	var response_dict:Dictionary = client.get_token_accounts_by_owner(wallet_address,"",token_program_id)
-	#response_dict = await client.http_response
-	print(response_dict)
+	var response_dict:Dictionary = client.get_token_accounts_by_owner(wallet_address,"",token_pid)
+	response_dict = await client.http_response
+
 	var wallet_tokens:Array[Pubkey]
 	for token in response_dict["result"]["value"]:
 		var token_byte_data = SolanaSDK.bs64_decode(token["account"]["data"][0])
@@ -161,7 +163,6 @@ func transfer_spl_to_address(token_address:String,receiver:String,amount:float,s
 		
 	var receiver_account:Pubkey = Pubkey.new_from_string(receiver) 
 	var token_mint:Pubkey = Pubkey.new_from_string(token_address) 
-	var token_program_id:Pubkey = Pubkey.new_from_string("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL")
 	
 	var sender_ata:Pubkey = await get_associated_token_account(sender_account.get_value(),token_address)
 	
@@ -173,7 +174,7 @@ func transfer_spl_to_address(token_address:String,receiver:String,amount:float,s
 			sender_account,
 			receiver_account,
 			token_mint,
-			token_program_id
+			associated_token_pid
 			)
 		instructions.append(init_ata_ix)
 		

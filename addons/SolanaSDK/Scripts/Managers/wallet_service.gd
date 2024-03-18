@@ -70,7 +70,7 @@ func get_kp():
 		
 func is_logged_in() -> bool:
 	if use_generated:
-		return true
+		return keypair!=null
 	return wallet_adapter.get_connected_key().get_value()!=""
 		
 

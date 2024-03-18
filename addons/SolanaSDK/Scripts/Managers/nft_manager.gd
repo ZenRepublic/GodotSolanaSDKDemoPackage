@@ -44,7 +44,12 @@ func load_nfts()->void:
 func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 	var nft:Nft = Nft.new()
 	
-	var metadata = MplTokenMetadata.get_mint_metadata(nft_mint)
+	var mpl_metadata:MplTokenMetadata = MplTokenMetadata.new()
+	mpl_metadata.url = SolanaService.client.url
+	add_child(mpl_metadata)
+	mpl_metadata.get_mint_metadata(nft_mint)
+	var metadata:MetaData = await mpl_metadata.metadata_fetched
+	
 	print(metadata)
 	if metadata==null:
 		return null
