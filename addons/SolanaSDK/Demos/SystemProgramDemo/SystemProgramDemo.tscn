@@ -123,7 +123,7 @@ offset_bottom = 269.0
 script = ExtResource("3_8saln")
 amount_label = NodePath("Balance")
 token_visual = NodePath("Visual")
-sol_icon_path = "res://addons/SolanaSDK/Textures/SolanaLogo.png"
+missing_icon_path = "res://addons/SolanaSDK/Textures/missingicon.png"
 
 [node name="Balance" type="Label" parent="AccountPanel/SolBalance"]
 layout_mode = 0

@@ -128,7 +128,7 @@ script = ExtResource("3_b3qx2")
 amount_label = NodePath("Balance")
 token_visual = NodePath("Visual")
 load_on_ready = true
-sol_icon_path = "res://addons/SolanaSDK/Textures/SolanaLogo.png"
+missing_icon_path = "res://addons/SolanaSDK/Textures/missingicon.png"
 
 [node name="Balance" type="Label" parent="StartingScreen/SolBalance"]
 layout_mode = 0
@@ -201,7 +201,6 @@ offset_bottom = 159.0
 script = ExtResource("3_b3qx2")
 amount_label = NodePath("Balance")
 token_visual = NodePath("Visual")
-sol_icon_path = "res://addons/SolanaSDK/Textures/SolanaLogo.png"
 
 [node name="Balance" type="Label" parent="GameScreen/SolBalance2"]
 layout_mode = 0

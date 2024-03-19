@@ -6,7 +6,7 @@ class_name TokenVisualizer
 @export var token_visual:TextureRect
 @export var load_on_ready:bool=false
 @export var token_to_load:String
-@export_file("*.png","*.jpg") var sol_icon_path:String
+@export_file("*.png","*.jpg") var missing_icon_path:String
 
 func _ready() -> void:
 	if load_on_ready:
@@ -32,7 +32,7 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 		return
 		
 	if token_mint == null:
-		token_visual.texture=load(sol_icon_path)
+		token_visual.texture=load(missing_icon_path)
 	
 	if token_mint!=null:
 		token_to_load = token_mint.get_value()

@@ -167,7 +167,7 @@ script = ExtResource("10_7xxk1")
 amount_label = NodePath("Balance")
 token_visual = NodePath("Visual")
 load_on_ready = true
-sol_icon_path = "res://addons/SolanaSDK/Textures/SolanaLogo.png"
+missing_icon_path = "res://addons/SolanaSDK/Textures/missingicon.png"
 
 [node name="Balance" type="Label" parent="SolBalance"]
 layout_mode = 0
