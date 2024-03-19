@@ -27,7 +27,6 @@ func _ready() -> void:
 	for button in mint_buttons:
 		button.pressed.connect(self.try_mint.bind(button))
 		
-	SolanaService.transaction_processor.connect("on_transaction_finish",refresh_cm_data)
 	pass # Replace with function body.
 
 func setup(cm_data:CandyMachineData) -> void:
@@ -40,28 +39,29 @@ func setup(cm_data:CandyMachineData) -> void:
 
 func try_mint(pressed_button:Button) -> void:
 	var button_index = mint_buttons.find(pressed_button,0)
-	SolanaService.transaction_processor.connect("on_transaction_finish",refresh_cm_data)
 	
-	if guard_settings!=null:
-		SolanaService.candy_machine_manager.mint_nft_with_guards(
-			Pubkey.new_from_string(candy_machine_id),
-			Pubkey.new_from_string(candy_guard_id),
-			cm_data,
-			SolanaService.wallet,
-			SolanaService.wallet.get_kp(),
-			guard_settings,
-			mint_groups[button_index]
-		)
-	
-func refresh_cm_data(transaction_id:String) -> void:
-	SolanaService.transaction_processor.disconnect("on_transaction_finish",refresh_cm_data)
-	if transaction_id=="":
+	if guard_settings==null:
+		push_error("Missing Candy Guard File")
 		return
 		
+	var tx_id:String = await SolanaService.candy_machine_manager.mint_nft_with_guards(
+		Pubkey.new_from_string(candy_machine_id),
+		Pubkey.new_from_string(candy_guard_id),
+		cm_data,
+		SolanaService.wallet,
+		SolanaService.wallet.get_kp(),
+		guard_settings,
+		mint_groups[button_index]
+	)
+	
+	if tx_id=="":
+		return
+	
 	cm_data = await SolanaService.candy_machine_manager.fetch_candy_machine(Pubkey.new_from_string(candy_machine_id))
 	if cm_data!=null:
 		setup(cm_data)
 		
 	for button in mint_buttons:
 		button.try_unlock()
+	
 	
