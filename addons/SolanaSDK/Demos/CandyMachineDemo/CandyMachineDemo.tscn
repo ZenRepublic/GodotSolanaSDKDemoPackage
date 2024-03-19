@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dvcf3y7hfwasq"]
+[gd_scene load_steps=25 format=3 uid="uid://dvcf3y7hfwasq"]
 
 [ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf" id="2_wxjie"]
 [ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://addons/SolanaSDK/Fonts/PUSSS___.TTF" id="3_84blg"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cye2pbirpht4u" path="res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG" id="11_iirhe"]
 [ext_resource type="Texture2D" uid="uid://d4kauar2qc15y" path="res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG" id="12_8q8gn"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd" id="13_cx01u"]
+[ext_resource type="PackedScene" uid="uid://blmw46he11fxs" path="res://addons/SolanaSDK/Scripts/TransactionProcessor/TransactionOverlayUI.tscn" id="14_3whrl"]
 
 [sub_resource type="GDScript" id="GDScript_ixqxj"]
 script/source = "extends Control
@@ -258,5 +259,7 @@ text = "TOKEN MINT"
 script = ExtResource("13_cx01u")
 token_address = "AgGbJJeE2Zm6mPs41YJAMpt27yZiq9EmeQPfmwnMohmn"
 unlock_amount = 1.0
+
+[node name="TransactionOverlayUI" parent="." instance=ExtResource("14_3whrl")]
 
 [connection signal="pressed" from="ReturnButton" to="ReturnButton" method="_on_pressed"]

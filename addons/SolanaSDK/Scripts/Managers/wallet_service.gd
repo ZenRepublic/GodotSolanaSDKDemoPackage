@@ -33,6 +33,7 @@ func login_game_wallet() -> void:
 #		print(keypair.get_private_value())
 	else:
 		keypair = Keypair.new_from_file(custom_wallet_path)
+		print(keypair.get_public_value())
 		if keypair==null:
 			print("Failed to fetch keypair from a local file")
 			return

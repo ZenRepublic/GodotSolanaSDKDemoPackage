@@ -49,7 +49,7 @@ func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 	add_child(mpl_metadata)
 	mpl_metadata.get_mint_metadata(nft_mint)
 	var metadata:MetaData = await mpl_metadata.metadata_fetched
-	
+	mpl_metadata.queue_free()
 	print(metadata)
 	if metadata==null:
 		return null

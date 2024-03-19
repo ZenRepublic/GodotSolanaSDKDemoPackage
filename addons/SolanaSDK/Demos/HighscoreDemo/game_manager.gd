@@ -12,17 +12,6 @@ extends Node
 
 @export var leaderboard_system:LeaderboardSystem
 
-var player_score:int
-
-#devnet Game account, created once using setup_game function
-#var old_game_address:String = "8ewcHXrpmwGRAVU9TndiUXfEEFqVu7vbthPZzkW55CYD"
-var game_address:String = "AfQ9P7ihTcLCs5Gu1jNrA3x1yAftxZKXKD7inqjMS5sq"
-#devned leaderboard No.1 created from the game. Players can submit their scores to it
-#var old_leaderboard_address:String = "6iorenkNgoZvyMB1Vcyn4mkx5nxk8qMHTbGrPkTiBh98"
-var leaderboard_address:String = "DerZ2gbSSLHvivumtKzgsztE7HnCPmwHqgvrUbwTfpLN"
-#collection used as nft_meta for games and leaderboards. this is devnet Rubians
-var nft_collection:String = "EE1XTVRxVX5UtTLKRg7Y5bFQEKm2wm2nao9SGF27fypH"
-
 #THIS IS VERY UNSAFE!! 
 #For players to submit scores, they need the game's authority (set in init_game) to sign as well
 #So that players couldnt just sign the transaction without playing the game with setting any score
@@ -30,14 +19,28 @@ var nft_collection:String = "EE1XTVRxVX5UtTLKRg7Y5bFQEKm2wm2nao9SGF27fypH"
 
 #For production, you need to store the keypair in some server, and send the serialized transaction
 #for the server to sign with that keypair and return the signed transaction to send it out.
-var game_authority:String = "E2Tf3ws9uekoVC5ZGxRKXzpchShT7GHhiphmzJxEjvFRTnBXT8y3zJtoxYWLMkVSBiCH1nqZj3Hrmu3tX3Tffuq"
 # Called when the node enters the scene tree for the first time.
+@export var game_authority_path:String
+
+var game_auth:Keypair
+
+var player_score:int
+
+#devnet Game account, created once using setup_game function
+var game_address:String = "5XSs9TZRasg3k6dJLo1fKko3gtc749KNgUoj9mCqRF26"
+#devned leaderboard No.1 created from the game. Players can submit their scores to it
+var leaderboard_address:String = "9ztUqAyKPvPUmTAiopEZcc4QGghMvuM9oURixDQCgGcK"
+#collection used as nft_meta for games and leaderboards. this is devnet Rubians
+var nft_collection:String = "EE1XTVRxVX5UtTLKRg7Y5bFQEKm2wm2nao9SGF27fypH"
+
 func _ready() -> void:
 	SceneLoader.emit_signal("scene_loaded")
 	
 	start_game_button.pressed.connect(start_game)
 	submit_score_button.pressed.connect(submit_score)
 	leaderboard_button.pressed.connect(show_leaderboard)
+	
+	game_auth = Keypair.new_from_file(game_authority_path)
 
 	pass # Replace with function body.
 
@@ -52,9 +55,9 @@ func start_game() -> void:
 	
 	var player_data:Dictionary = soar_program.fetch_player_data(SolanaService.wallet.get_pubkey())
 	if player_data.size()==0:
-		initialize_player()
-	else:
-		play()
+		await initialize_player()
+		
+	play()
 		
 func play() -> void:
 	start_screen.visible=false
@@ -70,7 +73,7 @@ func setup_game() -> void:
 	#game's collection nft. Rubians provided by default
 	game_attributes.nft_meta = Pubkey.new_from_string(nft_collection)
 	
-	soar_program.init_game(game_attributes)
+	var tx_id:String = await soar_program.init_game(game_attributes)
 
 
 func register_leaderboard() -> void:
@@ -82,7 +85,7 @@ func register_leaderboard() -> void:
 	leaderboard_data.is_ascending=false
 	leaderboard_data.allow_multiple_scores=true
 	
-	soar_program.add_leaderboard(game_address,leaderboard_data)
+	var tx_id:String = await soar_program.add_leaderboard(game_address,leaderboard_data,game_auth)
 	
 func update_leaderboard() -> void:
 	var leaderboard_data:SoarUtils.LeaderboardData = SoarUtils.LeaderboardData.new()
@@ -91,31 +94,26 @@ func update_leaderboard() -> void:
 	leaderboard_data.is_ascending=false
 	leaderboard_data.allow_multiple_scores=true
 	
-	soar_program.update_leaderboard(game_address,leaderboard_address,leaderboard_data)
+	var tx_id:String = await soar_program.update_leaderboard(game_address,leaderboard_address,leaderboard_data,game_auth)
 	
 
 func initialize_player() -> void:
-	var username:String = "RedTriangleGuy"
+	var username:String = "Pokemon Go"
 	#devnet rubian nft example
 	var user_nft:Pubkey = Pubkey.new_from_string("9aNFiE6mdcQSGaytpoqpWvJMeA2h6vDa4sJttsyyKFPA")
 	
-	#soar_program.on_player_initialized.connect(play)
-	#soar_program.initialize_player(username,user_nft)
-	soar_program.update_player(username,user_nft)
+	var tx_id:String = await soar_program.initialize_player(username,user_nft)
+	#soar_program.update_player(username,user_nft)
 	
 func submit_score() -> void:
 	var game_account:Pubkey = Pubkey.new_from_string(game_address)
 	var leaderboard_account:Pubkey = Pubkey.new_from_string(leaderboard_address)
 	
-	var seed = SolanaSDK.bs58_decode(game_authority)
-	var auth_keypair = Keypair.new_from_seed(seed)
-	soar_program.on_score_submitted.connect(return_to_menu)
-	soar_program.submit_score_to_leaderboard(game_account,leaderboard_account,auth_keypair,player_score)
-	
-func return_to_menu() -> void:
-	soar_program.on_score_submitted.disconnect(return_to_menu)
+	var auth_keypair = Keypair.new_from_file(game_authority_path)
+	var tx_is:String = await soar_program.submit_score_to_leaderboard(game_account,leaderboard_account,auth_keypair,player_score)
 	start_screen.visible=true
 	play_screen.visible=false
+
 	
 func show_leaderboard() -> void:
 	var leaderboard_scores:Dictionary = soar_program.fetch_leaderboard_scores(Pubkey.new_from_string(leaderboard_address))

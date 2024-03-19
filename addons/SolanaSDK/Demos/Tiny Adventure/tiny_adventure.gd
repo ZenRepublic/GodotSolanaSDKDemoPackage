@@ -42,7 +42,6 @@ func _process(delta: float) -> void:
 	pass
 	
 func init_game() -> void:
-	SolanaService.transaction_processor.connect("on_transaction_finish",start_game_callback)
 	var prize_in_lamports:int = int(chest_prize*pow(10,9))
 	var instructions:Array[Instruction]
 	var init_ix:Instruction = anchor_program.build_instruction("restartLevel",[
@@ -54,11 +53,9 @@ func init_game() -> void:
 	AnchorProgram.u64(prize_in_lamports))
 	
 	instructions.append(init_ix)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
-
-func start_game_callback(transaction_id:String) -> void:
-	SolanaService.transaction_processor.disconnect("on_transaction_finish",start_game_callback)
-	if transaction_id=="":
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	
+	if tx_id=="":
 		push_error("Failed to start game")
 		return
 		
@@ -76,7 +73,6 @@ func move_right() -> void:
 	move("moveRight")
 	
 func move(move_dir:String) -> void:
-	SolanaService.transaction_processor.connect("on_transaction_finish",move_callback)
 	var instructions:Array[Instruction]
 	var move_ix:Instruction = anchor_program.build_instruction(move_dir,[
 		level_pda, #gamedata
@@ -86,15 +82,14 @@ func move(move_dir:String) -> void:
 	],null)
 	
 	instructions.append(move_ix)
-	SolanaService.transaction_processor.try_sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
-
-func move_callback(transaction_id:String) -> void:
-	SolanaService.transaction_processor.disconnect("on_transaction_finish",move_callback)
-	if transaction_id=="":
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	
+	if tx_id=="":
 		push_error("Failed to move")
 		return
 		
 	set_player_pos()
+
 	
 func update_prize() -> void:
 	var data:Dictionary = anchor_program.fetch_account("GameVault",vault_pda)

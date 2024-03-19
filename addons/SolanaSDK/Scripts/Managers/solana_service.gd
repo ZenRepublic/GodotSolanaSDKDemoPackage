@@ -152,7 +152,7 @@ func generate_keypair_from_pk(pk:String) -> Keypair:
 	#var keypair = Keypair.new_from_file("C:\\Users\\thoma\\Desktop\\kp\\kp.json")
 	return keypair
 
-func transfer_sol_to_address(receiver:String,amount:float, sender:Keypair=null) -> void:
+func transfer_sol_to_address(receiver:String,amount:float, sender:Keypair=null) -> String:
 	var instructions:Array[Instruction]
 	
 	var sender_keypair = wallet.get_kp()
@@ -168,9 +168,10 @@ func transfer_sol_to_address(receiver:String,amount:float, sender:Keypair=null) 
 	var sol_transfer_ix:Instruction = SystemProgram.transfer(sender_account,receiver_account,amount_in_lamports)
 	instructions.append(sol_transfer_ix)
 	
-	transaction_processor.try_sign_transaction(sender_keypair,instructions)
+	var tx_id:String = await transaction_processor.sign_transaction(sender_keypair,instructions)
+	return tx_id
 	
-func transfer_spl_to_address(token_address:String,receiver:String,amount:float,sender:Keypair=null) -> void:
+func transfer_spl_to_address(token_address:String,receiver:String,amount:float,sender:Keypair=null) -> String:
 	var instructions:Array[Instruction]
 	
 	var sender_keypair = wallet.get_kp()
@@ -201,6 +202,6 @@ func transfer_spl_to_address(token_address:String,receiver:String,amount:float,s
 	var transfer_ix:Instruction = TokenProgram.transfer_checked(sender_ata,token_mint,receiver_ata,sender_account,amount,token_decimals)
 	instructions.append(transfer_ix)
 	
-	transaction_processor.try_sign_transaction(sender_keypair,instructions)
-	pass
+	var tx_id:String = await transaction_processor.sign_transaction(sender_keypair,instructions)
+	return tx_id
 

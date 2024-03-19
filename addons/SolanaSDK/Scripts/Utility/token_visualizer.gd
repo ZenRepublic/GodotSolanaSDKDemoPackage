@@ -12,7 +12,7 @@ func _ready() -> void:
 	if load_on_ready:
 		load_token()
 	
-	#SolanaService.transaction_processor.connect("on_transaction_finish",update_token)
+	SolanaService.transaction_processor.connect("on_transaction_finish",update_token)
 			
 func load_token() -> void:
 	var balance:float
@@ -41,7 +41,7 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 		add_child(mpl_metadata)
 		mpl_metadata.get_mint_metadata(token_mint)
 		var onchain_metadata:MetaData = await mpl_metadata.metadata_fetched
-	
+		mpl_metadata.queue_free()
 		if onchain_metadata==null:
 			push_error("Failed to fetch token metadata in a token visualizer!")
 			return
