@@ -57,7 +57,7 @@ func get_sol_balance(address_to_check:String) -> float:
 	return balance
 	
 func get_token_balance(address_to_check:String,token_address:String)->float:
-	var token_account:Pubkey = await get_associated_token_account(address_to_check,token_pid)
+	var token_account:Pubkey = await get_associated_token_account(address_to_check,token_address)
 	if token_account == null:
 		return 0	
 	
