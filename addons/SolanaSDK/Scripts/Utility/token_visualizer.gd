@@ -30,9 +30,6 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 	if token_visual==null:
 		push_error("No token visual provided!")
 		return
-		
-	if token_mint == null:
-		token_visual.texture=load(missing_icon_path)
 	
 	if token_mint!=null:
 		token_to_load = token_mint.get_value()
@@ -49,8 +46,11 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 		var uri:String = onchain_metadata.get_uri()
 		var metadata_json:Dictionary = await SolanaService.file_loader.load_token_metadata(uri)
 		var token_image:Texture2D = await SolanaService.file_loader.load_token_image(metadata_json["image"])
-
-		token_visual.texture = token_image
+		
+		if token_image==null:
+			token_visual.texture=load(missing_icon_path)
+		else:
+			token_visual.texture = token_image
 		
 func update_token(transaction_id:String)->void:
 	if transaction_id=="":
