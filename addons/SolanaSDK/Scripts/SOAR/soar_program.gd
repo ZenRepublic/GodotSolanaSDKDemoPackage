@@ -50,7 +50,7 @@ func init_game(game_attributes:SoarUtils.GameAttributes) -> String:
 	
 	print("Creating Game Account with ID: %s"%game_account.get_public_value())
 	instructions.append(init_game_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	return tx_id
 		
 
@@ -81,7 +81,7 @@ func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardD
 	print("Creating Leaderboard with ID: %s"%leaderboard.get_value())
 	
 	instructions.append(add_leaderboard_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	return tx_id
 	
 	
@@ -108,7 +108,7 @@ func update_leaderboard(game_address:String,leaderboard_address:String,leaderboa
 	print("Updating Leaderboard with ID: %s"%leaderboard_account.get_value())
 	
 	instructions.append(update_leaderboard_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	return tx_id
 	
 
@@ -127,7 +127,7 @@ func initialize_player(username:String, user_nft:Pubkey) -> String:
 	
 	print("Initializing Player account with ID: %s"%player_account.get_value())
 	instructions.append(init_player_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	return tx_id
 	
 		
@@ -145,7 +145,7 @@ func update_player(username:String, user_nft:Pubkey) -> String:
 	
 	print("Updating Player account with ID: %s"%player_account.get_value())
 	instructions.append(update_player_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	return tx_id
 		
 
@@ -191,7 +191,7 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		})
 		
 	instructions.append(submit_score_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	return tx_id
 	
 

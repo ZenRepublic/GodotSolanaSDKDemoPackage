@@ -41,5 +41,5 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,
 		)
 		
 	instructions.append(mint_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(payer.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(payer.get_kp(),instructions,"finalized")
 	return tx_id

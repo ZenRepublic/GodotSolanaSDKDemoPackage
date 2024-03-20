@@ -53,7 +53,7 @@ func init_game() -> void:
 	AnchorProgram.u64(prize_in_lamports))
 	
 	instructions.append(init_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	
 	if tx_id=="":
 		push_error("Failed to start game")
@@ -82,7 +82,7 @@ func move(move_dir:String) -> void:
 	],null)
 	
 	instructions.append(move_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,true,"finalized")
+	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	
 	if tx_id=="":
 		push_error("Failed to move")
