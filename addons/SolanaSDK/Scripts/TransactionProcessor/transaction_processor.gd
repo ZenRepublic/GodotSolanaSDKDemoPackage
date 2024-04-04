@@ -10,6 +10,7 @@ var priority_fee_medium:float = 0.0003
 var priority_fee_high:float = 0.0005
 
 signal on_transaction_init
+signal on_transaction_signed
 signal on_transaction_finish
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -38,35 +39,61 @@ func sign_transaction(wallet,instructions:Array[Instruction],tx_commitment:Strin
 	var priority_fee = get_priority_fee(priority_level)
 	transaction.set_unit_limit(priority_fee)
 	transaction.set_unit_price(priority_fee)
-
-	transaction.update_latest_blockhash()
-	transaction.sign_and_send()
-	var response:Dictionary = await transaction.transaction_response
 	
-	#if transaction cancelled, it will return empty resposne
+	transaction.update_latest_blockhash()
+	await transaction.blockhash_updated
+	
+	transaction.sign()
+	#await transaction.fully_signed
+	print("SIGNED")
+	emit_signal("on_transaction_signed")
+	var serialized_tx:PackedByteArray = transaction.serialize()
+	var tx_id:String = await sign_serialized_transaction(wallet,serialized_tx,tx_commitment)
+	#var tx_id:String = await send_transaction(transaction,tx_commitment)
+	
+	transaction.queue_free()
+	emit_signal("on_transaction_finish",tx_id)
+	
+	return tx_id
+	
+
+func sign_serialized_transaction(wallet,transaction_bytes:PackedByteArray,tx_commitment:String="confirmed") -> String:
+	emit_signal("on_transaction_init")
+	var transaction:Transaction = Transaction.new_from_bytes(transaction_bytes)
+	transaction.set_url(SolanaService.active_rpc)
+	
+	add_child(transaction)
+	transaction.set_signers([wallet])
+	
+	var tx_id:String = await send_transaction(transaction,tx_commitment)
+	
+	transaction.queue_free()
+	emit_signal("on_transaction_finish",tx_id)
+	
+	return tx_id
+	
+func send_transaction(tx:Transaction,tx_commitment:String="confirmed") -> String:
+	tx.send()
+	var response:Dictionary = await tx.transaction_response
+	
 	if response.size() == 0:
-		transaction.queue_free()
-		emit_signal("on_transaction_finish","")
 		return ""
 		
 	if response.has("error"):
 		print(response["error"])
-		transaction.queue_free()
-		emit_signal("on_transaction_finish","")
 		return ""
-	
+
 	match tx_commitment:
-		"confirmed":	
-			while !transaction.is_confirmed():
+		"confirmed":    
+			while !tx.is_confirmed():
 				await get_tree().create_timer(1).timeout
-		"finalized":	
-			while !transaction.is_finalized():
-				await get_tree().create_timer(1).timeout	
+		"finalized":    
+			while !tx.is_finalized():
+				await get_tree().create_timer(1).timeout    
 				
-	transaction.queue_free()
 	print("Transaction ID: ",response["result"])
-	emit_signal("on_transaction_finish",response["result"])
 	return response["result"]
+	
 
 func get_priority_fee(priority_level:PriorityLevel) -> float:
 	var fee:float
@@ -81,6 +108,7 @@ func get_priority_fee(priority_level:PriorityLevel) -> float:
 			fee =  priority_fee_high
 	
 	return fee
+	
 	
 	
 	

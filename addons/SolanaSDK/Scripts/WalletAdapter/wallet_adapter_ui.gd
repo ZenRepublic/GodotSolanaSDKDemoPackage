@@ -13,7 +13,8 @@ signal on_adapter_cancel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	cancel_button.pressed.connect(cancel_login)
+	if cancel_button!=null:
+		cancel_button.pressed.connect(cancel_login)
 	pass # Replace with function body.
 
 
