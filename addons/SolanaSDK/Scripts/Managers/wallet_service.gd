@@ -33,7 +33,7 @@ func login_game_wallet() -> void:
 #		print(keypair.get_private_value())
 	else:
 		keypair = Keypair.new_from_file(custom_wallet_path)
-		print(keypair.get_public_value())
+		print(keypair.get_public_string())
 		if keypair==null:
 			print("Failed to fetch keypair from a local file")
 			return
@@ -59,7 +59,7 @@ func log_in_fail() -> void:
 
 func get_pubkey() -> Pubkey:
 	if use_generated:
-		return Pubkey.new_from_string(keypair.get_public_value())
+		return Pubkey.new_from_string(keypair.get_public_string())
 	else:
 		return wallet_adapter.get_connected_key()
 	
@@ -72,7 +72,7 @@ func get_kp():
 func is_logged_in() -> bool:
 	if use_generated:
 		return keypair!=null
-	return wallet_adapter.get_connected_key().get_value()!=""
+	return wallet_adapter.get_connected_key().to_string()!=""
 		
 
 #func read_kp_from_file(file_path: String) -> Keypair:

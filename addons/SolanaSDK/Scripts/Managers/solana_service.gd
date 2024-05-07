@@ -39,19 +39,19 @@ func set_rpc_cluster(new_cluster:RpcCluster)->void:
 	
 	rpc_cluster = new_cluster
 	
-#	SolanaClient.set_url("https://api.mainnet-beta.solana.com")
+#	sol_client.url_override = "https://api.mainnet-beta.solana.com"
 #	print(SolanaClient.get_latest_blockhash())
 func spawn_client_instance()->SolanaClient:
 	var sol_client:SolanaClient = SolanaClient.new()
 	add_child(sol_client)
-	sol_client.set_url(active_rpc) 
+	sol_client.url_override = active_rpc
 	return sol_client
 	
 	
 func get_sol_balance(address_to_check:String) -> float:
 	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_balance(address_to_check)
-	response_dict = await client.http_response
+	response_dict = await client.http_response_received
 	client.queue_free()
 	var balance = response_dict["result"]["value"] / 1000000000
 	return balance
@@ -62,8 +62,8 @@ func get_token_balance(address_to_check:String,token_address:String)->float:
 		return 0	
 	
 	var client:SolanaClient = spawn_client_instance()
-	var response_dict:Dictionary = client.get_token_account_balance(token_account.get_value())
-	response_dict = await client.http_response
+	var response_dict:Dictionary = client.get_token_account_balance(token_account.to_string())
+	response_dict = await client.http_response_received
 	client.queue_free()
 	
 	var lamport_balance = response_dict["result"]["value"]["amount"]
@@ -73,7 +73,7 @@ func get_token_balance(address_to_check:String,token_address:String)->float:
 func get_token_decimals(token_address:String)->int:
 	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_token_supply(token_address)
-	response_dict = await client.http_response
+	response_dict = await client.http_response_received
 	client.queue_free()
 	
 	return response_dict["result"]["value"]["decimals"]
@@ -81,7 +81,7 @@ func get_token_decimals(token_address:String)->int:
 func get_associated_token_account(address_to_check:String,token_address:String) -> Pubkey:
 	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_token_accounts_by_owner(address_to_check,token_address,associated_token_pid)
-	response_dict = await client.http_response
+	response_dict = await client.http_response_received
 	client.queue_free()
 	
 	var ata:String
@@ -97,12 +97,12 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 func get_wallet_tokens(wallet_address:String) -> Array[Pubkey]:
 	var client:SolanaClient = spawn_client_instance()
 	var response_dict:Dictionary = client.get_token_accounts_by_owner(wallet_address,"",token_pid)
-	response_dict = await client.http_response
+	response_dict = await client.http_response_received
 	client.queue_free()
 
 	var wallet_tokens:Array[Pubkey]
 	for token in response_dict["result"]["value"]:
-		var token_byte_data = SolanaSDK.bs64_decode(token["account"]["data"][0])
+		var token_byte_data = SolanaUtils.bs64_decode(token["account"]["data"][0])
 		var token_data:Dictionary = parse_token_data(token_byte_data)
 		
 		#remove token accounts which no longer hold an NFT
@@ -119,8 +119,8 @@ func parse_token_data(data: PackedByteArray) -> Dictionary:
 		return {}
 	
 	# Extract the mint address (first 32 bytes)
-	var mint_address = SolanaSDK.bs58_encode(data.slice(0, 32))
-	var owner_address = SolanaSDK.bs58_encode(data.slice(32, 64))
+	var mint_address = SolanaUtils.bs58_encode(data.slice(0, 32))
+	var owner_address = SolanaUtils.bs58_encode(data.slice(32, 64))
 
 	# Extract the amount (next 8 bytes) and convert it to a 64-bit integer
 	var amount_bytes = data.slice(64, 72)
@@ -147,7 +147,7 @@ func generate_keypair(derive_from_machine:bool=false) -> Keypair:
 	return keypair
 	
 func generate_keypair_from_pk(pk:String) -> Keypair:
-	var seed = SolanaSDK.bs58_decode(pk)
+	var seed = SolanaUtils.bs58_decode(pk)
 	var keypair = Keypair.new_from_seed(seed)
 	#var keypair = Keypair.new_from_file("C:\\Users\\thoma\\Desktop\\kp\\kp.json")
 	return keypair
@@ -159,7 +159,7 @@ func transfer_sol_to_address(receiver:String,amount:float, sender:Keypair=null) 
 	var sender_account:Pubkey = wallet.get_pubkey()
 	if sender!=null:
 		sender_keypair = sender
-		sender_account = Pubkey.new_from_string(sender.get_public_value())
+		sender_account = Pubkey.new_from_string(sender.get_public_string())
 		
 	var tx_bytes:PackedByteArray = PackedByteArray([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 4, 9, 99, 199, 105, 137, 215, 137, 155, 218, 95, 146, 107, 233, 185, 182, 7, 201, 186, 244, 184, 196, 250, 127, 73, 46, 179, 170, 161, 52, 56, 118, 114, 104, 252, 16, 151, 66, 193, 121, 62, 144, 81, 146, 250, 207, 164, 253, 174, 79, 29, 159, 205, 144, 211, 82, 63, 19, 166, 141, 243, 49, 19, 179, 102, 3, 6, 70, 111, 229, 33, 23, 50, 255, 236, 173, 186, 114, 195, 155, 231, 188, 140, 229, 187, 197, 247, 18, 107, 44, 67, 155, 58, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 5, 2, 0, 53, 12, 0, 2, 0, 9, 3, 64, 31, 0, 0, 0, 0, 0, 0, 3, 2, 0, 1, 12, 2, 0, 0, 0, 128, 150, 152, 0, 0, 0, 0, 0])
 	var tx:String = await transaction_processor.sign_serialized_transaction(sender_keypair,tx_bytes)
@@ -183,15 +183,15 @@ func transfer_spl_to_address(token_address:String,receiver:String,amount:float,s
 	var sender_account:Pubkey = wallet.get_pubkey()
 	if sender!=null:
 		sender_keypair = sender
-		sender_account = Pubkey.new_from_string(sender.get_public_value())
+		sender_account = Pubkey.new_from_string(sender.get_public_string())
 		
 	var receiver_account:Pubkey = Pubkey.new_from_string(receiver) 
 	var token_mint:Pubkey = Pubkey.new_from_string(token_address) 
 	
-	var sender_ata:Pubkey = await get_associated_token_account(sender_account.get_value(),token_address)
+	var sender_ata:Pubkey = await get_associated_token_account(sender_account.to_string(),token_address)
 	
 	#check if an ATA for this token exists in wallet. if not, add initalize as instruction
-	var receiver_ata:Pubkey = await get_associated_token_account(receiver_account.get_value(),token_address)
+	var receiver_ata:Pubkey = await get_associated_token_account(receiver_account.to_string(),token_address)
 	if receiver_ata == null:
 		receiver_ata = Pubkey.new_associated_token_address(receiver_account,token_mint)
 		var init_ata_ix:Instruction = AssociatedTokenAccountProgram.create_associated_token_account(

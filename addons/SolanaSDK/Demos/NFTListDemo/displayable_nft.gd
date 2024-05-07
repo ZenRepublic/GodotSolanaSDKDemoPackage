@@ -30,7 +30,7 @@ func set_data(nft:Nft) -> void:
 		if nft.image!=null:
 			visual.texture = nft.image
 		else:
-			print("Couldn't load the image for mint: %s" % nft.mint.get_value())
+			print("Couldn't load the image for mint: %s" % nft.mint.to_string())
 		
 
 func set_data_manual(texture:Texture2D, nft_name:String) -> void:

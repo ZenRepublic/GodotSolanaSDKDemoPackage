@@ -8,7 +8,7 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var wallet_address = SolanaService.wallet.get_pubkey().get_value()
+	var wallet_address = SolanaService.wallet.get_pubkey().to_string()
 	account_address.text = wallet_address
 	
 	if balance_visualizer!=null:

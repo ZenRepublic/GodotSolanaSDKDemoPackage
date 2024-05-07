@@ -11,30 +11,56 @@ class_name SoarProgram
 
 @onready var soar_program:AnchorProgram = $SOAR_PROGRAM
 
+func spawn_anchor_program_instance()->AnchorProgram:
+	var instance:AnchorProgram = AnchorProgram.new()
+	add_child(instance)
+	instance.set_pid(soar_program.get_pid())
+	instance.set_json_file(soar_program.get_json_file())
+	instance.set_idl(soar_program.get_idl())
+	return instance
+
 func get_pid() -> Pubkey:
 		return Pubkey.new_from_string(soar_program.get_pid())
 		
 func fetch_game_data(game_account:Pubkey) -> Dictionary:
-	return soar_program.fetch_account("Game",game_account)
+	var instance:AnchorProgram = spawn_anchor_program_instance()
+	instance.fetch_account("Game",game_account)
+	var result:Dictionary = await instance.account_fetched
+	return result
 	
 func fetch_leaderboard_data(leaderboard_account:Pubkey) -> Dictionary:
-	return soar_program.fetch_account("LeaderBoard",leaderboard_account)
+	var instance:AnchorProgram = spawn_anchor_program_instance()
+	instance.fetch_account("LeaderBoard",leaderboard_account)
+	var result:Dictionary = await instance.account_fetched
+	return result
 	
 func fetch_leaderboard_scores(leaderboard_account:Pubkey) -> Dictionary:
+	var instance:AnchorProgram = spawn_anchor_program_instance()
 	var leaderboard_top_entries_pda:Pubkey = SoarPDA.get_leaderboard_scores_pda(leaderboard_account,get_pid())
-	return soar_program.fetch_account("LeaderTopEntries",leaderboard_top_entries_pda)
+	instance.fetch_account("LeaderTopEntries",leaderboard_top_entries_pda)
+	var result:Dictionary = await instance.account_fetched
+	return result
 	
 func fetch_player_data(user_account:Pubkey) -> Dictionary:
+	var instance:AnchorProgram = spawn_anchor_program_instance()
 	var player_pda:Pubkey = SoarPDA.get_player_pda(user_account,get_pid())
-	return soar_program.fetch_account("Player",player_pda)
+	instance.fetch_account("Player",player_pda)
+	var result:Dictionary = await instance.account_fetched
+	return result
 	
 func fetch_player_data_from_pda(player_pda:Pubkey) -> Dictionary:
-	return soar_program.fetch_account("Player",player_pda)
-
+	var instance:AnchorProgram = spawn_anchor_program_instance()
+	instance.fetch_account("Player",player_pda)
+	var result:Dictionary = await instance.account_fetched
+	return result
 func fetch_player_scores(user_account:Pubkey,leaderboard_account:Pubkey) -> Dictionary:
 	var player_account_pda:Pubkey = SoarPDA.get_player_pda(user_account,get_pid())
 	var player_scores_pda:Pubkey = SoarPDA.get_player_scores_pda(player_account_pda,leaderboard_account,get_pid())
-	return soar_program.fetch_account("PlayerScoresList",player_scores_pda)
+	
+	var instance:AnchorProgram = spawn_anchor_program_instance()
+	instance.fetch_account("PlayerScoresList",player_scores_pda)
+	var result:Dictionary = await instance.account_fetched
+	return result
 
 func init_game(game_attributes:SoarUtils.GameAttributes) -> String:
 	var game_account:Keypair = SolanaService.generate_keypair()
@@ -48,7 +74,7 @@ func init_game(game_attributes:SoarUtils.GameAttributes) -> String:
 		"GameAuth":[SolanaService.wallet.get_pubkey()]
 	})
 	
-	print("Creating Game Account with ID: %s"%game_account.get_public_value())
+	print("Creating Game Account with ID: %s"%game_account.get_public_string())
 	instructions.append(init_game_ix)
 	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
 	return tx_id
@@ -57,7 +83,7 @@ func init_game(game_attributes:SoarUtils.GameAttributes) -> String:
 	
 func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardData,game_auth:Keypair) -> String:
 	var game_account:Pubkey=Pubkey.new_from_string(game_address)
-	var game_data:Dictionary = fetch_game_data(game_account)
+	var game_data:Dictionary = await fetch_game_data(game_account)
 	
 	if game_data.size() == 0:
 		push_error("Failed to fetch the game data")
@@ -156,7 +182,7 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 	
 	#check if player already has a scores account for this leaderboard and if not, add ix of registering them
 	#player scores list returns info on player's score on a specific leaderboard. even if it's empty, the account may exists
-	var player_scores_list:Dictionary = fetch_player_scores(SolanaService.wallet.get_pubkey(),leaderboard_account)
+	var player_scores_list:Dictionary = await fetch_player_scores(SolanaService.wallet.get_pubkey(),leaderboard_account)
 	#for result in player_scores_list["scores"]:
 		#print(int(result["score"]))
 
@@ -173,7 +199,7 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		
 		instructions.append(register_player_ix)
 		
-	var leaderboard_data:Dictionary = fetch_leaderboard_data(leaderboard_account)
+	var leaderboard_data:Dictionary = await fetch_leaderboard_data(leaderboard_account)
 	var leaderboard_top_entries_pda:Pubkey = SoarPDA.get_leaderboard_scores_pda(leaderboard_account,get_pid())
 	var player_score = AnchorProgram.u64(score * pow(10,leaderboard_data["decimals"]))
 	

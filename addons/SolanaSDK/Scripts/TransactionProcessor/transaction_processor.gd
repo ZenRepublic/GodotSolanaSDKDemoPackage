@@ -24,7 +24,7 @@ func setup(adapter:WalletAdapter) -> void:
 func sign_transaction(wallet,instructions:Array[Instruction],tx_commitment:String="confirmed",priority_level:PriorityLevel=PriorityLevel.HIGH) -> String:
 	emit_signal("on_transaction_init")
 	var transaction:Transaction = Transaction.new()	
-	transaction.set_url(SolanaService.active_rpc)
+	transaction.url_override = SolanaService.active_rpc
 	add_child(transaction)
 	#
 	for idx in range(instructions.size()):
@@ -60,7 +60,7 @@ func sign_transaction(wallet,instructions:Array[Instruction],tx_commitment:Strin
 func sign_serialized_transaction(wallet,transaction_bytes:PackedByteArray,tx_commitment:String="confirmed") -> String:
 	emit_signal("on_transaction_init")
 	var transaction:Transaction = Transaction.new_from_bytes(transaction_bytes)
-	transaction.set_url(SolanaService.active_rpc)
+	transaction.url_override = SolanaService.active_rpc
 	
 	add_child(transaction)
 	transaction.set_signers([wallet])
@@ -74,7 +74,7 @@ func sign_serialized_transaction(wallet,transaction_bytes:PackedByteArray,tx_com
 	
 func send_transaction(tx:Transaction,tx_commitment:String="confirmed") -> String:
 	tx.send()
-	var response:Dictionary = await tx.transaction_response
+	var response:Dictionary = await tx.transaction_response_received
 	
 	if response.size() == 0:
 		return ""

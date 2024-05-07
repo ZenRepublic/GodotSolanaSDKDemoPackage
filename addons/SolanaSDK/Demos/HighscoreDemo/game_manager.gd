@@ -53,7 +53,7 @@ func start_game() -> void:
 	#check if this wallet is initialized as a player in SOAR program
 	#if not, initialize and then start
 	
-	var player_data:Dictionary = soar_program.fetch_player_data(SolanaService.wallet.get_pubkey())
+	var player_data:Dictionary = await soar_program.fetch_player_data(SolanaService.wallet.get_pubkey())
 	if player_data.size()==0:
 		await initialize_player()
 		
@@ -116,8 +116,8 @@ func submit_score() -> void:
 
 	
 func show_leaderboard() -> void:
-	var leaderboard_scores:Dictionary = soar_program.fetch_leaderboard_scores(Pubkey.new_from_string(leaderboard_address))
-	var player_scores:Dictionary = soar_program.fetch_player_scores(SolanaService.wallet.get_pubkey(),Pubkey.new_from_string(leaderboard_address))
+	var leaderboard_scores:Dictionary = await soar_program.fetch_leaderboard_scores(Pubkey.new_from_string(leaderboard_address))
+	var player_scores:Dictionary = await soar_program.fetch_player_scores(SolanaService.wallet.get_pubkey(),Pubkey.new_from_string(leaderboard_address))
 	leaderboard_system.refresh(leaderboard_scores,player_scores)
 	start_screen.visible=false
 	leaderboard_screen.visible=true

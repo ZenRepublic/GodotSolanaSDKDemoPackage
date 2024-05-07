@@ -16,7 +16,7 @@ func _ready() -> void:
 			
 func load_token() -> void:
 	var balance:float
-	var user_wallet:String = SolanaService.wallet.get_pubkey().get_value()
+	var user_wallet:String = SolanaService.wallet.get_pubkey().to_string()
 	if token_to_load.length()==0:
 		balance = await SolanaService.get_sol_balance(user_wallet)
 		set_token_data(balance)
@@ -32,7 +32,7 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 		return
 	
 	if token_mint!=null:
-		token_to_load = token_mint.get_value()
+		token_to_load = token_mint.to_string()
 		var mpl_metadata:MplTokenMetadata = MplTokenMetadata.new()
 		mpl_metadata.url = SolanaService.active_rpc
 		add_child(mpl_metadata)

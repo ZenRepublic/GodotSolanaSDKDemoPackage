@@ -25,7 +25,7 @@ func refresh(scores_data:Dictionary, player_scores:Dictionary) -> void:
 		if entry["entry"]["score"] == 0:
 			break
 			
-		var player_data:Dictionary = soar_program.fetch_player_data_from_pda(entry["player"])
+		var player_data:Dictionary = await soar_program.fetch_player_data_from_pda(entry["player"])
 		var entry_instance:LeaderboardEntry = leaderboard_entry.instantiate() as LeaderboardEntry
 		scorebox.add_child(entry_instance)
 		entry_instance.set_data(index,player_data["username"],entry["entry"]["score"])

@@ -26,7 +26,7 @@ func try_load_nfts(logged_in:bool) -> void:
 	
 func load_nfts()->void:
 	var connected_wallet:Pubkey = SolanaService.wallet.get_pubkey()
-	var wallet_tokens:Array[Pubkey] = await SolanaService.get_wallet_tokens(connected_wallet.get_value())
+	var wallet_tokens:Array[Pubkey] = await SolanaService.get_wallet_tokens(connected_wallet.to_string())
 	emit_signal("on_nft_load_started",wallet_tokens.size())
 	
 	for i in range(wallet_tokens.size()):	

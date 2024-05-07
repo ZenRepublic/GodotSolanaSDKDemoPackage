@@ -30,11 +30,11 @@ func belongs_to_collection(nft:Nft) -> bool:
 		
 	if first_verified_creator_mode:
 #		for creator in nft.metadata.get_creators():
-#			print("creator: ",creator.address.get_value())
+#			print("creator: ",creator.address.to_string())
 		if nft.metadata.get_creators().size() == 0:
 			return false
-		return nft.metadata.get_creators()[0].address.get_value() == collection_mint.get_value()
+		return nft.metadata.get_creators()[0].address.to_string() == collection_mint.to_string()
 	else:
 		if nft.metadata.get_collection() == null:
 			return false
-		return nft.metadata.get_collection().key.get_value() == collection_mint.get_value()
+		return nft.metadata.get_collection().key.to_string() == collection_mint.to_string()

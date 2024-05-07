@@ -25,7 +25,7 @@ func try_unlock() -> void:
 			var mint_list = get_hashlist_from_file(mint_list_path)
 			var in_list=false
 			for nft in held_nft_list:
-				if mint_list.has(nft.mint.get_value()):
+				if mint_list.has(nft.mint.to_string()):
 					in_list=true
 					break
 			set_interactable(in_list)

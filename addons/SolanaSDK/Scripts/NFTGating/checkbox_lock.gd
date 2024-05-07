@@ -27,9 +27,9 @@ func try_unlock() -> void:
 	var account_address = SolanaService.wallet.get_pubkey()
 	var token_balance:float
 	if token_address.length()==0:
-		token_balance = await SolanaService.get_sol_balance(account_address.get_value())
+		token_balance = await SolanaService.get_sol_balance(account_address.to_string())
 	else:
-		token_balance = await SolanaService.get_token_balance(account_address.get_value(),token_address)
+		token_balance = await SolanaService.get_token_balance(account_address.to_string(),token_address)
 	set_interactable(token_balance>=unlock_amount)
 	available_label.text = "%s Available" % int(token_balance)
 	

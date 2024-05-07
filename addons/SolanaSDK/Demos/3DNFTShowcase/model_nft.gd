@@ -30,7 +30,7 @@ func load_model() -> void:
 	if nft.model_state!=null:
 		instantiate_model(nft.model_state)
 	else:
-		print("Couldn't load the model for mint: %s" % nft.mint.get_value())
+		print("Couldn't load the model for mint: %s" % nft.mint.to_string())
 		
 	loading_template.visible=false
 			

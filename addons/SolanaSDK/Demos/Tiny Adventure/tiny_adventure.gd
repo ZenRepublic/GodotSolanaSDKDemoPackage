@@ -92,12 +92,18 @@ func move(move_dir:String) -> void:
 
 	
 func update_prize() -> void:
-	var data:Dictionary = anchor_program.fetch_account("GameVault",vault_pda)
+	var instance:AnchorProgram = spawn_anchor_program_instance()
+	instance.fetch_account("GameVault",vault_pda)
+	var data:Dictionary = await instance.account_fetched
+	
 	var prize_in_sol:float = float(data["chestPrize"])/pow(10,9)
 	prize_label.text = "%s SOL" % str(prize_in_sol)
 	
 func set_player_pos() -> void:
-	var data:Dictionary = anchor_program.fetch_account("GameData",level_pda)
+	var instance:AnchorProgram = spawn_anchor_program_instance()
+	instance.fetch_account("GameData",level_pda)
+	var data:Dictionary = await instance.account_fetched
+	
 	var new_pos = data["characterPos"]
 	player.get_parent().remove_child(player)
 	step_blocks[new_pos].add_child(player)
@@ -105,3 +111,12 @@ func set_player_pos() -> void:
 	if new_pos == step_blocks.size()-1:
 		in_game_balance.load_token()
 		chest.visible=false
+		
+
+func spawn_anchor_program_instance()->AnchorProgram:
+	var instance:AnchorProgram = AnchorProgram.new()
+	add_child(instance)
+	instance.set_pid(anchor_program.get_pid())
+	instance.set_json_file(anchor_program.get_json_file())
+	instance.set_idl(anchor_program.get_idl())
+	return instance
