@@ -30,10 +30,9 @@ func login_game_wallet() -> void:
 	if custom_wallet_path.length()==0:
 		keypair = SolanaService.generate_keypair(true)
 		#uncomment this to print your derived private key
-#		print(keypair.get_private_value())
+		#print(keypair.get_private_bytes())
 	else:
 		keypair = Keypair.new_from_file(custom_wallet_path)
-		print(keypair.get_public_string())
 		if keypair==null:
 			print("Failed to fetch keypair from a local file")
 			return
@@ -50,6 +49,7 @@ func log_in_success() -> void:
 		wallet_adapter.disconnect("connection_established",log_in_success)
 		wallet_adapter.disconnect("connection_error",log_in_fail)
 	emit_signal("on_logged_in",true)
+	print(get_pubkey().to_string())
 	
 func log_in_fail() -> void:
 	if !use_generated:
