@@ -73,13 +73,3 @@ func is_logged_in() -> bool:
 	if use_generated:
 		return keypair!=null
 	return wallet_adapter.get_connected_key().to_string()!=""
-		
-
-#func read_kp_from_file(file_path: String) -> Keypair:
-	#var file = FileAccess.open(file_path, FileAccess.READ)
-	#if file==null:
-		#return null
-		#
-	#var kp_text = file.get_as_text()
-	#var keypair:Keypair = SolanaService.generate_keypair_from_pk(kp_text)
-	#return keypair

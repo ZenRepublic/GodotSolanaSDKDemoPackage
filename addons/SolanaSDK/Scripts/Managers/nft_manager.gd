@@ -11,10 +11,9 @@ signal on_nft_loaded
 signal on_nft_load_finished
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func setup() -> void:
 	if load_on_login:
 		SolanaService.wallet.connect("on_logged_in",try_load_nfts)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -47,9 +47,9 @@ func sign_transaction(wallet,instructions:Array[Instruction],tx_commitment:Strin
 	#await transaction.fully_signed
 	print("SIGNED")
 	emit_signal("on_transaction_signed")
-	var serialized_tx:PackedByteArray = transaction.serialize()
-	var tx_id:String = await sign_serialized_transaction(wallet,serialized_tx,tx_commitment)
-	#var tx_id:String = await send_transaction(transaction,tx_commitment)
+	#var serialized_tx:PackedByteArray = transaction.serialize()
+	#var tx_id:String = await sign_serialized_transaction(wallet,serialized_tx,tx_commitment)
+	var tx_id:String = await send_transaction(transaction,tx_commitment)
 	
 	transaction.queue_free()
 	emit_signal("on_transaction_finish",tx_id)

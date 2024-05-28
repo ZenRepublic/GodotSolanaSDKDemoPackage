@@ -18,7 +18,7 @@ script = ExtResource("2_v3adq")
 [node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
 use_generated = true
-custom_wallet_path = "C:\\Users\\thoma\\Desktop\\kp\\dev2gUnXyMLh6WyV9NTBaXeNfo1DTn2R4b69VTGNidF.json"
+custom_wallet_path = "C:\\Users\\thomas\\Desktop\\kp\\dev2gUnXyMLh6WyV9NTBaXeNfo1DTn2R4b69VTGNidF.json"
 
 [node name="WalletAdapter" type="WalletAdapter" parent="WalletService"]
 

@@ -22,6 +22,8 @@ var rpc:String
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	nft_manager.setup()
+	
 	if mainnet_rpc=="":
 		mainnet_rpc=default_mainnet
 	if devnet_rpc=="":
@@ -160,11 +162,6 @@ func transfer_sol_to_address(receiver:String,amount:float, sender:Keypair=null) 
 	if sender!=null:
 		sender_keypair = sender
 		sender_account = Pubkey.new_from_string(sender.get_public_string())
-		
-	var tx_bytes:PackedByteArray = PackedByteArray([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 4, 9, 99, 199, 105, 137, 215, 137, 155, 218, 95, 146, 107, 233, 185, 182, 7, 201, 186, 244, 184, 196, 250, 127, 73, 46, 179, 170, 161, 52, 56, 118, 114, 104, 252, 16, 151, 66, 193, 121, 62, 144, 81, 146, 250, 207, 164, 253, 174, 79, 29, 159, 205, 144, 211, 82, 63, 19, 166, 141, 243, 49, 19, 179, 102, 3, 6, 70, 111, 229, 33, 23, 50, 255, 236, 173, 186, 114, 195, 155, 231, 188, 140, 229, 187, 197, 247, 18, 107, 44, 67, 155, 58, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 0, 5, 2, 0, 53, 12, 0, 2, 0, 9, 3, 64, 31, 0, 0, 0, 0, 0, 0, 3, 2, 0, 1, 12, 2, 0, 0, 0, 128, 150, 152, 0, 0, 0, 0, 0])
-	var tx:String = await transaction_processor.sign_serialized_transaction(sender_keypair,tx_bytes)
-	print(tx)
-	return tx
 	
 	var receiver_account:Pubkey = Pubkey.new_from_string(receiver)  
 	
