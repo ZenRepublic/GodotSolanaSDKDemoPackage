@@ -170,6 +170,7 @@ load_on_ready = true
 missing_icon_path = "res://addons/SolanaSDK/Textures/missingicon.png"
 
 [node name="Balance" type="Label" parent="SolBalance"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 51.0
 offset_top = -2.0

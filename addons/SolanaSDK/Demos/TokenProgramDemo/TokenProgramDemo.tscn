@@ -126,6 +126,7 @@ token_visual = NodePath("Visual")
 missing_icon_path = "res://addons/SolanaSDK/Textures/missingicon.png"
 
 [node name="Balance" type="Label" parent="AccountPanel/TokenVisualizer"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 80.0
 offset_right = 218.0
