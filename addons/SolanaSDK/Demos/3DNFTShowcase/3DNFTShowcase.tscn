@@ -123,6 +123,13 @@ theme_override_fonts/font = ExtResource("2_unrps")
 theme_override_font_sizes/font_size = 23
 text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
 
+[node name="Balance" type="Label" parent="UICanvas/UI/AccountPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="ReturnButton" type="Button" parent="UICanvas/UI"]
 layout_mode = 1
 anchors_preset = 8

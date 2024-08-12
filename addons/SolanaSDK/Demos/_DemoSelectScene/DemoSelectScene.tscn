@@ -115,6 +115,13 @@ theme_override_fonts/font = ExtResource("1_plclv")
 theme_override_font_sizes/font_size = 23
 text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
 
+[node name="Balance" type="Label" parent="AccountPanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="SelectNetwork" type="Label" parent="."]
 layout_mode = 1
 offset_left = 32.0

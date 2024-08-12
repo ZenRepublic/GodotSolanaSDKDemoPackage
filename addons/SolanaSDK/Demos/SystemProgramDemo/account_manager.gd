@@ -4,7 +4,7 @@ extends Node
 @export var balance_visualizer:TokenVisualizer
 
 @onready var account_address:Label = $AccountAddress
-@onready var balance_label:Label = $Balance
+@onready var balance_label:Label = %Balance
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
