@@ -19,7 +19,7 @@ func _ready() -> void:
 	prev_arrow.pressed.connect(show_previous)
 	next_arrow.pressed.connect(show_next)
 	
-	if !SolanaService.asset_manager.assets_loaded_loaded:
+	if !SolanaService.asset_manager.assets_loaded:
 		SolanaService.asset_manager.on_asset_loaded.connect(add_to_list)
 		SolanaService.asset_manager.on_asset_load_finished.connect(asset_load_finished)
 		SolanaService.asset_manager.load_assets()

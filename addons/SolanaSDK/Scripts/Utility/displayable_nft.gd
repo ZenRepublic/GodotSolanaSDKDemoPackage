@@ -32,7 +32,7 @@ func set_data(nft:Nft) -> void:
 	if nft.image!=null:
 		visual.texture = nft.image
 	else:
-		await nft.load_image(image_size)
+		await nft.try_load_image(image_size)
 		if nft.image!=null:
 			visual.texture = nft.image
 		else:

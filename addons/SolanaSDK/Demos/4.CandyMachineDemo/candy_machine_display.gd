@@ -20,7 +20,6 @@ var cm_data:CandyMachineData
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	cm_data = await SolanaService.candy_machine_manager.fetch_candy_machine(Pubkey.new_from_string(candy_machine_id))
-	print(cm_data)
 	if cm_data!=null:
 		setup(cm_data)
 	

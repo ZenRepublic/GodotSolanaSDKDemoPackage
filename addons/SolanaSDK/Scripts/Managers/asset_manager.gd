@@ -11,6 +11,7 @@ var owned_assets:Array[WalletAsset]
 
 @export var missing_texture_visual:Texture2D
 
+var is_loading:bool=false
 var assets_loaded=false
 
 signal on_asset_load_started(asset_keys:Array[Pubkey])
@@ -27,6 +28,11 @@ func try_load_assets(logged_in:bool) -> void:
 		load_assets()
 		
 func load_assets()->void:
+#	if currently loading, dont trigger again
+	if is_loading:
+		return
+		
+	is_loading=true
 	assets_loaded=false
 	
 	var connected_wallet:Pubkey = SolanaService.wallet.get_pubkey()
@@ -49,6 +55,7 @@ func load_assets()->void:
 		
 	on_asset_load_finished.emit(owned_assets)
 	assets_loaded=true
+	is_loading=false
 
 func get_asset_from_mint(asset_mint:Pubkey, load_texture:bool=false) -> WalletAsset:
 	var mpl_metadata:MplTokenMetadata = SolanaService.spawn_mpl_metadata_client()
@@ -58,19 +65,18 @@ func get_asset_from_mint(asset_mint:Pubkey, load_texture:bool=false) -> WalletAs
 
 	if metadata==null:
 		return null
-		
 	var asset_type:AssetType = get_asset_type(metadata)
 	match asset_type:
 		AssetType.NONE:
 			return null
 		AssetType.NFT:
 			var nft:Nft = Nft.new()
-			nft.set_data(asset_mint,metadata,asset_type,load_texture)
+			await nft.set_data(asset_mint,metadata,asset_type,load_texture)
 			return nft
 			pass
 		AssetType.TOKEN:
 			var token:Token = Token.new()
-			token.set_data(asset_mint,metadata,asset_type,load_texture)
+			await token.set_data(asset_mint,metadata,asset_type,load_texture)
 			return token
 			pass
 			

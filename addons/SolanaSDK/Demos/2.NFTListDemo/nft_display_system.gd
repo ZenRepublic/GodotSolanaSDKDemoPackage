@@ -1,4 +1,5 @@
 extends Node
+class_name NftDisplaySystem
 
 @export var displayable_nft_scn:PackedScene
 @export var collection_filter:Array[NFTCollection]
@@ -8,9 +9,11 @@ extends Node
 
 var displayables:Array[DisplayableNFT]
 
+signal on_display_updated
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if !SolanaService.asset_manager.assets_loaded_loaded:
+	if !SolanaService.asset_manager.assets_loaded:
 		SolanaService.asset_manager.on_asset_loaded.connect(add_to_list)
 		SolanaService.asset_manager.on_asset_load_finished.connect(asset_load_finished)
 		SolanaService.asset_manager.load_assets()
@@ -53,6 +56,8 @@ func add_to_list(asset:WalletAsset) -> void:
 	displayable_nft.set_data(asset)
 	displayables.append(displayable_nft)
 	
+	on_display_updated.emit()
+	
 func asset_load_finished(owned_assets:Array[WalletAsset])->void:
 	pass
 	
@@ -62,3 +67,4 @@ func clear_display() -> void:
 		nft.queue_free()
 	
 	displayables.clear()
+	on_display_updated.emit()

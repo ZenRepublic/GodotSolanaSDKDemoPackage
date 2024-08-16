@@ -22,7 +22,7 @@ func set_data(mint_address:Pubkey,token_metadata:MetaData,asset_type:AssetManage
 	symbol = metadata.get_symbol()
 	type = asset_type
 	
-	var offchain_metadata = await SolanaService.file_loader.load_token_metadata(metadata.get_uri())
+	offchain_metadata = await SolanaService.file_loader.load_token_metadata(metadata.get_uri())
 	if autoload_image:
 		await try_load_image(image_size)
 		
@@ -32,6 +32,7 @@ func try_load_image(size:int=256) -> void:
 		image = SolanaService.asset_manager.missing_texture_visual
 		return
 		
+	#print(offchain_metadata["image"])
 	image = await SolanaService.file_loader.load_token_image(offchain_metadata["image"],size)
 	if image == null:
 		push_warning("Couldn't fetch image for mint: %s" % mint.to_string())

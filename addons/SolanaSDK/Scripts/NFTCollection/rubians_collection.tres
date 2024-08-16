@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_rli0d")
 mainnet_collection_id = "9pg23GZKceX1pfVCwG1cfWXG2qJknbhejWGqkuH8hYY8"
-devnet_collection_id = ""
+devnet_collection_id = "EE1XTVRxVX5UtTLKRg7Y5bFQEKm2wm2nao9SGF27fypH"
 first_verified_creator_mode = false
 collection_name = "Rubians"
