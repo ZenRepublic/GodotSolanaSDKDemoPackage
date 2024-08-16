@@ -33,4 +33,4 @@ func cancel_login()-> void:
 func confirm_login(login_success:bool) -> void:
 	login_overlay.visible=false
 	if login_success:
-		SceneLoader.load_scene(path_to_scene)
+		$SceneLoader.load_scene(path_to_scene)

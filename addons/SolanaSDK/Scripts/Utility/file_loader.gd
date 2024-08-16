@@ -4,7 +4,6 @@ class_name FileLoader
 func load_token_metadata(uri:String) -> Dictionary:
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	print(uri)
 	# Perform a GET request. The URL below returns JSON as of writing.
 	var request = http_request.request(uri)
 	if request != OK:
@@ -19,6 +18,9 @@ func load_token_metadata(uri:String) -> Dictionary:
 		push_error("Failed to fetch Token Metadata")
 		return {}
 	
+	if response_dict["body"] == null:
+		return {}
+		
 	return response_dict["body"]
 	
 

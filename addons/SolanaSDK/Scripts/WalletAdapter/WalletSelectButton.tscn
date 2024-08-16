@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_button.gd" id="1_r0etn"]
 [ext_resource type="Texture2D" uid="uid://0x1jjxnmbchx" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg" id="2_xu6ps"]
 
-
 [node name="WalletSelection" type="Button" node_paths=PackedStringArray("provider_name", "visual")]
 custom_minimum_size = Vector2(0, 70)
+offset_right = 350.0
+offset_bottom = 70.0
 script = ExtResource("1_r0etn")
 provider_name = NodePath("Label")
 visual = NodePath("Image")

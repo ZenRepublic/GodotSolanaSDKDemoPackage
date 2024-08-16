@@ -26,4 +26,3 @@ static func get_player_scores_pda(user_key:Pubkey,leaderboard_account:Pubkey, pi
 	var user_bytes = user_key.to_bytes()
 	var leaderboard_bytes = leaderboard_account.to_bytes()
 	return Pubkey.new_pda_bytes([name_bytes,user_bytes,leaderboard_bytes],pid)
-

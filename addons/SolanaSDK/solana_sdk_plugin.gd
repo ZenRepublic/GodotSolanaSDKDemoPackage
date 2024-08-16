@@ -2,12 +2,13 @@
 @tool
 extends EditorPlugin
 
+var solana_service_path:String = "res://addons/SolanaSDK/Autoload/SolanaService.tscn"
+
 func _enter_tree():
 	# This method is called when the editor starts
 	
 	var autoload_script_paths:Array[String]
-	autoload_script_paths.append("res://addons/SolanaSDK/Autoload/SceneLoader.tscn")
-	autoload_script_paths.append("res://addons/SolanaSDK/Autoload/SolanaService.tscn")
+	autoload_script_paths.append(solana_service_path)
 	
 	for script in autoload_script_paths:
 		var script_parts:PackedStringArray = script.split("/")

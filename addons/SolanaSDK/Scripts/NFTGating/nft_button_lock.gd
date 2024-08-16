@@ -11,12 +11,14 @@ enum NFTLockType {HELD_AMOUNT,MINT_MATCH}
 func _ready() -> void:
 	super()
 	if lock_active:
-		SolanaService.nft_manager.connect("on_nft_load_finished",try_unlock)
+		SolanaService.asset_manager.on_asset_load_finished.connect(try_unlock)
 		
-
+func handle_asset_load_finished(owned_assets:Array[WalletAsset]) -> void:
+	try_unlock()
+	
 func try_unlock() -> void:
 	super()
-	var held_nft_list:Array[Nft] = SolanaService.nft_manager.get_nfts_from_collection(collection_gate)
+	var held_nft_list:Array[Nft] = SolanaService.asset_manager.get_nfts_from_collection(collection_gate)
 	
 	match lock_type:
 		NFTLockType.HELD_AMOUNT:

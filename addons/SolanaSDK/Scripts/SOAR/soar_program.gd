@@ -62,7 +62,7 @@ func fetch_player_scores(user_account:Pubkey,leaderboard_account:Pubkey) -> Dict
 	var result:Dictionary = await instance.account_fetched
 	return result
 
-func init_game(game_attributes:SoarUtils.GameAttributes) -> String:
+func init_game(game_attributes:SoarUtils.GameAttributes) -> TransactionData:
 	var game_account:Keypair = SolanaService.generate_keypair()
 	var instructions:Array[Instruction]
 	var init_game_ix:Instruction = soar_program.build_instruction("initializeGame",[
@@ -76,18 +76,18 @@ func init_game(game_attributes:SoarUtils.GameAttributes) -> String:
 	
 	print("Creating Game Account with ID: %s"%game_account.get_public_string())
 	instructions.append(init_game_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
-	return tx_id
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	return tx_data
 		
 
 	
-func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardData,game_auth:Keypair) -> String:
+func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardData,game_auth:Keypair) -> TransactionData:
 	var game_account:Pubkey=Pubkey.new_from_string(game_address)
 	var game_data:Dictionary = await fetch_game_data(game_account)
 	
 	if game_data.size() == 0:
 		push_error("Failed to fetch the game data")
-		return ""
+		return TransactionData.new({})
 		
 	var leaderboard_id:int = game_data["leaderboardCount"]+1
 	var leaderboard:Pubkey = SoarPDA.get_leaderboard_pda(game_account,leaderboard_id,get_pid())
@@ -107,11 +107,11 @@ func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardD
 	print("Creating Leaderboard with ID: %s"%leaderboard.get_value())
 	
 	instructions.append(add_leaderboard_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
-	return tx_id
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	return tx_data
 	
 	
-func update_leaderboard(game_address:String,leaderboard_address:String,leaderboard_data:SoarUtils.LeaderboardData,game_auth:Keypair) -> String:
+func update_leaderboard(game_address:String,leaderboard_address:String,leaderboard_data:SoarUtils.LeaderboardData,game_auth:Keypair) -> TransactionData:
 	var game_account:Pubkey=Pubkey.new_from_string(game_address)
 	var leaderboard_account:Pubkey = Pubkey.new_from_string(leaderboard_address)
 	var leaderboard_top_entries:Pubkey = SoarPDA.get_leaderboard_scores_pda(leaderboard_account, get_pid())
@@ -134,11 +134,11 @@ func update_leaderboard(game_address:String,leaderboard_address:String,leaderboa
 	print("Updating Leaderboard with ID: %s"%leaderboard_account.get_value())
 	
 	instructions.append(update_leaderboard_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
-	return tx_id
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	return tx_data
 	
 
-func initialize_player(username:String, user_nft:Pubkey) -> String:
+func initialize_player(username:String, user_nft:Pubkey) -> TransactionData:
 	var player_account:Pubkey = SoarPDA.get_player_pda(SolanaService.wallet.get_pubkey(),get_pid())
 	var instructions:Array[Instruction]
 	var init_player_ix:Instruction = soar_program.build_instruction("initializePlayer",[
@@ -153,11 +153,11 @@ func initialize_player(username:String, user_nft:Pubkey) -> String:
 	
 	print("Initializing Player account with ID: %s"%player_account.get_value())
 	instructions.append(init_player_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
-	return tx_id
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	return tx_data
 	
 		
-func update_player(username:String, user_nft:Pubkey) -> String:
+func update_player(username:String, user_nft:Pubkey) -> TransactionData:
 	var player_account:Pubkey = SoarPDA.get_player_pda(SolanaService.wallet.get_pubkey(),get_pid())
 	
 	var instructions:Array[Instruction]
@@ -171,11 +171,11 @@ func update_player(username:String, user_nft:Pubkey) -> String:
 	
 	print("Updating Player account with ID: %s"%player_account.get_value())
 	instructions.append(update_player_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
-	return tx_id
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	return tx_data
 		
 
-func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,game_auth:Keypair,score:int) -> String:
+func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,game_auth:Keypair,score:int) -> TransactionData:
 	var player_account_pda:Pubkey = SoarPDA.get_player_pda(SolanaService.wallet.get_pubkey(),get_pid())
 	var player_scores_pda:Pubkey = SoarPDA.get_player_scores_pda(player_account_pda,leaderboard_account,get_pid())
 	var instructions:Array[Instruction]
@@ -217,7 +217,6 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		})
 		
 	instructions.append(submit_score_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(SolanaService.wallet.get_kp(),instructions,"finalized")
-	return tx_id
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	return tx_data
 	
-

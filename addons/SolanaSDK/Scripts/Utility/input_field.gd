@@ -54,5 +54,3 @@ func is_valid() -> bool:
 		return false
 		
 	return true
-
-

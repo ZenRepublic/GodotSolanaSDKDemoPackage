@@ -59,6 +59,8 @@ func log_in_fail() -> void:
 
 func get_pubkey() -> Pubkey:
 	if use_generated:
+		if keypair == null:
+			return null
 		return Pubkey.new_from_string(keypair.get_public_string())
 	else:
 		return wallet_adapter.get_connected_key()

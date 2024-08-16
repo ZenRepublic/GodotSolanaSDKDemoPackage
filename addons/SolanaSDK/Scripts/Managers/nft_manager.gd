@@ -14,10 +14,6 @@ signal on_nft_load_finished
 func setup() -> void:
 	if load_on_login:
 		SolanaService.wallet.connect("on_logged_in",try_load_nfts)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func try_load_nfts(logged_in:bool) -> void:
 	if logged_in:
@@ -25,7 +21,7 @@ func try_load_nfts(logged_in:bool) -> void:
 	
 func load_nfts()->void:
 	var connected_wallet:Pubkey = SolanaService.wallet.get_pubkey()
-	var wallet_tokens:Array[Pubkey] = await SolanaService.get_wallet_tokens(connected_wallet.to_string())
+	var wallet_tokens:Array[Pubkey] = await SolanaService.get_wallet_assets(connected_wallet.to_string())
 	emit_signal("on_nft_load_started",wallet_tokens.size())
 	
 	for i in range(wallet_tokens.size()):	
@@ -44,12 +40,11 @@ func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 	var nft:Nft = Nft.new()
 	
 	var mpl_metadata:MplTokenMetadata = MplTokenMetadata.new()
-	mpl_metadata.url_override = SolanaService.active_rpc
 	add_child(mpl_metadata)
 	mpl_metadata.get_mint_metadata(nft_mint)
 	var metadata:MetaData = await mpl_metadata.metadata_fetched
 	mpl_metadata.queue_free()
-	print(metadata)
+
 	if metadata==null:
 		return null
 	
@@ -57,7 +52,7 @@ func get_nft_from_mint(nft_mint:Pubkey, load_texture:bool=false) -> Nft:
 	#print(SolanaService.file_loader.test)
 	var offchain_metadata = await SolanaService.file_loader.load_token_metadata(uri)
 	#remove any token which is not an nft. spls dont have properties
-	print(offchain_metadata)
+
 	if !offchain_metadata.has("properties"):
 		return null
 

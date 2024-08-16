@@ -1,27 +1,37 @@
 extends Node
 class_name CandyMachineManager
 
-var candy_machine:MplCandyMachine
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func fetch_candy_machine(cm_id:Pubkey) -> CandyMachineData:
-	if candy_machine == null:
-		candy_machine = MplCandyMachine.new()
-		candy_machine.url = SolanaService.active_rpc
-		add_child(candy_machine)
-		
+	var candy_machine = SolanaService.spawn_mpl_candy_machine_client()
 	candy_machine.get_candy_machine_info(cm_id)
-	var cm_data:CandyMachineData = await candy_machine.info_fetched
+	var cm_data:CandyMachineData = await candy_machine.account_fetched
+	candy_machine.queue_free()
 	return cm_data
 	
-func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,payer:WalletService,receiver,guards:CandyGuardAccessList,group:String,custom_mint_account:Keypair=null) -> String:
+func mint_nft(cm_id:Pubkey, cm_data:CandyMachineData, payer:WalletService, receiver,tx_commitment:TransactionManager.Commitment=TransactionManager.Commitment.FINALIZED,priority_fee:float=0.0, custom_mint_account:Keypair=null) -> TransactionData:
+	var mint_account:Keypair = custom_mint_account
+	if mint_account==null:
+		mint_account = SolanaService.generate_keypair()
+	var instructions:Array[Instruction]
+	
+	var mint_ix:Instruction = MplCandyMachine.mint(
+		payer.get_kp(),
+		receiver,
+		mint_account,
+		cm_data.collection_mint,
+		cm_data.authority,
+		cm_id
+		)
+		
+	instructions.append(mint_ix)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,tx_commitment,priority_fee,payer.get_kp())
+	return tx_data
+	
+	
+	
+	
+func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,payer:WalletService,receiver,guards:CandyGuardAccessList,group:String,tx_commitment:TransactionManager.Commitment=TransactionManager.Commitment.FINALIZED,priority_fee:float=0.0,custom_mint_account:Keypair=null) -> TransactionData:
 	var mint_account:Keypair = custom_mint_account
 	if mint_account==null:
 		mint_account = SolanaService.generate_keypair()
@@ -41,5 +51,5 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,
 		)
 		
 	instructions.append(mint_ix)
-	var tx_id:String = await SolanaService.transaction_processor.sign_transaction(payer.get_kp(),instructions,"finalized")
-	return tx_id
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,tx_commitment,priority_fee,payer.get_kp())
+	return tx_data
