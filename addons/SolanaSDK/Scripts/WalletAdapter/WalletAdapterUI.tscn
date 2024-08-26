@@ -1,11 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://be2rmdwqrqiw0"]
+[gd_scene load_steps=4 format=3 uid="uid://be2rmdwqrqiw0"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_ui.gd" id="1_pslxa"]
 [ext_resource type="PackedScene" uid="uid://w27yxay7tghj" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletSelectButton.tscn" id="2_8yesu"]
-[ext_resource type="Texture2D" uid="uid://0x1jjxnmbchx" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg" id="3_a225v"]
-[ext_resource type="Texture2D" uid="uid://17u8fpx30rv3" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/solflarelogo.jpg" id="4_j0eux"]
-[ext_resource type="Texture2D" uid="uid://du7duuvlwpqlj" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/backpacklogo.jpg" id="5_elfe4"]
-[ext_resource type="Texture2D" uid="uid://denyhj5xo00he" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/ultimatelogo.jpg" id="6_kutrt"]
 [ext_resource type="Texture2D" uid="uid://b3003ar1uxa77" path="res://addons/SolanaSDK/Textures/closebutton.jpg.png" id="7_nuaxe"]
 
 [node name="WalletAdapterUI" type="Control" node_paths=PackedStringArray("cancel_button", "selection_spawn")]
@@ -24,7 +20,7 @@ grow_vertical = 2
 script = ExtResource("1_pslxa")
 provider_button_scn = ExtResource("2_8yesu")
 provider_names = Array[String](["Phantom", "Solflare", "Backpack", "Ultimate"])
-provider_images = Array[Texture]([ExtResource("3_a225v"), ExtResource("4_j0eux"), ExtResource("5_elfe4"), ExtResource("6_kutrt")])
+provider_images = Array[Texture]([null, null, null, null])
 cancel_button = NodePath("Backround/CancelButton")
 selection_spawn = NodePath("PanelContainer/VBoxContainer")
 
@@ -77,3 +73,5 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

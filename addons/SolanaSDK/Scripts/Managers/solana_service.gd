@@ -1,11 +1,13 @@
 extends Node
-enum RpcCluster{Mainnet,Devnet}
-@export var rpc_cluster:RpcCluster=RpcCluster.Mainnet
+enum RpcCluster{MAINNET,DEVNET,SONIC}
+@export var rpc_cluster:RpcCluster=RpcCluster.MAINNET
 @export var mainnet_rpc:String
 @export var devnet_rpc:String
+@export var sonic_rpc:String
 
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
+
 
 var active_rpc:String
 
@@ -35,11 +37,13 @@ func _ready() -> void:
 	
 func set_rpc_cluster(new_cluster:RpcCluster)->void:
 	match new_cluster:
-		RpcCluster.Mainnet:
+		RpcCluster.MAINNET:
 			active_rpc = mainnet_rpc
-		RpcCluster.Devnet:
+		RpcCluster.DEVNET:
 			active_rpc = devnet_rpc
-	
+		RpcCluster.SONIC:
+			active_rpc = sonic_rpc
+			
 	ProjectSettings.set_setting("solana_sdk/client/default_url",active_rpc)
 	rpc_cluster = new_cluster
 	

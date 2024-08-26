@@ -11,9 +11,9 @@ enum NFTLockType {HELD_AMOUNT,MINT_MATCH}
 func _ready() -> void:
 	super()
 	if lock_active:
-		SolanaService.asset_manager.on_asset_load_finished.connect(try_unlock)
+		SolanaService.asset_manager.on_asset_loaded.connect(handle_asset_loaded)
 		
-func handle_asset_load_finished(owned_assets:Array[WalletAsset]) -> void:
+func handle_asset_loaded(asset:WalletAsset) -> void:
 	try_unlock()
 	
 func try_unlock() -> void:

@@ -1,8 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://2ktq3vdndve"]
+[gd_scene load_steps=15 format=3 uid="uid://2ktq3vdndve"]
 
-[ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf" id="1_plclv"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/1.TokenTransferDemo/account_manager.gd" id="2_10qtm"]
-[ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://addons/SolanaSDK/Fonts/PUSSS___.TTF" id="2_wfsl8"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="3_b8juh"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_DemoSelectScene/rpc_network_switcher.gd" id="3_lb3d3"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="4_mglv1"]
@@ -71,20 +69,17 @@ script = ExtResource("2_10qtm")
 
 [node name="AccountLabel" type="Label" parent="Margin/Content/AccountPanel"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 40
 text = "Welcome back,"
 
 [node name="AccountAddress" type="Label" parent="Margin/Content/AccountPanel"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 23
+theme_override_font_sizes/font_size = 20
 text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
 
 [node name="IntroText" type="Label" parent="Margin/Content"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 80
+theme_override_font_sizes/font_size = 65
 text = "SELECT DEMO"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -116,8 +111,7 @@ layout_mode = 2
 
 [node name="ID" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo1/MarginContainer2/DemoContents"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "DEMO 1
 "
 horizontal_alignment = 1
@@ -126,8 +120,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.729412, 0.137255, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 20
 text = "TOKEN TRANSFER
 "
 horizontal_alignment = 1
@@ -137,8 +130,7 @@ autowrap_mode = 2
 [node name="Description" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo1/MarginContainer2/DemoContents"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Fetch wallet information, display balance and transfer tokens to a desired address"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -152,7 +144,6 @@ theme_override_constants/margin_right = 25
 [node name="SelectButton" type="Button" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo1/MarginContainer2/DemoContents/MarginContainer" node_paths=PackedStringArray("scene_loader")]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
@@ -179,8 +170,7 @@ layout_mode = 2
 
 [node name="ID" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo2/MarginContainer2/DemoContents"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "DEMO 2
 "
 horizontal_alignment = 1
@@ -189,8 +179,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.729412, 0.137255, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 20
 text = "NFT LOADER
 "
 horizontal_alignment = 1
@@ -200,8 +189,7 @@ autowrap_mode = 2
 [node name="Description" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo2/MarginContainer2/DemoContents"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Load all owned NFTs and display them in a container"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -215,7 +203,6 @@ theme_override_constants/margin_right = 25
 [node name="SelectButton" type="Button" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo2/MarginContainer2/DemoContents/MarginContainer" node_paths=PackedStringArray("scene_loader")]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
@@ -242,8 +229,7 @@ layout_mode = 2
 
 [node name="ID" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo3/MarginContainer2/DemoContents"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "DEMO 3
 "
 horizontal_alignment = 1
@@ -252,8 +238,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.729412, 0.137255, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 20
 text = "3D NFT SHOWCASE
 "
 horizontal_alignment = 1
@@ -263,8 +248,7 @@ autowrap_mode = 2
 [node name="Description" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo3/MarginContainer2/DemoContents"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Parse NFTs that have glbs in their metadata and spawn them inside the game scene"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -278,7 +262,6 @@ theme_override_constants/margin_right = 25
 [node name="SelectButton" type="Button" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo3/MarginContainer2/DemoContents/MarginContainer" node_paths=PackedStringArray("scene_loader")]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
@@ -305,8 +288,7 @@ layout_mode = 2
 
 [node name="ID" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo4/MarginContainer2/DemoContents"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "DEMO 4
 "
 horizontal_alignment = 1
@@ -315,8 +297,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.729412, 0.137255, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 20
 text = "Candymachine Mint
 "
 horizontal_alignment = 1
@@ -326,8 +307,7 @@ autowrap_mode = 2
 [node name="Description" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo4/MarginContainer2/DemoContents"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Fetch candymachine v3 info and mint from it. Candy guards and PNFTs supported"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -341,7 +321,6 @@ theme_override_constants/margin_right = 25
 [node name="SelectButton" type="Button" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo4/MarginContainer2/DemoContents/MarginContainer" node_paths=PackedStringArray("scene_loader")]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
@@ -368,8 +347,7 @@ layout_mode = 2
 
 [node name="ID" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo5/MarginContainer2/DemoContents"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "DEMO 5
 "
 horizontal_alignment = 1
@@ -378,8 +356,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.729412, 0.137255, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 20
 text = "Tiny Adventure
 "
 horizontal_alignment = 1
@@ -389,8 +366,7 @@ autowrap_mode = 2
 [node name="Description" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo5/MarginContainer2/DemoContents"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Simple onchain game interacting with custom anchor program"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -404,7 +380,6 @@ theme_override_constants/margin_right = 25
 [node name="SelectButton" type="Button" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo5/MarginContainer2/DemoContents/MarginContainer" node_paths=PackedStringArray("scene_loader")]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
@@ -431,8 +406,7 @@ layout_mode = 2
 
 [node name="ID" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo6/MarginContainer2/DemoContents"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 35
 text = "DEMO 6
 "
 horizontal_alignment = 1
@@ -441,8 +415,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.729412, 0.137255, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 20
 text = "SOAR Highscores"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -451,8 +424,7 @@ autowrap_mode = 2
 [node name="Description" type="Label" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo6/MarginContainer2/DemoContents"]
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 16
 text = "Interacting with SOAR program to set highscores and fetch leaderboards"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -466,7 +438,6 @@ theme_override_constants/margin_right = 25
 [node name="SelectButton" type="Button" parent="Margin/Content/DemoContainerPanel2/ScrollContainer/HBoxContainer/Demo6/MarginContainer2/DemoContents/MarginContainer" node_paths=PackedStringArray("scene_loader")]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_wfsl8")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_tft61")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
@@ -487,7 +458,6 @@ layout_mode = 2
 
 [node name="SelectNetwork" type="Label" parent="Margin/Content/Footer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
 theme_override_font_sizes/font_size = 23
 text = "Select Network:"
 
@@ -507,8 +477,7 @@ size_flags_horizontal = 3
 
 [node name="MadeBy" type="Label" parent="Margin/Content/Footer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_plclv")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 25
 text = "Made by Zen Republic"
 horizontal_alignment = 1
 vertical_alignment = 1

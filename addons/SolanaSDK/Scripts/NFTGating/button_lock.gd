@@ -6,6 +6,8 @@ class_name ButtonLock
 
 
 func _ready() -> void:
+	set_interactable(false)
+	try_unlock()
 	self.visibility_changed.connect(on_visibility_changed)
 
 func on_visibility_changed() -> void:

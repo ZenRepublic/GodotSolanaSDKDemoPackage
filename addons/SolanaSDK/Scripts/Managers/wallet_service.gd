@@ -12,10 +12,14 @@ class_name WalletService
 var keypair:Keypair
 
 signal on_login_begin
-signal on_logged_in
+signal on_login_finish(success:bool)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if !use_generated:
+		wallet_adapter.connection_established.connect(log_in_success)
+		wallet_adapter.connection_failed.connect(log_in_fail)
+	
 	if autologin:
 		try_login()
 
@@ -24,7 +28,7 @@ func try_login() -> void:
 	if use_generated:
 		login_game_wallet()
 	else:
-		emit_signal("on_login_begin")
+		on_login_begin.emit()
 	
 func login_game_wallet() -> void:
 	if custom_wallet_path.length()==0:
@@ -39,23 +43,16 @@ func login_game_wallet() -> void:
 	log_in_success()
 
 func login_adapter(provider_id:int) -> void:
+	print("LOGIN ADAPTEr")
 	wallet_adapter.wallet_type = provider_id	
-	wallet_adapter.connect("connection_established",log_in_success)
-	wallet_adapter.connect("connection_error",log_in_fail)
 	wallet_adapter.connect_wallet()
 
 func log_in_success() -> void:
-	if !use_generated:
-		wallet_adapter.disconnect("connection_established",log_in_success)
-		wallet_adapter.disconnect("connection_error",log_in_fail)
-	emit_signal("on_logged_in",true)
+	on_login_finish.emit(true)
 	print(get_pubkey().to_string())
 	
 func log_in_fail() -> void:
-	if !use_generated:
-		wallet_adapter.disconnect("connection_established",log_in_success)
-		wallet_adapter.disconnect("connection_error",log_in_fail)
-	emit_signal("on_logged_in",false)
+	on_login_finish.emit(false)
 
 func get_pubkey() -> Pubkey:
 	if use_generated:

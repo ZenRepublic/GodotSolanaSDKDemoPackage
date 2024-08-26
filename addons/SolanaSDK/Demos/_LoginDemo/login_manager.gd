@@ -10,10 +10,10 @@ var adapter_instance:WalletAdapterUI
 func _ready() -> void:
 	login_overlay.visible=false
 	SolanaService.wallet.on_login_begin.connect(pop_adapter)	
-	SolanaService.wallet.on_logged_in.connect(confirm_login)	
+	SolanaService.wallet.on_login_finish.connect(confirm_login)	
 	
-	wallet_adapter_ui.connect("on_provider_selected",process_adapter_result)
-	wallet_adapter_ui.connect("on_adapter_cancel",cancel_login)
+	wallet_adapter_ui.on_provider_selected.connect(process_adapter_result)
+	wallet_adapter_ui.on_adapter_cancel.connect(cancel_login)
 
 
 func _on_login_button_pressed() -> void:

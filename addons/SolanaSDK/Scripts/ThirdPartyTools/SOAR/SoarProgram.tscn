@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://kb5sk8ykb617"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/SOAR/soar_program.gd" id="1_3bck6"]
-[ext_resource type="JSON" path="res://addons/SolanaSDK/Scripts/SOAR/soar_idl.json" id="2_pup3c"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/ThirdPartyTools/SOAR/soar_program.gd" id="1_3bck6"]
+[ext_resource type="JSON" path="res://addons/SolanaSDK/Scripts/ThirdPartyTools/SOAR/soar_idl.json" id="2_pup3c"]
 
 [node name="SoarProgram" type="Node"]
 script = ExtResource("1_3bck6")

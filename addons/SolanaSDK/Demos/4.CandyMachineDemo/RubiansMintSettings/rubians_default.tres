@@ -25,4 +25,4 @@ token_burn_amount = 1
 token_burn_mint = SubResource("Pubkey_44u12")
 
 [resource]
-groups = Array[Object]([SubResource("CandyGuardAccessList_4cnea"), SubResource("CandyGuardAccessList_pey3n")])
+groups = Array[CandyGuardAccessList]([SubResource("CandyGuardAccessList_4cnea"), SubResource("CandyGuardAccessList_pey3n")])

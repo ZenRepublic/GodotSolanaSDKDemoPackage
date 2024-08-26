@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://w27yxay7tghj"]
+[gd_scene load_steps=2 format=3 uid="uid://w27yxay7tghj"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_button.gd" id="1_r0etn"]
-[ext_resource type="Texture2D" uid="uid://0x1jjxnmbchx" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletProviderLogos/phantomlogo.jpg" id="2_xu6ps"]
 
 [node name="WalletSelection" type="Button" node_paths=PackedStringArray("provider_name", "visual")]
 custom_minimum_size = Vector2(0, 70)
@@ -21,7 +20,6 @@ offset_top = -28.5
 offset_right = 85.8651
 offset_bottom = 28.5001
 grow_vertical = 2
-texture = ExtResource("2_xu6ps")
 expand_mode = 4
 stretch_mode = 4
 

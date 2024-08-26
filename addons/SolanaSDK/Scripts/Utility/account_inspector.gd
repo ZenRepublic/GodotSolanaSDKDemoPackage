@@ -30,7 +30,7 @@ func get_link_base(inspect_site:InspectSite) -> String:
 			
 func get_cluster_extension(inspect_site:InspectSite) -> String:
 	var extension:String
-	if SolanaService.rpc_cluster == SolanaService.RpcCluster.Devnet:
+	if SolanaService.rpc_cluster == SolanaService.RpcCluster.DEVNET:
 		extension = "?cluster=devnet"
 		if inspect_site == InspectSite.SOLANAFM:
 			extension += "-alpha"

@@ -1,8 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://bf3edinsgleli"]
+[gd_scene load_steps=14 format=3 uid="uid://bf3edinsgleli"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/login_manager.gd" id="1_0vojp"]
-[ext_resource type="FontFile" uid="uid://inxwmykjoa5p" path="res://addons/SolanaSDK/Fonts/Circus Of Innocents.ttf" id="3_e8qnp"]
-[ext_resource type="FontFile" uid="uid://djc4usmv5o2u5" path="res://addons/SolanaSDK/Fonts/PUSSS___.TTF" id="4_cunvt"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="5_o1wf6"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="6_5mt3p"]
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="7_mpo2d"]
@@ -59,7 +57,6 @@ offset_top = 110.0
 offset_right = 366.0
 offset_bottom = 257.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("3_e8qnp")
 theme_override_font_sizes/font_size = 120
 text = "Godot Solana SDK
 "
@@ -76,7 +73,6 @@ offset_top = 249.0
 offset_right = 387.0
 offset_bottom = 324.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("3_e8qnp")
 theme_override_font_sizes/font_size = 60
 text = "Demo Package
 "
@@ -89,11 +85,10 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -333.0
-offset_top = 244.0
+offset_top = 251.0
 offset_right = -138.0
-offset_bottom = 283.0
+offset_bottom = 290.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("3_e8qnp")
 theme_override_font_sizes/font_size = 25
 text = "By Zen Republic"
 horizontal_alignment = 1
@@ -113,8 +108,8 @@ offset_bottom = -196.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("4_cunvt")
-theme_override_font_sizes/font_size = 35
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
 theme_override_styles/focus = SubResource("StyleBoxEmpty_muk2j")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_tt47o")
 theme_override_styles/hover = SubResource("StyleBoxTexture_6yw5e")
@@ -147,8 +142,7 @@ offset_right = 389.0
 offset_bottom = 123.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_e8qnp")
-theme_override_font_sizes/font_size = 91
+theme_override_font_sizes/font_size = 60
 text = "Logging in, please wait..."
 horizontal_alignment = 1
 vertical_alignment = 1

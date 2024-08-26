@@ -21,7 +21,7 @@ signal on_asset_load_finished(assets:Array[WalletAsset])
 # Called when the node enters the scene tree for the first time.
 func setup() -> void:
 	if load_on_login:
-		SolanaService.wallet.connect("on_logged_in",try_load_assets)
+		SolanaService.wallet.on_login_finish.connect(try_load_assets)
 		
 func try_load_assets(logged_in:bool) -> void:
 	if logged_in:

@@ -12,9 +12,9 @@ var nfts:Array[Nft]
 var collection_mint:Pubkey
 
 func set_key()-> void:
-	if SolanaService.rpc_cluster == SolanaService.RpcCluster.Mainnet:
+	if SolanaService.rpc_cluster == SolanaService.RpcCluster.MAINNET:
 		collection_mint = Pubkey.new_from_string(mainnet_collection_id)
-	elif SolanaService.rpc_cluster == SolanaService.RpcCluster.Devnet:
+	elif SolanaService.rpc_cluster == SolanaService.RpcCluster.DEVNET:
 		collection_mint = Pubkey.new_from_string(devnet_collection_id)
 
 func get_collection_key() -> Pubkey:
