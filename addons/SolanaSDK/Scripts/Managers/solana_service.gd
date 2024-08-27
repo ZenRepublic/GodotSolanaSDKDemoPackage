@@ -7,7 +7,7 @@ enum RpcCluster{MAINNET,DEVNET,SONIC}
 
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
-
+var default_sonic = "https://devnet.sonic.game"
 
 var active_rpc:String
 
@@ -31,6 +31,8 @@ func _ready() -> void:
 		mainnet_rpc=default_mainnet
 	if devnet_rpc=="":
 		devnet_rpc=default_devnet
+	if sonic_rpc=="":
+		sonic_rpc=default_sonic
 		
 	set_rpc_cluster(rpc_cluster)
 	

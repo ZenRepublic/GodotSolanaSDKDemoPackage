@@ -13,7 +13,7 @@
 script = ExtResource("1_hwc3u")
 rpc_cluster = 1
 devnet_rpc = "https://api.devnet.solana.com"
-sonic_rpc = "https://www.devnet.sonic.game"
+sonic_rpc = "https://devnet.sonic.game"
 
 [node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
