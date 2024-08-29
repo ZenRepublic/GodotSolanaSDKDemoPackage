@@ -9,78 +9,71 @@ extends Node
 
 @export var player:TextureRect
 @export var chest:TextureRect
-@export var chest_prize:float
-@export var prize_label:Label
 @export var step_blocks:Array[CenterContainer]
-@export var left_button:TextureButton
-@export var right_button:TextureButton
+@export var move_button:BaseButton
+@export var password:String="gib"
 
 @export var in_game_balance:TokenVisualizer
 
-var level_pda
-var vault_pda
+var game_account
+var chest_vault
 
 var curr_pos:int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	level_pda = Pubkey.new_pda(["Level1"],Pubkey.new_from_string(tiny_adventure_pid))
-	vault_pda = Pubkey.new_pda(["Vault1"],Pubkey.new_from_string(tiny_adventure_pid))
+	game_account = Pubkey.new_pda(["level1"],Pubkey.new_from_string(tiny_adventure_pid))
+	chest_vault = Pubkey.new_pda(["chestVault"],Pubkey.new_from_string(tiny_adventure_pid))
 	
-	start_button.text = "START GAME (%s SOL)" % chest_prize
-	start_button.pressed.connect(init_game)
-	left_button.pressed.connect(move_left)
-	right_button.pressed.connect(move_right)
+	start_button.pressed.connect(setup_game)
+	move_button.pressed.connect(move)
 	
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
-func init_game() -> void:
-	var prize_in_lamports:int = int(chest_prize*pow(10,9))
+func setup_game() -> void:
 	var instructions:Array[Instruction]
-	var init_ix:Instruction = anchor_program.build_instruction("restartLevel",[
-		level_pda, #gamedata
-		vault_pda, #gamevault
+	
+	var init_ix:Instruction = anchor_program.build_instruction("initializeLevelOne",[
+		game_account, #gamedata
+		chest_vault, #gamevault
 		SolanaService.wallet.get_kp(), #signer
 		SystemProgram.get_pid() #system program
-	],
-	AnchorProgram.u64(prize_in_lamports))
-	
+	],null)
 	instructions.append(init_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	
+	var setup_ix:Instruction = anchor_program.build_instruction("resetLevelAndSpawnChest",[
+		SolanaService.wallet.get_kp(), #signer
+		chest_vault, #gamevault
+		game_account, #gamedata
+		SystemProgram.get_pid() #system program
+	],null)
+	instructions.append(setup_ix)
+	
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
 	
 	if !tx_data.is_successful():
 		push_error("Failed to start game")
 		return
 		
-	update_prize()
 	set_player_pos()
 	in_game_balance.load_token()
 	
 	start_screen.visible=false
 	game_screen.visible=true
 	
-	
-func move_left() -> void:
-	move("moveLeft")
-func move_right() -> void:
-	move("moveRight")
-	
-func move(move_dir:String) -> void:
+func move() -> void:
 	var instructions:Array[Instruction]
-	var move_ix:Instruction = anchor_program.build_instruction(move_dir,[
-		level_pda, #gamedata
-		vault_pda, #gamevault
+	var move_ix:Instruction = anchor_program.build_instruction("moveRight",[
+		chest_vault, #gamevault
+		game_account, #gamedata
 		SolanaService.wallet.get_kp(), #signer
 		SystemProgram.get_pid() #system program
-	],null)
+	],{
+		"password":password,
+	})
 	
 	instructions.append(move_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions,TransactionManager.Commitment.FINALIZED)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
 	
 	if !tx_data.is_successful():
 		push_error("Failed to move")
@@ -89,20 +82,12 @@ func move(move_dir:String) -> void:
 	set_player_pos()
 
 	
-func update_prize() -> void:
-	var instance:AnchorProgram = spawn_anchor_program_instance()
-	instance.fetch_account("GameVault",vault_pda)
-	var data:Dictionary = await instance.account_fetched
-	
-	var prize_in_sol:float = float(data["chestPrize"])/pow(10,9)
-	prize_label.text = "%s SOL" % str(prize_in_sol)
-	
 func set_player_pos() -> void:
 	var instance:AnchorProgram = spawn_anchor_program_instance()
-	instance.fetch_account("GameData",level_pda)
+	instance.fetch_account("GameDataAccount",game_account)
 	var data:Dictionary = await instance.account_fetched
 	
-	var new_pos = data["characterPos"]
+	var new_pos = data["playerPosition"]
 	player.get_parent().remove_child(player)
 	step_blocks[new_pos].add_child(player)
 	

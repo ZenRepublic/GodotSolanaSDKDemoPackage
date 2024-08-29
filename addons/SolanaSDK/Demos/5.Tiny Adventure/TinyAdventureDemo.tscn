@@ -5,7 +5,6 @@
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/token_visualizer.gd" id="3_b3qx2"]
 [ext_resource type="Texture2D" uid="uid://c7s56sayh028u" path="res://addons/SolanaSDK/Textures/SolanaLogo.png" id="5_3wya5"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd" id="8_p878m"]
-[ext_resource type="Texture2D" uid="uid://3npcx8cx80ui" path="res://addons/SolanaSDK/Textures/Arrow.PNG" id="9_cuoqf"]
 [ext_resource type="Texture2D" uid="uid://cye2pbirpht4u" path="res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG" id="9_nsyg2"]
 [ext_resource type="Texture2D" uid="uid://d4kauar2qc15y" path="res://addons/SolanaSDK/Textures/Buttons/b_green_hover.PNG" id="10_8d8y4"]
 [ext_resource type="Texture2D" uid="uid://dq15ny3t87eog" path="res://addons/SolanaSDK/icon.svg" id="10_t3mrk"]
@@ -14,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="12_uwrbt"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="13_h53v3"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd" id="14_4x4kr"]
-[ext_resource type="JSON" path="res://addons/SolanaSDK/Demos/5.Tiny Adventure/tiny_adventure_idl.json" id="15_6u3kn"]
+[ext_resource type="JSON" path="res://addons/SolanaSDK/Demos/5.Tiny Adventure/tiny_idl.json" id="14_ayq1d"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_loader.gd" id="18_7asl2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
@@ -51,7 +50,10 @@ texture = ExtResource("12_uwrbt")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bmrj2"]
 texture = ExtResource("12_uwrbt")
 
-[node name="TinyAdventureDemo" type="Control" node_paths=PackedStringArray("start_button", "player", "chest", "prize_label", "step_blocks", "left_button", "right_button")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eh4ub"]
+bg_color = Color(0.360524, 0.371319, 0.458671, 1)
+
+[node name="TinyAdventureDemo" type="Control" node_paths=PackedStringArray("start_button", "player", "chest", "step_blocks", "move_button", "in_game_balance")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,15 +61,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sapfa")
-tiny_adventure_pid = "F3PjdY1TiKYqGqRaBHXcXSNqAW8FtjF9SCKrSth5V6DK"
-start_button = NodePath("MarginContainer/StartingScreen/StartButton")
+tiny_adventure_pid = "2opEDUyeHM8rv1JfcK6N4BPgXnB4g9NjZ7wD23mGTmhr"
+start_button = NodePath("StartingScreen/StartingScreen/StartButton")
 player = NodePath("GameScreen/BlocksContainer/Block0/Player")
 chest = NodePath("GameScreen/BlocksContainer/Block3/Chest")
-chest_prize = 0.01
-prize_label = NodePath("GameScreen/BlocksContainer/Block3/Chest/Prize")
 step_blocks = [NodePath("GameScreen/BlocksContainer/Block0"), NodePath("GameScreen/BlocksContainer/Block1"), NodePath("GameScreen/BlocksContainer/Block2"), NodePath("GameScreen/BlocksContainer/Block3")]
-left_button = NodePath("GameScreen/Buttons/LeftButton")
-right_button = NodePath("GameScreen/Buttons/RightButton")
+move_button = NodePath("GameScreen/Buttons/MoveButton")
+in_game_balance = NodePath("GameScreen/SolBalance2")
 
 [node name="TransactionOverlayUI" parent="." instance=ExtResource("2_ripwo")]
 
@@ -80,7 +80,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7pi32")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="StartingScreen" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -93,18 +93,18 @@ grow_vertical = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_right = 30
 
-[node name="StartingScreen" type="VBoxContainer" parent="MarginContainer"]
+[node name="StartingScreen" type="VBoxContainer" parent="StartingScreen"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Intro" type="Label" parent="MarginContainer/StartingScreen"]
+[node name="Intro" type="Label" parent="StartingScreen/StartingScreen"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Tiny Adventure"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AccountAddress" type="Label" parent="MarginContainer/StartingScreen"]
+[node name="AccountAddress" type="Label" parent="StartingScreen/StartingScreen"]
 custom_minimum_size = Vector2(800, 100)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -114,14 +114,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BalanceLabel" type="Label" parent="MarginContainer/StartingScreen"]
+[node name="BalanceLabel" type="Label" parent="StartingScreen/StartingScreen"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "SOL Balance"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SolBalance" type="HBoxContainer" parent="MarginContainer/StartingScreen" node_paths=PackedStringArray("amount_label", "token_visual")]
+[node name="SolBalance" type="HBoxContainer" parent="StartingScreen/StartingScreen" node_paths=PackedStringArray("amount_label", "token_visual")]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
@@ -132,19 +132,19 @@ load_on_ready = true
 auto_update_balance = true
 missing_icon_path = "res://addons/SolanaSDK/Textures/missingicon.png"
 
-[node name="Visual" type="TextureRect" parent="MarginContainer/StartingScreen/SolBalance"]
+[node name="Visual" type="TextureRect" parent="StartingScreen/StartingScreen/SolBalance"]
 layout_mode = 2
 texture = ExtResource("5_3wya5")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Balance" type="Label" parent="MarginContainer/StartingScreen/SolBalance"]
+[node name="Balance" type="Label" parent="StartingScreen/StartingScreen/SolBalance"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "..."
 vertical_alignment = 1
 
-[node name="StartButton" type="Button" parent="MarginContainer/StartingScreen"]
+[node name="StartButton" type="Button" parent="StartingScreen/StartingScreen"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -156,7 +156,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_m8hje")
 theme_override_styles/hover = SubResource("StyleBoxTexture_efb31")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_bio0t")
 theme_override_styles/normal = SubResource("StyleBoxTexture_hadpj")
-text = "Start game (0.1 SOL)"
+text = "Start game"
 script = ExtResource("8_p878m")
 unlock_amount = 0.01
 
@@ -264,26 +264,11 @@ layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="LeftButton" type="TextureButton" parent="GameScreen/Buttons"]
-custom_minimum_size = Vector2(128, 128)
+[node name="MoveButton" type="Button" parent="GameScreen/Buttons"]
+custom_minimum_size = Vector2(150, 80)
 layout_mode = 2
-texture_normal = ExtResource("9_cuoqf")
-texture_pressed = ExtResource("9_cuoqf")
-texture_hover = ExtResource("9_cuoqf")
-texture_disabled = ExtResource("9_cuoqf")
-ignore_texture_size = true
-stretch_mode = 5
-flip_h = true
-
-[node name="RightButton" type="TextureButton" parent="GameScreen/Buttons"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-texture_normal = ExtResource("9_cuoqf")
-texture_pressed = ExtResource("9_cuoqf")
-texture_hover = ExtResource("9_cuoqf")
-texture_disabled = ExtResource("9_cuoqf")
-ignore_texture_size = true
-stretch_mode = 5
+theme_override_font_sizes/font_size = 40
+text = "MOVE!"
 
 [node name="ReturnButton" type="Button" parent="." node_paths=PackedStringArray("scene_loader")]
 layout_mode = 1
@@ -308,83 +293,39 @@ path_to_scene = "res://addons/SolanaSDK/Demos/_DemoSelectScene/DemoSelectScene.t
 scene_loader = NodePath("../SceneLoader")
 
 [node name="AnchorProgram" type="AnchorProgram" parent="."]
-pid = "F3PjdY1TiKYqGqRaBHXcXSNqAW8FtjF9SCKrSth5V6DK"
-json_file = ExtResource("15_6u3kn")
+pid = "2opEDUyeHM8rv1JfcK6N4BPgXnB4g9NjZ7wD23mGTmhr"
+json_file = ExtResource("14_ayq1d")
 idl = {
 "accounts": [{
-"name": "GameData",
+"name": "GameDataAccount",
 "type": {
 "fields": [{
-"name": "characterPos",
+"name": "playerPosition",
 "type": "u8"
 }],
 "kind": "struct"
 }
 }, {
-"name": "GameVault",
+"name": "ChestVaultAccount",
 "type": {
-"fields": [{
-"name": "chestPrize",
-"type": "u64"
-}],
+"fields": [],
 "kind": "struct"
 }
+}],
+"errors": [{
+"code": 6000.0,
+"msg": "Password was wrong",
+"name": "WrongPassword"
 }],
 "instructions": [{
 "accounts": [{
 "isMut": true,
 "isSigner": false,
-"name": "gameData"
+"name": "newGameDataAccount"
 }, {
 "isMut": true,
 "isSigner": false,
-"name": "gameVault"
-}, {
-"isMut": true,
-"isSigner": true,
-"name": "signer"
-}, {
-"isMut": false,
-"isSigner": false,
-"name": "systemProgram"
-}],
-"args": [{
-"name": "startPos",
-"type": "u8"
-}],
-"name": "initialize"
-}, {
-"accounts": [{
-"isMut": true,
-"isSigner": false,
-"name": "gameData"
-}, {
-"isMut": true,
-"isSigner": false,
-"name": "gameVault"
-}, {
-"isMut": true,
-"isSigner": true,
-"name": "signer"
-}, {
-"isMut": false,
-"isSigner": false,
-"name": "systemProgram"
-}],
-"args": [{
-"name": "chestPrice",
-"type": "u64"
-}],
-"name": "restartLevel"
-}, {
-"accounts": [{
-"isMut": true,
-"isSigner": false,
-"name": "gameData"
-}, {
-"isMut": true,
-"isSigner": false,
-"name": "gameVault"
+"name": "chestVault"
 }, {
 "isMut": true,
 "isSigner": true,
@@ -395,33 +336,81 @@ idl = {
 "name": "systemProgram"
 }],
 "args": [],
+"name": "initializeLevelOne"
+}, {
+"accounts": [{
+"isMut": true,
+"isSigner": true,
+"name": "payer"
+}, {
+"isMut": true,
+"isSigner": false,
+"name": "chestVault"
+}, {
+"isMut": true,
+"isSigner": false,
+"name": "gameDataAccount"
+}, {
+"isMut": false,
+"isSigner": false,
+"name": "systemProgram"
+}],
+"args": [],
+"name": "resetLevelAndSpawnChest"
+}, {
+"accounts": [{
+"isMut": true,
+"isSigner": false,
+"name": "chestVault"
+}, {
+"isMut": true,
+"isSigner": false,
+"name": "gameDataAccount"
+}, {
+"isMut": true,
+"isSigner": true,
+"name": "player"
+}, {
+"isMut": false,
+"isSigner": false,
+"name": "systemProgram"
+}],
+"args": [{
+"name": "password",
+"type": "string"
+}],
 "name": "moveRight"
-}, {
-"accounts": [{
-"isMut": true,
-"isSigner": false,
-"name": "gameData"
-}, {
-"isMut": true,
-"isSigner": false,
-"name": "gameVault"
-}, {
-"isMut": true,
-"isSigner": true,
-"name": "signer"
-}, {
-"isMut": false,
-"isSigner": false,
-"name": "systemProgram"
 }],
-"args": [],
-"name": "moveLeft"
-}],
-"name": "tiny_adventure",
+"name": "tiny_adventure_two",
 "version": "0.1.0"
 }
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource("18_7asl2")
+
+[node name="LoadingCanvas" type="Panel" parent="SceneLoader"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_eh4ub")
+
+[node name="Label" type="Label" parent="SceneLoader/LoadingCanvas"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Loading, please wait..."
 
 [connection signal="pressed" from="ReturnButton" to="ReturnButton" method="_on_pressed"]

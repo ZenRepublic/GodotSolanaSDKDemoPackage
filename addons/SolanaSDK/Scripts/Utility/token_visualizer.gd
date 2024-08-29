@@ -10,6 +10,7 @@ class_name TokenVisualizer
 @export_file("*.png","*.jpg") var missing_icon_path:String
 
 func _ready() -> void:
+	print(name)
 	if load_on_ready:
 		load_token()
 	
@@ -52,8 +53,8 @@ func set_token_data(amount:float=0,token_mint:Pubkey=null) -> void:
 		else:
 			token_visual.texture = token_image
 		
-func update_token(transaction_id:String)->void:
-	if transaction_id=="":
+func update_token(tx_data:TransactionData)->void:
+	if !tx_data.is_successful():
 		return
 	
 	load_token()

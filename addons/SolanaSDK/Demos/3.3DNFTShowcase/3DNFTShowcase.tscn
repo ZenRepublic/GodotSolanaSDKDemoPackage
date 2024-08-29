@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cwbo7ujwfaygi"]
+[gd_scene load_steps=24 format=3 uid="uid://cwbo7ujwfaygi"]
 
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="6_1i7e0"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="7_cdlhf"]
@@ -67,6 +67,9 @@ top_radius = 5.095
 bottom_radius = 8.525
 height = 51.382
 radial_segments = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufg32"]
+bg_color = Color(0.360524, 0.371319, 0.458671, 1)
 
 [node name="3DNFTShowcase" type="Node3D"]
 script = SubResource("GDScript_c4hgs")
@@ -197,5 +200,30 @@ skeleton = NodePath("../..")
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource("12_8giwc")
+
+[node name="LoadingCanvas" type="Panel" parent="SceneLoader"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ufg32")
+
+[node name="Label" type="Label" parent="SceneLoader/LoadingCanvas"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Loading, please wait..."
 
 [connection signal="pressed" from="UICanvas/UI/ReturnButton" to="UICanvas/UI/ReturnButton" method="_on_pressed"]

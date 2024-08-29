@@ -68,6 +68,12 @@ func get_kp():
 	else:
 		return wallet_adapter
 		
+func get_shorthand_address():
+	var address:String = get_pubkey().to_string()
+	var part1:String = address.substr(0,4)
+	var part2:String = address.substr(address.length()-5,4)
+	return "%s...%s" % [part1,part2]
+		
 func is_logged_in() -> bool:
 	if use_generated:
 		return keypair!=null
