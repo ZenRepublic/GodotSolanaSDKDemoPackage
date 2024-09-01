@@ -19,8 +19,7 @@ func get_link(inspect_type:AccountInspector.InspectSite = AccountInspector.Inspe
 func get_error_message(full:bool=true) -> String:
 	if data.size() == 0:
 		return "Failed to send the transaction, please try again..."
-		
 	var error_message:String = "Error %s: %s" % [data["error"]["code"],data["error"]["message"]]
 	if full:
-		error_message += "\nTx Logs: %s" % data["error"]["logs"]
+		error_message += "\nTx Logs: %s" % str(data["error"]["data"]["logs"])
 	return error_message

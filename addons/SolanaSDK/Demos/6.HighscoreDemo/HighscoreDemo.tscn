@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dilver32v2354"]
+[gd_scene load_steps=26 format=3 uid="uid://dilver32v2354"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/6.HighscoreDemo/leaderboard_system.gd" id="1_7oio1"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/6.HighscoreDemo/game_manager.gd" id="1_dp1gx"]
@@ -44,6 +44,9 @@ texture = ExtResource("6_644p6")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hadpj"]
 texture = ExtResource("6_644p6")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oyeh"]
+bg_color = Color(0.360524, 0.371319, 0.458671, 1)
 
 [node name="HighscoreDemo" type="Control" node_paths=PackedStringArray("start_game_button", "score_label", "submit_score_button", "leaderboard_button")]
 layout_mode = 3
@@ -352,6 +355,31 @@ text = "GO BACK"
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource("15_ilu4p")
+
+[node name="LoadingCanvas" type="Panel" parent="SceneLoader"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3oyeh")
+
+[node name="Label" type="Label" parent="SceneLoader/LoadingCanvas"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Loading, please wait..."
 
 [connection signal="pressed" from="StartingScreen/ReturnButton" to="StartingScreen/ReturnButton" method="_on_pressed"]
 [connection signal="pressed" from="LeaderboardScreen/Content/VBoxContainer/BackButton" to="LeaderboardScreen/Content/VBoxContainer/BackButton" method="_on_pressed"]

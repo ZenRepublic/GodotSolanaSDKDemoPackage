@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bf3edinsgleli"]
+[gd_scene load_steps=15 format=3 uid="uid://bf3edinsgleli"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/login_manager.gd" id="1_0vojp"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="5_o1wf6"]
@@ -27,6 +27,9 @@ texture = ExtResource("5_o1wf6")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18s3k"]
 bg_color = Color(0.34902, 0.360784, 0.482353, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5jui"]
+bg_color = Color(0.360524, 0.371319, 0.458671, 1)
+
 [node name="LoginScene" type="Control" node_paths=PackedStringArray("wallet_adapter_ui")]
 layout_mode = 3
 anchors_preset = 15
@@ -35,7 +38,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0vojp")
-path_to_scene = "res://Games/MiningMinigame/MiningMinigame.tscn"
+path_to_scene = "res://addons/SolanaSDK/Demos/_DemoSelectScene/DemoSelectScene.tscn"
 wallet_adapter_ui = NodePath("LoginOverlay/WalletAdapterUI")
 
 [node name="Background" type="Panel" parent="."]
@@ -151,5 +154,30 @@ vertical_alignment = 1
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource("8_r3y48")
+
+[node name="LoadingCanvas" type="Panel" parent="SceneLoader"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_y5jui")
+
+[node name="Label" type="Label" parent="SceneLoader/LoadingCanvas"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Loading, please wait..."
 
 [connection signal="pressed" from="LoginButton" to="." method="_on_login_button_pressed"]

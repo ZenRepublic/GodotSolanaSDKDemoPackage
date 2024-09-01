@@ -1,7 +1,7 @@
 extends Node
 class_name SceneLoader
 
-@onready var loading_canvas:CanvasLayer = $LoadingCanvas
+@onready var loading_canvas:Control = $LoadingCanvas
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

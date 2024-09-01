@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dw5exsao534ov"]
+[gd_scene load_steps=27 format=3 uid="uid://dw5exsao534ov"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/1.TokenTransferDemo/account_manager.gd" id="1_ossju"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/token_visualizer.gd" id="3_no3k2"]
@@ -45,6 +45,9 @@ texture = ExtResource("13_uo35c")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bmrj2"]
 texture = ExtResource("13_uo35c")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q88lx"]
+bg_color = Color(0.360524, 0.371319, 0.458671, 1)
 
 [node name="TokenTransferDemo" type="Control"]
 layout_mode = 3
@@ -276,6 +279,31 @@ scene_loader = NodePath("../SceneLoader")
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource("16_gwjyc")
+
+[node name="LoadingCanvas" type="Panel" parent="SceneLoader"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_q88lx")
+
+[node name="Label" type="Label" parent="SceneLoader/LoadingCanvas"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Loading, please wait..."
 
 [connection signal="text_changed" from="TransactionContainer/TransactionBoxes/SolTransactionPanel/ReceiverInputField" to="TransactionContainer/TransactionBoxes/SolTransactionPanel/ReceiverInputField" method="_on_text_changed"]
 [connection signal="text_changed" from="TransactionContainer/TransactionBoxes/SolTransactionPanel/AmountInputField" to="TransactionContainer/TransactionBoxes/SolTransactionPanel/AmountInputField" method="_on_text_changed"]

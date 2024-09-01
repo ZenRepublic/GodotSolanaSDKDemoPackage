@@ -15,7 +15,7 @@ func sign_transaction(instructions:Array[Instruction],tx_commitment:Commitment=C
 	for idx in range(instructions.size()):
 		if instructions[idx] == null:
 			push_error("instruction %s is null, couldn't build a transaction!"%idx)
-			on_tx_finish.emit("")
+			on_tx_finish.emit(TransactionData.new({}))
 			return TransactionData.new({})
 			
 		transaction.add_instruction(instructions[idx])
@@ -69,7 +69,7 @@ func send_transaction(tx:Transaction,tx_commitment:Commitment=Commitment.CONFIRM
 	
 	if !tx_data.is_successful():
 		print(tx_data.get_error_message())
-		return
+		return tx_data
 
 	match tx_commitment:
 		Commitment.PROCESSED:

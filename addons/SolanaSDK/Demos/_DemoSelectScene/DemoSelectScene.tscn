@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://2ktq3vdndve"]
+[gd_scene load_steps=16 format=3 uid="uid://2ktq3vdndve"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/1.TokenTransferDemo/account_manager.gd" id="2_10qtm"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="3_b8juh"]
@@ -10,6 +10,9 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bume7"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ncd6e"]
+bg_color = Color(0.360524, 0.371319, 0.458671, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4s7sl"]
 bg_color = Color(0.448574, 0.691759, 0.300011, 1)
@@ -48,6 +51,31 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bume7")
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource("9_6qm0y")
 
+[node name="LoadingCanvas" type="Panel" parent="SceneLoader"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ncd6e")
+
+[node name="Label" type="Label" parent="SceneLoader/LoadingCanvas"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Loading, please wait..."
+
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -76,6 +104,9 @@ text = "Welcome back,"
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"
+
+[node name="Balance" type="Label" parent="Margin/Content/AccountPanel"]
+layout_mode = 2
 
 [node name="IntroText" type="Label" parent="Margin/Content"]
 layout_mode = 2
