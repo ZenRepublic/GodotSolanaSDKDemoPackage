@@ -496,10 +496,12 @@ text = "Select Network:"
 layout_mode = 2
 selected = 0
 allow_reselect = true
-item_count = 2
+item_count = 3
 popup/item_0/text = "Mainnet"
 popup/item_1/text = "Devnet"
 popup/item_1/id = 1
+popup/item_2/text = "Sonic"
+popup/item_2/id = 2
 script = ExtResource("3_lb3d3")
 
 [node name="MarginContainer" type="MarginContainer" parent="Margin/Content/Footer"]
