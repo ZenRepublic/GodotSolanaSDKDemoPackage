@@ -8,13 +8,13 @@ signal on_input_submit
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	confirm_button.disabled=true
-	confirm_button.connect("pressed",on_input_confirm)
+	confirm_button.pressed.connect(on_input_confirm)
 	for field in input_fields:
-		field.connect("on_field_updated",check_validity)
+		field.on_field_updated.connect(check_validity)
 
 
 func on_input_confirm() -> void:
-	emit_signal("on_input_submit",get_fields_data())
+	on_input_submit.emit(get_fields_data())
 	
 
 func check_validity():

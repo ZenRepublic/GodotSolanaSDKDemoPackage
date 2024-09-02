@@ -37,14 +37,18 @@ func setup(nfts:Array[Nft]) -> void:
 	
 	for nft in nfts:
 		add_to_list(nft)
-	show_at_index(0)
+	
+	if models.size() > 0:
+		show_at_index(0)
 		
 func add_to_list(asset:WalletAsset) -> void:
 	if !asset is Nft:
 		return
-		
+	
+	print(asset.is_3D_model())
 	if !asset.is_3D_model():
 		return
+	
 	var model_nft:ModelNFT = model_nft_scn.instantiate()
 	model_spawn.add_child(model_nft)
 	model_nft.visible=false

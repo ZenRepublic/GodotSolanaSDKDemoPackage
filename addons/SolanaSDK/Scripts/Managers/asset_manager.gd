@@ -89,6 +89,9 @@ func get_asset_from_mint(asset_mint:Pubkey, load_texture:bool=false) -> WalletAs
 # 4 - Programmable NFT
 # 5 - Programmable NFT Edition		
 func get_asset_type(metadata:MetaData) -> AssetType:
+	if metadata.get_token_standard() == null:
+		return AssetType.NONE
+		
 	var token_standard:int = metadata.get_token_standard()
 	match token_standard:
 		1,2:

@@ -9,7 +9,7 @@ class_name DisplayableNFT
 
 var nft:Nft
 
-signal on_selected
+signal on_selected(displayable:DisplayableNFT)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -49,4 +49,4 @@ func get_associated_nft() -> Nft:
 	return nft
 	
 func handle_select() -> void:
-	on_selected.emit()
+	on_selected.emit(self)

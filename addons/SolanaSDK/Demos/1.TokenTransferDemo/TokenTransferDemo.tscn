@@ -78,9 +78,10 @@ theme_override_constants/margin_bottom = 30
 [node name="VBoxContainer" type="VBoxContainer" parent="AccountContainer"]
 layout_mode = 2
 
-[node name="AccountPanel" type="VBoxContainer" parent="AccountContainer/VBoxContainer"]
+[node name="AccountPanel" type="VBoxContainer" parent="AccountContainer/VBoxContainer" node_paths=PackedStringArray("balance_visualizer")]
 layout_mode = 2
 script = ExtResource("1_ossju")
+balance_visualizer = NodePath("SolBalance")
 
 [node name="AccountLabel" type="Label" parent="AccountContainer/VBoxContainer/AccountPanel"]
 layout_mode = 2

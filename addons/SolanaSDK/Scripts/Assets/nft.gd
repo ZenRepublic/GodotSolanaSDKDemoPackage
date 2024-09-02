@@ -7,6 +7,9 @@ class_name Nft
 var model_state:GLTFState
 	
 func get_category() -> String:
+	if offchain_metadata.size() == 0:
+		return ""
+		
 	if offchain_metadata["properties"].has("category"):
 		return offchain_metadata["properties"]["category"]
 	else:

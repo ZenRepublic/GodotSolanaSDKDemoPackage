@@ -98,7 +98,7 @@ func transfer_sol(receiver:String,amount:float,tx_commitment=Commitment.CONFIRME
 	
 	var amount_in_lamports = int(amount*1000000000)
 	
-	var sol_transfer_ix:Instruction = SystemProgram.transfer(sender_account,receiver_account,amount_in_lamports)
+	var sol_transfer_ix:Instruction = SystemProgram.transfer(sender_keypair,receiver_account,amount_in_lamports)
 	instructions.append(sol_transfer_ix)
 	
 	if custom_sender!=null:
@@ -127,10 +127,10 @@ func transfer_token(token_address:String,receiver:String,amount:float,tx_commitm
 	if receiver_ata == null:
 		receiver_ata = Pubkey.new_associated_token_address(receiver_account,token_mint)
 		var init_ata_ix:Instruction = AssociatedTokenAccountProgram.create_associated_token_account(
-			sender_account,
+			sender_keypair,
 			receiver_account,
 			token_mint,
-			SolanaService.associated_token_pid
+			SolanaService.token_pid
 			)
 		instructions.append(init_ata_ix)
 		

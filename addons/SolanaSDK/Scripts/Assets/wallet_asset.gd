@@ -22,7 +22,8 @@ func set_data(mint_address:Pubkey,token_metadata:MetaData,asset_type:AssetManage
 	symbol = metadata.get_symbol()
 	type = asset_type
 	
-	offchain_metadata = await SolanaService.file_loader.load_token_metadata(metadata.get_uri())
+	if metadata.get_uri() != null and metadata.get_uri().length() > 0:
+		offchain_metadata = await SolanaService.file_loader.load_token_metadata(metadata.get_uri())
 	if autoload_image:
 		await try_load_image(image_size)
 		

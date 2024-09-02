@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cwbo7ujwfaygi"]
+[gd_scene load_steps=23 format=3 uid="uid://cwbo7ujwfaygi"]
 
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="6_1i7e0"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="7_cdlhf"]
@@ -9,21 +9,6 @@
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd" id="9_r2b8r"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/3.3DNFTShowcase/asset_inspector.gd" id="10_0ihl4"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_loader.gd" id="12_8giwc"]
-
-[sub_resource type="GDScript" id="GDScript_c4hgs"]
-script/source = "extends Node
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	$SceneLoader.emit_signal(\"scene_loaded\")
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_as8ny"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -72,7 +57,6 @@ radial_segments = 12
 bg_color = Color(0.360524, 0.371319, 0.458671, 1)
 
 [node name="3DNFTShowcase" type="Node3D"]
-script = SubResource("GDScript_c4hgs")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_17iql")

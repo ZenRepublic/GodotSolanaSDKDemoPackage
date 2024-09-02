@@ -48,7 +48,7 @@ texture = ExtResource("6_644p6")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oyeh"]
 bg_color = Color(0.360524, 0.371319, 0.458671, 1)
 
-[node name="HighscoreDemo" type="Control" node_paths=PackedStringArray("start_game_button", "score_label", "submit_score_button", "leaderboard_button")]
+[node name="HighscoreDemo" type="Control" node_paths=PackedStringArray("start_game_button", "score_label", "submit_score_button", "leaderboard_button", "leaderboard_system")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,7 +60,8 @@ start_game_button = NodePath("StartingScreen/Content/VBoxContainer/StartButton")
 score_label = NodePath("PlayScreen/score")
 submit_score_button = NodePath("PlayScreen/SubmitButton")
 leaderboard_button = NodePath("StartingScreen/Content/VBoxContainer/LeaderboardButton")
-game_authority_path = "res://addons/SolanaSDK/Demos/HighscoreDemo/DgjZTqLaxmhtg1eypxpLfDfQw3whi5Wg45pD4oSJb8Az.json"
+leaderboard_system = NodePath("LeaderboardScreen")
+game_authority_path = "res://addons/SolanaSDK/Demos/6.HighscoreDemo/DgjZTqLaxmhtg1eypxpLfDfQw3whi5Wg45pD4oSJb8Az.json"
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 1
