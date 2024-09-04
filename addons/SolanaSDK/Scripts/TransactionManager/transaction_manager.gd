@@ -136,7 +136,8 @@ func transfer_token(token_address:String,receiver:String,amount:float,tx_commitm
 		
 	#get the decimals of the token to multiply by the amount provided
 	var token_decimals = await SolanaService.get_token_decimals(token_address)
-	var transfer_ix:Instruction = TokenProgram.transfer_checked(sender_ata,token_mint,receiver_ata,sender_account,amount,token_decimals)
+	var decimal_amount = amount*pow(10,token_decimals)
+	var transfer_ix:Instruction = TokenProgram.transfer_checked(sender_ata,token_mint,receiver_ata,sender_keypair,decimal_amount,token_decimals)
 	instructions.append(transfer_ix)
 	
 	if custom_sender!=null:

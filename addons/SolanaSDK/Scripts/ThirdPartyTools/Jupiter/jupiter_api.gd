@@ -12,12 +12,13 @@ var JUP_SWAP_API:String = "https://quote-api.jup.ag/v6/swap"
 func _ready() -> void:
 	#var token_status:TokenStatus = await get_token_status(Pubkey.new_from_string("Ds52CDgqdWbTWsua1hgT3AuSSy4FNx2Ezge1br3jQ14a"))
 	#var token_price:float =  await get_token_unit_price(Pubkey.new_from_string("Ds52CDgqdWbTWsua1hgT3AuSSy4FNx2Ezge1br3jQ14a"),Pubkey.new_from_string("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"))
-	var response = await get_swap_quote(Pubkey.new_from_string("So11111111111111111111111111111111111111112"),
-	Pubkey.new_from_string("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"),
-	0.02,1.0)
-	print(response)
-	var tx:TransactionData = await swap_token(Pubkey.new_from_string("84pL2GAuv8XGVPyZre2xcgUNSGz9csYHBt5AW4PUcEe9"),response)
-	print(tx)
+	#var response = await get_swap_quote(Pubkey.new_from_string("So11111111111111111111111111111111111111112"),
+	#Pubkey.new_from_string("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"),
+	#0.02,1.0)
+	#print(response)
+	#var tx:TransactionData = await swap_token(SolanaService.wallet.get_pubkey(),response)
+	#print(tx)
+	pass
 	
 func get_swap_quote(token_to_send:Pubkey,token_to_receive:Pubkey,amount_to_send:float,slippage_percentage:float,fee_account:Pubkey=null,fee_percentage:float=0) -> Dictionary:
 	var input_mint:String = "inputMint="+token_to_send.to_string()
@@ -41,9 +42,7 @@ func swap_token(payer:Pubkey,swap_quote:Dictionary) -> TransactionData:
 		"wrapAndUnwrapSol":true
 	}
 	var response:Dictionary = await send_post_request(JSON.stringify(body),headers,JUP_SWAP_API)
-	print(response)
 	var serialized_tx_data:PackedByteArray = SolanaUtils.bs64_decode(response["swapTransaction"])
-	print(serialized_tx_data)
 	var priority_fee:float = response["prioritizationFeeLamports"]
 	#return null
 	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_serialized_transaction(SolanaService.wallet.get_kp(),serialized_tx_data,TransactionManager.Commitment.CONFIRMED,priority_fee)

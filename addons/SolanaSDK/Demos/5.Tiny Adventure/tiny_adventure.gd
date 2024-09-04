@@ -4,7 +4,6 @@ extends Node
 @onready var game_screen = $GameScreen
 @onready var anchor_program:AnchorProgram = $AnchorProgram
 
-@export var tiny_adventure_pid:String
 @export var start_button:ButtonLock
 
 @export var player:TextureRect
@@ -22,8 +21,8 @@ var curr_pos:int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	game_account = Pubkey.new_pda(["level1"],Pubkey.new_from_string(tiny_adventure_pid))
-	chest_vault = Pubkey.new_pda(["chestVault"],Pubkey.new_from_string(tiny_adventure_pid))
+	game_account = Pubkey.new_pda(["level1"],Pubkey.new_from_string(anchor_program.get_pid()))
+	chest_vault = Pubkey.new_pda(["chestVault"],Pubkey.new_from_string(anchor_program.get_pid()))
 	
 	start_button.pressed.connect(setup_game)
 	move_button.pressed.connect(move)
@@ -83,9 +82,8 @@ func move() -> void:
 
 	
 func set_player_pos() -> void:
-	var instance:AnchorProgram = spawn_anchor_program_instance()
-	instance.fetch_account("GameDataAccount",game_account)
-	var data:Dictionary = await instance.account_fetched
+	anchor_program.fetch_account("GameDataAccount",game_account)
+	var data:Dictionary = await anchor_program.account_fetched
 	
 	var new_pos = data["playerPosition"]
 	player.get_parent().remove_child(player)
@@ -94,12 +92,3 @@ func set_player_pos() -> void:
 	if new_pos == step_blocks.size()-1:
 		in_game_balance.load_token()
 		chest.visible=false
-		
-
-func spawn_anchor_program_instance()->AnchorProgram:
-	var instance:AnchorProgram = AnchorProgram.new()
-	add_child(instance)
-	instance.set_pid(anchor_program.get_pid())
-	instance.set_json_file(anchor_program.get_json_file())
-	instance.set_idl(anchor_program.get_idl())
-	return instance

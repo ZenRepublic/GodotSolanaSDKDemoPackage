@@ -36,6 +36,7 @@ func load_assets()->void:
 	assets_loaded=false
 	
 	var connected_wallet:Pubkey = SolanaService.wallet.get_pubkey()
+	
 	var wallet_assets:Array[Dictionary] = await SolanaService.get_wallet_assets(connected_wallet.to_string())
 	on_asset_load_started.emit(wallet_assets.size())
 	
