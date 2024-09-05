@@ -9,7 +9,9 @@ func _ready() -> void:
 			select(0)
 		SolanaService.RpcCluster.DEVNET:
 			select(1)
-			
+		SolanaService.RpcCluster.SONIC:
+			select(2)
+
 	item_selected.connect(on_network_selected)
 	pass # Replace with function body.
 
@@ -21,4 +23,6 @@ func on_network_selected(selection:int) -> void:
 			rpc_cluster = SolanaService.RpcCluster.MAINNET
 		1:
 			rpc_cluster = SolanaService.RpcCluster.DEVNET
+		2:
+			rpc_cluster = SolanaService.RpcCluster.SONIC
 	SolanaService.set_rpc_cluster(rpc_cluster)
