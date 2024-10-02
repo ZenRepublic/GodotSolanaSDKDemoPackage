@@ -7,57 +7,69 @@ signal on_tx_init
 signal on_tx_signed
 signal on_tx_finish(tx_data:TransactionData)
 
-func sign_transaction(instructions:Array[Instruction],tx_commitment:Commitment=Commitment.CONFIRMED,priority_fee:float=0.0,custom_signer=null) -> TransactionData:
-	on_tx_init.emit()
+func create_transaction(instructions:Array[Instruction],priority_fee:float=0.0) -> Transaction:
 	var transaction:Transaction = Transaction.new()	
 	add_child(transaction)
-	#
+	
 	for idx in range(instructions.size()):
 		if instructions[idx] == null:
 			push_error("instruction %s is null, couldn't build a transaction!"%idx)
-			on_tx_finish.emit(TransactionData.new({}))
-			return TransactionData.new({})
-			
+			return null
 		transaction.add_instruction(instructions[idx])
+		
+	#transaction.set_unit_limit(priority_fee)
+	#transaction.set_unit_price(priority_fee)
+	
+	transaction.update_latest_blockhash()
+	await transaction.blockhash_updated
+	
+	return transaction
+	
+
+func sign_transaction(transaction:Transaction,tx_commitment:Commitment=Commitment.CONFIRMED,custom_signer=null) -> TransactionData:
+	on_tx_init.emit()
+	if transaction == null:
+		on_tx_finish.emit(TransactionData.new({}))
+		return TransactionData.new({})
 	
 	var wallet
 	if custom_signer!=null:
 		wallet = custom_signer
 	else:
 		wallet = SolanaService.wallet.get_kp()
+		
+		
 	transaction.set_payer(wallet)
-	
-	transaction.set_unit_limit(priority_fee)
-	transaction.set_unit_price(priority_fee)
-	
-	transaction.update_latest_blockhash()
-	await transaction.blockhash_updated
-	
+	#
+	#transaction.set_unit_limit(0.0)
+	#transaction.set_unit_price(0.0)
 	transaction.sign()
+	print("SIGNED!")
 	#await transaction.fully_signed
-	print("SIGNED")
+	
+	#var double_signed_tx:Transaction = await RubianServer.get_oracle_signature(transaction)
+	#print(double_signed_tx.get_signers())
+	#return
+	
 	on_tx_signed.emit()
-	#var serialized_tx:PackedByteArray = transaction.serialize()
 	var tx_data:TransactionData = await send_transaction(transaction,tx_commitment)
 	
-	transaction.queue_free()
 	on_tx_finish.emit(tx_data)
 	return tx_data
 	
 
-func sign_serialized_transaction(wallet,transaction_bytes:PackedByteArray,tx_commitment:Commitment=Commitment.CONFIRMED,priority_fee:float=0.0) -> TransactionData:
+func sign_serialized_transaction(signers:Array,transaction_bytes:PackedByteArray,tx_commitment:Commitment=Commitment.CONFIRMED,priority_fee:float=0.0) -> TransactionData:
 	on_tx_init.emit()
 	var transaction:Transaction = Transaction.new_from_bytes(transaction_bytes)
-
 	add_child(transaction)
-	transaction.set_signers([wallet])
 	
-	transaction.set_unit_limit(priority_fee)
-	transaction.set_unit_price(priority_fee)
+	transaction.set_signers(signers)
+	transaction.sign()
+	#transaction.set_unit_limit(priority_fee)
+	#transaction.set_unit_price(priority_fee)
 
 	var tx_data:TransactionData = await send_transaction(transaction,tx_commitment)
 	
-	transaction.queue_free()
 	on_tx_finish.emit(tx_data)
 	
 	return tx_data
@@ -78,7 +90,8 @@ func send_transaction(tx:Transaction,tx_commitment:Commitment=Commitment.CONFIRM
 			await tx.confirmed
 		Commitment.FINALIZED:
 			await tx.finalized  
-				
+		
+	tx.queue_free()	
 	print_rich("[url]%s[/url]" % tx_data.get_link())
 	return tx_data
 		
@@ -101,11 +114,16 @@ func transfer_sol(receiver:String,amount:float,tx_commitment=Commitment.CONFIRME
 	var sol_transfer_ix:Instruction = SystemProgram.transfer(sender_keypair,receiver_account,amount_in_lamports)
 	instructions.append(sol_transfer_ix)
 	
+	var transaction:Transaction = await create_transaction(instructions,priority_fee)
+	#var double_signed_tx:Transaction = await RubianServer.get_oracle_signature(transaction)
+	#print(double_signed_tx.get_signers())
+	#return
+	
 	if custom_sender!=null:
-		var tx_data:TransactionData = await sign_transaction(instructions,tx_commitment,priority_fee,custom_sender)
+		var tx_data:TransactionData = await sign_transaction(transaction,tx_commitment,custom_sender)
 		return tx_data
 	else:
-		var tx_data:TransactionData = await sign_transaction(instructions)
+		var tx_data:TransactionData = await sign_transaction(transaction)
 		return tx_data
 
 func transfer_token(token_address:String,receiver:String,amount:float,tx_commitment=Commitment.CONFIRMED,priority_fee:float=0.0,custom_sender:Keypair=null) -> TransactionData:
@@ -130,7 +148,7 @@ func transfer_token(token_address:String,receiver:String,amount:float,tx_commitm
 			sender_keypair,
 			receiver_account,
 			token_mint,
-			SolanaService.token_pid
+			SolanaService.TOKEN_PID
 			)
 		instructions.append(init_ata_ix)
 		
@@ -140,9 +158,11 @@ func transfer_token(token_address:String,receiver:String,amount:float,tx_commitm
 	var transfer_ix:Instruction = TokenProgram.transfer_checked(sender_ata,token_mint,receiver_ata,sender_keypair,decimal_amount,token_decimals)
 	instructions.append(transfer_ix)
 	
+	var transaction:Transaction = await create_transaction(instructions,priority_fee)
+	
 	if custom_sender!=null:
-		var tx_data:TransactionData = await sign_transaction(instructions,tx_commitment,priority_fee,custom_sender)
+		var tx_data:TransactionData = await sign_transaction(transaction,tx_commitment,custom_sender)
 		return tx_data
 	else:
-		var tx_data:TransactionData = await sign_transaction(instructions)
+		var tx_data:TransactionData = await sign_transaction(transaction)
 		return tx_data

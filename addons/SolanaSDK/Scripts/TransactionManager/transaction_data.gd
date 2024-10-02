@@ -16,10 +16,10 @@ func get_link(inspect_type:AccountInspector.InspectSite = AccountInspector.Inspe
 
 	return SolanaService.account_inspector.get_tx_link(data["result"],inspect_type)
 	
-func get_error_message(full:bool=true) -> String:
+func get_error_message(include_logs:bool=true) -> String:
 	if data.size() == 0:
 		return "Failed to send the transaction, please try again..."
 	var error_message:String = "Error %s: %s" % [data["error"]["code"],data["error"]["message"]]
-	if full:
+	if include_logs and data["error"].has("data"):
 		error_message += "\nTx Logs: %s" % str(data["error"]["data"]["logs"])
 	return error_message

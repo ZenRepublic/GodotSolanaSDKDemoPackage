@@ -1,8 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://b8ysjvfoeeent"]
+[gd_scene load_steps=28 format=3 uid="uid://b8ysjvfoeeent"]
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Demos/5.Tiny Adventure/tiny_adventure.gd" id="1_sapfa"]
 [ext_resource type="PackedScene" uid="uid://blmw46he11fxs" path="res://addons/SolanaSDK/Scripts/TransactionManager/TransactionOverlayUI.tscn" id="2_ripwo"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/token_visualizer.gd" id="3_b3qx2"]
 [ext_resource type="Texture2D" uid="uid://c7s56sayh028u" path="res://addons/SolanaSDK/Textures/SolanaLogo.png" id="5_3wya5"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/NFTGating/token_button_lock.gd" id="8_p878m"]
 [ext_resource type="Texture2D" uid="uid://cye2pbirpht4u" path="res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG" id="9_nsyg2"]
@@ -12,9 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://bgbp0rixlgwes" path="res://addons/SolanaSDK/Textures/open-treasure-chest-icon-flat-style-vector.png" id="11_ot3nv"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="12_uwrbt"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="13_h53v3"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd" id="14_4x4kr"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_change_button.gd" id="14_4x4kr"]
 [ext_resource type="JSON" path="res://addons/SolanaSDK/Demos/5.Tiny Adventure/tiny_idl.json" id="14_ayq1d"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_loader.gd" id="18_7asl2"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_loader.gd" id="18_7asl2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
@@ -53,7 +52,7 @@ texture = ExtResource("12_uwrbt")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eh4ub"]
 bg_color = Color(0.360524, 0.371319, 0.458671, 1)
 
-[node name="TinyAdventureDemo" type="Control" node_paths=PackedStringArray("start_button", "player", "chest", "step_blocks", "move_button", "in_game_balance")]
+[node name="TinyAdventureDemo" type="Control" node_paths=PackedStringArray("start_button", "player", "chest", "step_blocks", "move_button", "menu_balance", "in_game_balance")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,13 +60,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sapfa")
-tiny_adventure_pid = "2opEDUyeHM8rv1JfcK6N4BPgXnB4g9NjZ7wD23mGTmhr"
 start_button = NodePath("StartingScreen/StartingScreen/StartButton")
 player = NodePath("GameScreen/BlocksContainer/Block0/Player")
 chest = NodePath("GameScreen/BlocksContainer/Block3/Chest")
 step_blocks = [NodePath("GameScreen/BlocksContainer/Block0"), NodePath("GameScreen/BlocksContainer/Block1"), NodePath("GameScreen/BlocksContainer/Block2"), NodePath("GameScreen/BlocksContainer/Block3")]
 move_button = NodePath("GameScreen/Buttons/MoveButton")
-in_game_balance = NodePath("GameScreen/SolBalance2")
+menu_balance = NodePath("StartingScreen/StartingScreen/SolBalance/Balance")
+in_game_balance = NodePath("GameScreen/SolBalance2/Balance")
 
 [node name="TransactionOverlayUI" parent="." instance=ExtResource("2_ripwo")]
 
@@ -104,7 +103,7 @@ text = "Tiny Adventure"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AccountAddress" type="Label" parent="StartingScreen/StartingScreen"]
+[node name="Explanation" type="Label" parent="StartingScreen/StartingScreen"]
 custom_minimum_size = Vector2(800, 100)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -121,16 +120,10 @@ text = "SOL Balance"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SolBalance" type="HBoxContainer" parent="StartingScreen/StartingScreen" node_paths=PackedStringArray("amount_label", "token_visual")]
+[node name="SolBalance" type="HBoxContainer" parent="StartingScreen/StartingScreen"]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
-script = ExtResource("3_b3qx2")
-amount_label = NodePath("Balance")
-token_visual = NodePath("Visual")
-load_on_ready = true
-auto_update_balance = true
-missing_icon_path = "res://addons/SolanaSDK/Textures/missingicon.png"
 
 [node name="Visual" type="TextureRect" parent="StartingScreen/StartingScreen/SolBalance"]
 layout_mode = 2
@@ -181,12 +174,9 @@ text = "SOL Balance"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SolBalance2" type="HBoxContainer" parent="GameScreen" node_paths=PackedStringArray("amount_label", "token_visual")]
+[node name="SolBalance2" type="HBoxContainer" parent="GameScreen"]
 layout_mode = 2
 alignment = 1
-script = ExtResource("3_b3qx2")
-amount_label = NodePath("Balance")
-token_visual = NodePath("Visual")
 
 [node name="Visual" type="TextureRect" parent="GameScreen/SolBalance2"]
 layout_mode = 2

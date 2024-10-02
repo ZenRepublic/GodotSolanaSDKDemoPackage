@@ -4,7 +4,7 @@ class_name CandyMachineDisplay
 @export var candy_machine_id:String
 @export var candy_guard_id:String
 
-@export var nft_display:DisplayableNFT
+@export var asset_display:DisplayableAsset
 @export var collection_desc:Label
 @export var minted_amount:Label
 @export var progress_bar:ProgressBar
@@ -30,7 +30,7 @@ func _ready() -> void:
 
 func setup(cm_data:CandyMachineData) -> void:
 	var collection_nft:Nft = await SolanaService.asset_manager.get_asset_from_mint(cm_data.collection_mint,true)
-	nft_display.set_data(collection_nft)
+	asset_display.set_data(collection_nft)
 	collection_desc.text = collection_nft.offchain_metadata["description"]
 
 	minted_amount.text = "%s/%s Minted" % [cm_data.items_redeemed,cm_data.items_available]

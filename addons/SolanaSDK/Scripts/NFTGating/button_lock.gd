@@ -4,6 +4,7 @@ class_name ButtonLock
 @export var lock_active:bool=true
 @export var hide_if_locked:bool
 
+var is_hidden:bool
 
 func _ready() -> void:
 	set_interactable(false)
@@ -11,14 +12,18 @@ func _ready() -> void:
 	self.visibility_changed.connect(on_visibility_changed)
 
 func on_visibility_changed() -> void:
+	if hide_if_locked and is_hidden:
+		return
+		
 	if self.visible and lock_active:
 		set_interactable(false)
 		try_unlock()
 
 func set_interactable(state:bool) -> void:
 	disabled = !state
-	if state==false && hide_if_locked:
-		visible=false
+	if hide_if_locked:
+		visible = state
+		is_hidden = !state
 		
 func try_unlock() -> void:
 	pass

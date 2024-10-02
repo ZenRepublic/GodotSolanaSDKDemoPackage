@@ -28,7 +28,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func setup(nfts:Array[Nft]) -> void:
+func setup(nfts:Array) -> void:
 	if models.size()!=null:
 		clear_models()
 	

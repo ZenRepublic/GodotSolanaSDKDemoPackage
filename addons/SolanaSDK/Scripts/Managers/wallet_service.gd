@@ -43,13 +43,12 @@ func login_game_wallet() -> void:
 	log_in_success()
 
 func login_adapter(provider_id:int) -> void:
-	print("LOGIN ADAPTEr")
 	wallet_adapter.wallet_type = provider_id	
 	wallet_adapter.connect_wallet()
 
 func log_in_success() -> void:
 	on_login_finish.emit(true)
-	print(get_pubkey().to_string())
+	print("Logged in as: ",get_pubkey().to_string())
 	
 func log_in_fail() -> void:
 	on_login_finish.emit(false)

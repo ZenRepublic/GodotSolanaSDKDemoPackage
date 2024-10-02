@@ -11,8 +11,12 @@ var default_mainnet = "https://api.mainnet-beta.solana.com"
 
 var active_rpc:String
 
-var token_pid:String = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-var associated_token_pid:String = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+var TOKEN_METADATA_PID:String = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+var TOKEN_PID:String = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+var ATA_TOKEN_PID:String = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+var SYSVAR_RENT_PUBKEY:String = "SysvarRent111111111111111111111111111111111"
+
+var WRAPPED_SOL_CA:String = "So11111111111111111111111111111111111111112"
 
 @onready var wallet:WalletService = $WalletService
 @onready var transaction_manager:TransactionManager = $TransactionManager
@@ -22,6 +26,8 @@ var associated_token_pid:String = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
 @onready var asset_manager:AssetManager = $AssetManager
 
 var rpc:String
+
+signal on_rpc_cluster_changed
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -46,6 +52,7 @@ func set_rpc_cluster(new_cluster:RpcCluster)->void:
 			
 	ProjectSettings.set_setting("solana_sdk/client/default_url",active_rpc)
 	rpc_cluster = new_cluster
+	on_rpc_cluster_changed.emit()
 	
 func generate_keypair(derive_from_machine:bool=false) -> Keypair:
 	var randomizer = RandomNumberGenerator.new()
@@ -69,7 +76,6 @@ func generate_keypair_from_pk(pk:String) -> Keypair:
 	#var keypair = Keypair.new_from_file("C:\\Users\\thoma\\Desktop\\kp\\kp.json")
 	return keypair
 	
-#	print(SolanaClient.get_latest_blockhash())
 func spawn_client_instance()->SolanaClient:
 	var sol_client:SolanaClient = SolanaClient.new()
 	add_child(sol_client)
@@ -84,6 +90,14 @@ func spawn_mpl_candy_machine_client() -> MplCandyMachine:
 	var candy_machine:MplCandyMachine = MplCandyMachine.new()
 	add_child(candy_machine)
 	return candy_machine
+	
+func spawn_program_instance(original_program:AnchorProgram)->AnchorProgram:
+	var program_instance:AnchorProgram = AnchorProgram.new()
+	program_instance.set_pid(original_program.get_pid())
+	program_instance.set_json_file(original_program.get_json_file())
+	program_instance.set_idl(original_program.get_idl())
+	add_child(program_instance)
+	return program_instance
 	
 func get_account_info(account:Pubkey) -> Dictionary:
 	var client:SolanaClient = spawn_client_instance()
@@ -104,14 +118,22 @@ func get_balance(address_to_check:String,token_address:String="") -> float:
 		var token_account:Pubkey = await get_associated_token_account(address_to_check,token_address)
 		if token_account == null:
 			return 0
+		var balance = await get_ata_balance(token_account.to_string())
+		return balance
 		
-		client.get_token_account_balance(token_account.to_string())
-		var response_dict:Dictionary = await client.http_response_received
-		client.queue_free()
+func get_ata_balance(associated_token_account:String) -> float:
+	var client:SolanaClient = spawn_client_instance()
+	client.get_token_account_balance(associated_token_account)
+	var response_dict:Dictionary = await client.http_response_received
+	client.queue_free()
+	
+	if response_dict.has("error"):
+		push_error("Failed to ata balance")
+		return 0
 		
-		var lamport_balance = response_dict["result"]["value"]["amount"]
-		var token_decimals = response_dict["result"]["value"]["decimals"]
-		return float(lamport_balance)/(10**token_decimals)	
+	var lamport_balance = response_dict["result"]["value"]["amount"]
+	var token_decimals = response_dict["result"]["value"]["decimals"]
+	return float(lamport_balance)/(10**token_decimals)	
 		
 func get_token_decimals(token_address:String)->int:
 	var client:SolanaClient = spawn_client_instance()
@@ -119,17 +141,22 @@ func get_token_decimals(token_address:String)->int:
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
 	
+	if response_dict.has("error"):
+		push_error("Failed to get token decimals")
+		return 0
+		
 	return response_dict["result"]["value"]["decimals"]
 	
 func get_associated_token_account(address_to_check:String,token_address:String) -> Pubkey:
 	var client:SolanaClient = spawn_client_instance()
-	client.get_token_accounts_by_owner(address_to_check,token_address,associated_token_pid)
+	client.get_token_accounts_by_owner(address_to_check,token_address,ATA_TOKEN_PID)
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
 	
 	var ata:String
 	
 	if response_dict.has("error"):
+		push_error("Failed to get fetch ATA")
 		return null
 
 	if response_dict["result"]["value"].size() == 0:
@@ -137,29 +164,98 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	
 	return Pubkey.new_from_string(response_dict["result"]["value"][0]["pubkey"])
 	
-func get_wallet_assets(wallet_address:String,use_das:bool=false) -> Array[Dictionary]:
+func fetch_program_account_of_type(program:AnchorProgram,account_type:String,key:Pubkey) -> Dictionary:
+	var program_instance:AnchorProgram = spawn_program_instance(program)
+	
+	program_instance.fetch_account(account_type,key)
+	var account:Dictionary = await program_instance.account_fetched
+	program_instance.queue_free()
+	return account
+	
+func fetch_all_program_accounts_of_type(program:AnchorProgram,account_type:String,filter:Array=[]) -> Dictionary:
+	var program_instance:AnchorProgram = spawn_program_instance(program)
+	
+	program_instance.fetch_all_accounts(account_type,filter)
+	var accounts:Dictionary = await program_instance.accounts_fetched
+	program_instance.queue_free()
+	return accounts
+	
+func get_asset_data(asset_id:Pubkey) -> Dictionary:
 	var client:SolanaClient = spawn_client_instance()
-	#if use_das:
-		#client.get_asset(Pubkey.new_from_string("AhR9HxFxtDEiuKBE4Hp2NeQ1Y4NoukVEN8xa5CP5MTXp"))
-		#var response_dict:Dictionary = await client.http_response_received
-		#print(response_dict)
-		#return []
-		
-	client.get_token_accounts_by_owner(wallet_address,"",token_pid)
+	client.get_asset(asset_id)
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
 
+	if response_dict.has("error"):
+		print("Failed to fetch asset data")
+		return {}
+		
+	return response_dict["result"]
+	
+func get_wallet_assets_data(wallet_to_check:Pubkey,asset_limit:int=1000) -> Array:
+	var page_id:int=1
+	var wallet_assets:Array
+	
+	while true:
+		var client:SolanaClient = spawn_client_instance()
+		client.get_assets_by_owner(wallet_to_check,page_id,asset_limit)
+		var response_dict:Dictionary = await client.http_response_received
+		client.queue_free()
+		if response_dict.has("error"):
+			push_error("Error fetching DAS assets data, stopping paging operation")
+			break
+			
+		var loaded_page_assets:Array = response_dict["result"]["items"]
+		for item in loaded_page_assets:
+			wallet_assets.append(item)
+		
+		if loaded_page_assets.size() < asset_limit:
+			break
+		page_id+=1
+	
+	return wallet_assets
+	
+func get_collection_assets_data(nft_owner:Pubkey,collection_mint:Pubkey,asset_limit:int=1000) -> Array:
+	var page_id:int=1
+	var owned_collection_assets:Array
+	
+	while true:
+		var client:SolanaClient = spawn_client_instance()
+		client.get_assets_by_group("collection_id",collection_mint,page_id,asset_limit)
+		var response_dict:Dictionary = await client.http_response_received
+		client.queue_free()
+		if response_dict.has("error"):
+			push_error("Error fetching DAS collection assets data, stopping paging operation")
+			break
+			
+		var loaded_page_assets:Array = response_dict["result"]["items"]
+		if loaded_page_assets.size() < asset_limit:
+			break
+		page_id+=1
+
+	return owned_collection_assets
+	
+func get_token_accounts(wallet_to_check:Pubkey) -> Array[Dictionary]:
+	var client:SolanaClient = spawn_client_instance()
+	client.get_token_accounts_by_owner(wallet_to_check.to_string(),"",TOKEN_PID)
+	var response_dict:Dictionary = await client.http_response_received
+	client.queue_free()
+	
+	if response_dict.has("error"):
+		push_error("Failed to fetch token accounts")
+		return []
+	
 	var wallet_tokens:Array[Dictionary]
 	for token in response_dict["result"]["value"]:
 		var token_byte_data = SolanaUtils.bs64_decode(token["account"]["data"][0])
 		var token_data:Dictionary = parse_token_data(token_byte_data)
-		print(token_data)
 		#remove token accounts which no longer hold an NFT
 		if token_data["amount"] == 0:
 			continue
 		wallet_tokens.append(token_data)
 	
 	return wallet_tokens
+	
 	
 func parse_token_data(data: PackedByteArray) -> Dictionary:
 	# Ensure that the data has a minimum length

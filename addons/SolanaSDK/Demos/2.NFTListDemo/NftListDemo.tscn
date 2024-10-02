@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="9_0s3rn"]
 [ext_resource type="PackedScene" uid="uid://c6ync1x06vh2q" path="res://addons/SolanaSDK/Demos/2.NFTListDemo/DisplayableNFT.tscn" id="10_1bsb3"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/2.NFTListDemo/nft_display_system.gd" id="10_m65q0"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/DisplaySystems/Assets/asset_display_system.gd" id="10_m65q0"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="10_xwtt3"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="11_kb74x"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_change_button.gd" id="12_aui6t"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/scene_loader.gd" id="12_n62t7"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_change_button.gd" id="12_aui6t"]
+[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_loader.gd" id="12_n62t7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pi32"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
@@ -121,15 +121,16 @@ theme_override_constants/margin_left = 60
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 60
 
-[node name="DisplaySystem" type="PanelContainer" parent="NFTContent/MarginContainer" node_paths=PackedStringArray("container", "no_nft_overlay")]
+[node name="DisplaySystem" type="PanelContainer" parent="NFTContent/MarginContainer" node_paths=PackedStringArray("container", "no_asset_overlay")]
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_vertical = 4
 script = ExtResource("10_m65q0")
-displayable_nft_scn = ExtResource("10_1bsb3")
 container = NodePath("MarginContainer/ScrollContainer/GridContainer")
-no_nft_overlay = NodePath("NoNFTsOverlay")
-load_all = true
+no_asset_overlay = NodePath("NoNFTsOverlay")
+display_type = 1
+display_entry_scn = ExtResource("10_1bsb3")
+load_all_owned = true
 
 [node name="MarginContainer" type="MarginContainer" parent="NFTContent/MarginContainer/DisplaySystem"]
 layout_mode = 2

@@ -12,7 +12,8 @@ extends Node
 @export var move_button:BaseButton
 @export var password:String="gib"
 
-@export var in_game_balance:TokenVisualizer
+@export var menu_balance:Label
+@export var in_game_balance:Label
 
 var game_account
 var chest_vault
@@ -27,6 +28,7 @@ func _ready() -> void:
 	start_button.pressed.connect(setup_game)
 	move_button.pressed.connect(move)
 	
+	menu_balance.text = str(await SolanaService.get_balance(SolanaService.wallet.get_pubkey().to_string()))
 	pass # Replace with function body.
 	
 func setup_game() -> void:
@@ -48,14 +50,15 @@ func setup_game() -> void:
 	],null)
 	instructions.append(setup_ix)
 	
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	
 	if !tx_data.is_successful():
 		push_error("Failed to start game")
 		return
 		
 	set_player_pos()
-	in_game_balance.load_token()
+	in_game_balance.text = str(await SolanaService.get_balance(SolanaService.wallet.get_pubkey().to_string()))
 	
 	start_screen.visible=false
 	game_screen.visible=true
@@ -72,7 +75,8 @@ func move() -> void:
 	})
 	
 	instructions.append(move_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	
 	if !tx_data.is_successful():
 		push_error("Failed to move")
@@ -90,5 +94,5 @@ func set_player_pos() -> void:
 	step_blocks[new_pos].add_child(player)
 	
 	if new_pos == step_blocks.size()-1:
-		in_game_balance.load_token()
+		in_game_balance.text = str(await SolanaService.get_balance(SolanaService.wallet.get_pubkey().to_string()))
 		chest.visible=false

@@ -11,55 +11,42 @@ class_name SoarProgram
 
 @onready var soar_program:AnchorProgram = $SOAR_PROGRAM
 
-func spawn_anchor_program_instance()->AnchorProgram:
-	var instance:AnchorProgram = AnchorProgram.new()
-	add_child(instance)
-	instance.set_pid(soar_program.get_pid())
-	instance.set_json_file(soar_program.get_json_file())
-	instance.set_idl(soar_program.get_idl())
-	return instance
-
 func get_pid() -> Pubkey:
 		return Pubkey.new_from_string(soar_program.get_pid())
 		
 func fetch_game_data(game_account:Pubkey) -> Dictionary:
-	var instance:AnchorProgram = spawn_anchor_program_instance()
-	instance.fetch_account("Game",game_account)
-	var result:Dictionary = await instance.account_fetched
+	soar_program.fetch_account("Game",game_account)
+	var result:Dictionary = await soar_program.account_fetched
 	return result
 	
 func fetch_leaderboard_data(leaderboard_account:Pubkey) -> Dictionary:
-	var instance:AnchorProgram = spawn_anchor_program_instance()
-	instance.fetch_account("LeaderBoard",leaderboard_account)
-	var result:Dictionary = await instance.account_fetched
+	soar_program.fetch_account("LeaderBoard",leaderboard_account)
+	var result:Dictionary = await soar_program.account_fetched
 	return result
 	
 func fetch_leaderboard_scores(leaderboard_account:Pubkey) -> Dictionary:
-	var instance:AnchorProgram = spawn_anchor_program_instance()
 	var leaderboard_top_entries_pda:Pubkey = SoarPDA.get_leaderboard_scores_pda(leaderboard_account,get_pid())
-	instance.fetch_account("LeaderTopEntries",leaderboard_top_entries_pda)
-	var result:Dictionary = await instance.account_fetched
+	soar_program.fetch_account("LeaderTopEntries",leaderboard_top_entries_pda)
+	var result:Dictionary = await soar_program.account_fetched
 	return result
 	
 func fetch_player_data(user_account:Pubkey) -> Dictionary:
-	var instance:AnchorProgram = spawn_anchor_program_instance()
 	var player_pda:Pubkey = SoarPDA.get_player_pda(user_account,get_pid())
-	instance.fetch_account("Player",player_pda)
-	var result:Dictionary = await instance.account_fetched
+	soar_program.fetch_account("Player",player_pda)
+	var result:Dictionary = await soar_program.account_fetched
 	return result
 	
 func fetch_player_data_from_pda(player_pda:Pubkey) -> Dictionary:
-	var instance:AnchorProgram = spawn_anchor_program_instance()
-	instance.fetch_account("Player",player_pda)
-	var result:Dictionary = await instance.account_fetched
+	soar_program.fetch_account("Player",player_pda)
+	var result:Dictionary = await soar_program.account_fetched
 	return result
+	
 func fetch_player_scores(user_account:Pubkey,leaderboard_account:Pubkey) -> Dictionary:
 	var player_account_pda:Pubkey = SoarPDA.get_player_pda(user_account,get_pid())
 	var player_scores_pda:Pubkey = SoarPDA.get_player_scores_pda(player_account_pda,leaderboard_account,get_pid())
 	
-	var instance:AnchorProgram = spawn_anchor_program_instance()
-	instance.fetch_account("PlayerScoresList",player_scores_pda)
-	var result:Dictionary = await instance.account_fetched
+	soar_program.fetch_account("PlayerScoresList",player_scores_pda)
+	var result:Dictionary = await soar_program.account_fetched
 	return result
 
 func init_game(game_attributes:SoarUtils.GameAttributes) -> TransactionData:
@@ -76,7 +63,8 @@ func init_game(game_attributes:SoarUtils.GameAttributes) -> TransactionData:
 	
 	print("Creating Game Account with ID: %s"%game_account.get_public_string())
 	instructions.append(init_game_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	return tx_data
 		
 
@@ -107,7 +95,8 @@ func add_leaderboard(game_address:String,leaderboard_data:SoarUtils.LeaderboardD
 	print("Creating Leaderboard with ID: %s"%leaderboard.get_value())
 	
 	instructions.append(add_leaderboard_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	return tx_data
 	
 	
@@ -134,7 +123,8 @@ func update_leaderboard(game_address:String,leaderboard_address:String,leaderboa
 	print("Updating Leaderboard with ID: %s"%leaderboard_account.get_value())
 	
 	instructions.append(update_leaderboard_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	return tx_data
 	
 
@@ -153,7 +143,8 @@ func initialize_player(username:String, user_nft:Pubkey) -> TransactionData:
 	
 	print("Initializing Player account with ID: %s"%player_account.get_value())
 	instructions.append(init_player_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	return tx_data
 	
 		
@@ -171,7 +162,8 @@ func update_player(username:String, user_nft:Pubkey) -> TransactionData:
 	
 	print("Updating Player account with ID: %s"%player_account.get_value())
 	instructions.append(update_player_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	return tx_data
 		
 
@@ -217,6 +209,7 @@ func submit_score_to_leaderboard(game_account:Pubkey,leaderboard_account:Pubkey,
 		})
 		
 	instructions.append(submit_score_ix)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(instructions)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
 	return tx_data
 	

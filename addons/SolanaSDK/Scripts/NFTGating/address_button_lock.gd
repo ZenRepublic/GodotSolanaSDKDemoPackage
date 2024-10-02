@@ -9,4 +9,3 @@ func try_unlock() -> void:
 	var user_address:String = SolanaService.wallet.get_pubkey().to_string()
 	set_interactable(wallet_addresses.has(user_address))
 	
-

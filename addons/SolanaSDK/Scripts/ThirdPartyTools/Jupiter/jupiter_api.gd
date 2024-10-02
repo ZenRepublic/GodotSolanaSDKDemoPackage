@@ -20,9 +20,11 @@ func _ready() -> void:
 	#print(tx)
 	pass
 	
-func get_swap_quote(token_to_send:Pubkey,token_to_receive:Pubkey,amount_to_send:float,slippage_percentage:float,fee_account:Pubkey=null,fee_percentage:float=0) -> Dictionary:
+func get_swap_quote(token_to_send:Pubkey,token_to_receive:Pubkey,amount_to_send:float,slippage_percentage:float,fee_account:Pubkey=null,fee_percentage:float=0):
 	var input_mint:String = "inputMint="+token_to_send.to_string()
 	var mint_data:Dictionary = await get_token_data(token_to_send)
+	if mint_data.size() == 0:
+		return null
 	
 	var output_mint:String = "outputMint="+token_to_receive.to_string()
 	
@@ -45,7 +47,7 @@ func swap_token(payer:Pubkey,swap_quote:Dictionary) -> TransactionData:
 	var serialized_tx_data:PackedByteArray = SolanaUtils.bs64_decode(response["swapTransaction"])
 	var priority_fee:float = response["prioritizationFeeLamports"]
 	#return null
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_serialized_transaction(SolanaService.wallet.get_kp(),serialized_tx_data,TransactionManager.Commitment.CONFIRMED,priority_fee)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_serialized_transaction([SolanaService.wallet.get_kp()],serialized_tx_data,TransactionManager.Commitment.CONFIRMED,priority_fee)
 	return tx_data
 
 func get_token_data(token_mint:Pubkey) -> Dictionary:
@@ -53,8 +55,11 @@ func get_token_data(token_mint:Pubkey) -> Dictionary:
 	return response
 	
 func get_token_status(token_mint:Pubkey) -> TokenStatus:
-	var response:Dictionary = await send_get_request(JUP_TOKEN_API+token_mint.to_string())
-	if "verified" in response["tags"]:
+	var response:Dictionary = await get_token_data(token_mint)
+	if response.size() == 0:
+		return TokenStatus.UNKNOWN
+		
+	if "verified" in response["tags"] or "strict" in response["tags"]:
 		return TokenStatus.VERIFIED
 	else:
 		return TokenStatus.UNKNOWN
@@ -66,7 +71,6 @@ func get_token_unit_price(token_mint:Pubkey,price_against:Pubkey=null) -> float:
 		vs_token = "&vsToken="+price_against.to_string()
 		
 	var response:Dictionary = await send_get_request(JUP_PRICE_API+ids+vs_token)
-	print(response)
 	if response == {}:
 		return 0
 	return response["data"][token_mint.to_string()]["price"]
@@ -85,6 +89,7 @@ func send_get_request(request_link:String) -> Dictionary:
 	var response_dict = parse_http_response(raw_response,true)
 	
 	if response_dict["response_code"] != 200:
+		print(response_dict)
 		return {}
 	
 	if response_dict["body"] == null:
@@ -105,6 +110,7 @@ func send_post_request(body, headers:Array,endpoint:String) -> Dictionary:
 	var response_dict = parse_http_response(raw_response,true)
 
 	if response_dict["response_code"] != 200:
+		print(response_dict)
 		return {}
 	
 	return response_dict["body"]

@@ -15,6 +15,7 @@ func load_token_metadata(uri:String) -> Dictionary:
 	var response_dict = parse_http_response(raw_response,true)
 	
 	if response_dict["response_code"] != 200:
+		print(response_dict)
 		push_error("Failed to fetch Token Metadata")
 		return {}
 	
@@ -150,6 +151,7 @@ func load_3d_model(model_link:String) -> GLTFState:
 	var response_dict = parse_http_response(raw_response)
 	
 	if response_dict["response_code"] != 200:
+		print(response_dict)
 		push_error("Failed to fetch Token Model")
 		return null
 	
