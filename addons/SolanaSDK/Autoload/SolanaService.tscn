@@ -13,8 +13,8 @@
 [node name="SolanaService" type="Node"]
 script = ExtResource("1_hwc3u")
 rpc_cluster = 1
-devnet_rpc = "https://api.devnet.solana.com"
 sonic_rpc = "https://www.devnet.sonic.game"
+honeycomb_rpc = "https://rpc.test.honeycombprotocol.com/"
 
 [node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
@@ -42,3 +42,4 @@ script = ExtResource("9_pob61")
 
 [node name="ShdwDriveCreator" type="Node" parent="."]
 script = ExtResource("9_m6qd0")
+selected_storage = "test storage"

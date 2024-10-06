@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	
 func set_value(number) -> void:
 	number_value = number
-	
+		
 	match format_mode:
 		NumberFormatMode.COMMA:
 			text = comma_format(number)
@@ -59,14 +59,17 @@ func zeros_to_letter(number) -> String:
 	elif number >= 1_000:
 		formatted_number = number / 1_000.0
 		suffix = "K"
-	
+		
+	var floored_number:float = floor(formatted_number * pow(10, decimal_amount)) / pow(10, decimal_amount)
 	var formatted_string:String
-	# Ensure there is at least one decimal point if the number has non-zero decimals
-	if int(formatted_number) != formatted_number:
-		var format_string = "%0." + str(clampi(decimal_amount,0,3)) + "f"
-		formatted_string = format_string % formatted_number
+	# Determine if we should display decimals or not
+	if floored_number == int(floored_number):
+		# No decimals needed, display as integer
+		formatted_string = str(int(floored_number))
 	else:
-		formatted_string = str(int(formatted_number))
+		# Use formatting to display with the specified decimal places
+		var format_string = "%0." + str(decimal_amount) + "f"
+		formatted_string = format_string % floored_number
 	
 	return formatted_string + suffix
 

@@ -11,6 +11,7 @@ var accounts:Array[AccountDisplayEntry]
 
 var list_data:Dictionary
 
+signal on_account_added(account_entry:AccountDisplayEntry)
 signal on_account_selected(account_data:Dictionary)
 
 func _ready() -> void:
@@ -52,7 +53,7 @@ func refresh_account_list() -> void:
 		elif typeof(identifier) != TYPE_STRING:
 			identifier = str(identifier)
 			
-		await add_account(identifier,data)
+		add_account(identifier,data)
 		
 	if refresh_button!=null:
 		refresh_button.disabled=false
@@ -71,6 +72,7 @@ func add_account(account_name:String,account_data:Dictionary) -> void:
 	await entry_instance.setup_account_entry(account_name,account_data)
 	entry_instance.on_selected.connect(handle_press)
 	accounts.append(entry_instance)
+	on_account_added.emit(entry_instance)
 	
 func handle_press(selected_account:AccountDisplayEntry) -> void:
 	on_account_selected.emit(selected_account.data)

@@ -1,9 +1,10 @@
 extends Node
-enum RpcCluster{MAINNET,DEVNET,SONIC}
+enum RpcCluster{MAINNET,DEVNET,SONIC,HONEYNET}
 @export var rpc_cluster:RpcCluster=RpcCluster.MAINNET
 @export var mainnet_rpc:String
 @export var devnet_rpc:String
 @export var sonic_rpc:String
+@export var honeycomb_rpc:String
 
 var default_devnet = "https://api.devnet.solana.com"
 var default_mainnet = "https://api.mainnet-beta.solana.com"
@@ -49,6 +50,8 @@ func set_rpc_cluster(new_cluster:RpcCluster)->void:
 			active_rpc = devnet_rpc
 		RpcCluster.SONIC:
 			active_rpc = sonic_rpc
+		RpcCluster.HONEYNET:
+			active_rpc = honeycomb_rpc
 			
 	ProjectSettings.set_setting("solana_sdk/client/default_url",active_rpc)
 	rpc_cluster = new_cluster
@@ -105,6 +108,14 @@ func get_account_info(account:Pubkey) -> Dictionary:
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
 	return response_dict
+	
+func get_airdrop(address:String,sol_lamport_amount:int) -> void:
+	var client:SolanaClient = spawn_client_instance()
+	client.request_airdrop(address,sol_lamport_amount)
+	var response_dict:Dictionary = await client.http_response_received
+	print(response_dict)
+	
+	client.queue_free()
 	
 func get_balance(address_to_check:String,token_address:String="") -> float:
 	var client:SolanaClient = spawn_client_instance()

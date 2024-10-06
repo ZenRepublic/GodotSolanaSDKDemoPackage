@@ -78,8 +78,9 @@ func validate_text(new_text:String) -> String:
 
 	match input_type:
 		InputType.ALPHANUMERIC:
+			adjusted_text = new_text.strip_edges()
 			if is_pubkey:
-				if SolanaUtils.bs58_decode(text).size() != 32:
+				if SolanaUtils.bs58_decode(adjusted_text).size() != 32:
 					return ""
 		InputType.INTEGER:
 			var value:int = int(new_text)

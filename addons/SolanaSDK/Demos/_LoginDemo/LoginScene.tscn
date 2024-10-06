@@ -38,7 +38,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0vojp")
-path_to_scene = "res://CandymachineMintScene.tscn"
+path_to_scene = "res://addons/SolanaSDK/Demos/_DemoSelectScene/DemoSelectScene.tscn"
 wallet_adapter_ui = NodePath("LoginOverlay/WalletAdapterUI")
 
 [node name="Background" type="Panel" parent="."]
