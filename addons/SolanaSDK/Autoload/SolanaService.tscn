@@ -12,7 +12,6 @@
 
 [node name="SolanaService" type="Node"]
 script = ExtResource("1_hwc3u")
-rpc_cluster = 1
 sonic_rpc = "https://www.devnet.sonic.game"
 honeycomb_rpc = "https://rpc.test.honeycombprotocol.com/"
 

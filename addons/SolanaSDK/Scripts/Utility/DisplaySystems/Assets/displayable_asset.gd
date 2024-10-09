@@ -38,7 +38,7 @@ func set_data(asset:WalletAsset) -> void:
 			visual.texture = asset.image
 		else:
 			set_default_visual()
-			print("Couldn't load the image for mint: %s" % asset.mint.to_string())
+			push_warning("Couldn't load the image for mint: %s" % asset.mint.to_string())
 			
 	if asset is Token:
 		var token = asset as Token

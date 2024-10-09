@@ -153,7 +153,7 @@ func get_token_decimals(token_address:String)->int:
 	client.queue_free()
 	
 	if response_dict.has("error"):
-		push_error("Failed to get token decimals")
+		push_error("Failed to get token decimals for token %s" % token_address)
 		return 0
 		
 	return response_dict["result"]["value"]["decimals"]
@@ -191,8 +191,11 @@ func fetch_all_program_accounts_of_type(program:AnchorProgram,account_type:Strin
 	program_instance.queue_free()
 	return accounts
 	
-func get_asset_data(asset_id:Pubkey) -> Dictionary:
+func get_asset_data(asset_id:Pubkey, override_rpc_url:String) -> Dictionary:
 	var client:SolanaClient = spawn_client_instance()
+	if override_rpc_url!="":
+			client.url_override = override_rpc_url
+			
 	client.get_asset(asset_id)
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
@@ -203,12 +206,15 @@ func get_asset_data(asset_id:Pubkey) -> Dictionary:
 		
 	return response_dict["result"]
 	
-func get_wallet_assets_data(wallet_to_check:Pubkey,asset_limit:int=1000) -> Array:
+func get_wallet_assets_data(wallet_to_check:Pubkey,asset_limit:int=1000, override_rpc_url:String="") -> Array:
 	var page_id:int=1
 	var wallet_assets:Array
 	
 	while true:
 		var client:SolanaClient = spawn_client_instance()
+		if override_rpc_url!="":
+			client.url_override = override_rpc_url
+			
 		client.get_assets_by_owner(wallet_to_check,page_id,asset_limit)
 		var response_dict:Dictionary = await client.http_response_received
 		client.queue_free()
@@ -223,15 +229,18 @@ func get_wallet_assets_data(wallet_to_check:Pubkey,asset_limit:int=1000) -> Arra
 		if loaded_page_assets.size() < asset_limit:
 			break
 		page_id+=1
-	
+
 	return wallet_assets
 	
-func get_collection_assets_data(nft_owner:Pubkey,collection_mint:Pubkey,asset_limit:int=1000) -> Array:
+func get_collection_assets_data(nft_owner:Pubkey,collection_mint:Pubkey,asset_limit:int=1000,override_rpc_url:String="") -> Array:
 	var page_id:int=1
 	var owned_collection_assets:Array
 	
 	while true:
 		var client:SolanaClient = spawn_client_instance()
+		if override_rpc_url!="":
+			client.url_override = override_rpc_url
+			
 		client.get_assets_by_group("collection_id",collection_mint,page_id,asset_limit)
 		var response_dict:Dictionary = await client.http_response_received
 		client.queue_free()
@@ -243,7 +252,6 @@ func get_collection_assets_data(nft_owner:Pubkey,collection_mint:Pubkey,asset_li
 		if loaded_page_assets.size() < asset_limit:
 			break
 		page_id+=1
-
 	return owned_collection_assets
 	
 func get_token_accounts(wallet_to_check:Pubkey) -> Array[Dictionary]:

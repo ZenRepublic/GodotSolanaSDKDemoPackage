@@ -3,11 +3,11 @@ class_name TransactionManager
 
 enum Commitment{PROCESSED,CONFIRMED,FINALIZED}
 
-signal on_tx_init
+signal on_tx_sign_start
 signal on_tx_signed
 signal on_tx_finish(tx_data:TransactionData)
 
-func create_transaction(instructions:Array[Instruction],priority_fee:float=0.0) -> Transaction:
+func create_transaction(instructions:Array[Instruction],priority_fee:int=0.0) -> Transaction:
 	var transaction:Transaction = Transaction.new()	
 	add_child(transaction)
 	
@@ -17,8 +17,9 @@ func create_transaction(instructions:Array[Instruction],priority_fee:float=0.0) 
 			return null
 		transaction.add_instruction(instructions[idx])
 		
-	#transaction.set_unit_limit(priority_fee)
-	#transaction.set_unit_price(priority_fee)
+	if priority_fee > 0:
+		transaction.set_unit_limit(priority_fee)
+		transaction.set_unit_price(priority_fee)
 	
 	transaction.update_latest_blockhash()
 	await transaction.blockhash_updated
@@ -26,47 +27,23 @@ func create_transaction(instructions:Array[Instruction],priority_fee:float=0.0) 
 	return transaction
 	
 
-func sign_transaction(transaction:Transaction,tx_commitment:Commitment=Commitment.CONFIRMED,custom_signer=null) -> TransactionData:
-	on_tx_init.emit()
+func sign_and_send(transaction:Transaction,tx_commitment:Commitment=Commitment.CONFIRMED,custom_signer=null) -> TransactionData:
 	if transaction == null:
 		on_tx_finish.emit(TransactionData.new({}))
 		return TransactionData.new({})
-	
-	var wallet
-	if custom_signer!=null:
-		wallet = custom_signer
+		
+	var needed_signers:Array
+	if custom_signer!= null:
+		needed_signers == [custom_signer]
 	else:
-		wallet = SolanaService.wallet.get_kp()
-		
-		
-	transaction.set_payer(wallet)
-	#
-	#transaction.set_unit_limit(0.0)
-	#transaction.set_unit_price(0.0)
-	transaction.sign()
-	print("SIGNED!")
+		needed_signers = [SolanaService.wallet.get_kp()]
+	
+	transaction = await sign_transaction_normal(transaction,needed_signers,custom_signer)
+	
 	on_tx_signed.emit()
 	var tx_data:TransactionData = await send_transaction(transaction,tx_commitment)
 	
 	on_tx_finish.emit(tx_data)
-	return tx_data
-	
-
-func sign_serialized_transaction(signers:Array,transaction_bytes:PackedByteArray,tx_commitment:Commitment=Commitment.CONFIRMED,priority_fee:float=0.0) -> TransactionData:
-	on_tx_init.emit()
-	var transaction:Transaction = Transaction.new_from_bytes(transaction_bytes)
-	add_child(transaction)
-	
-	transaction.set_signers(signers)
-	transaction.partially_sign([SolanaService.wallet.get_kp()])
-	print(transaction.serialize())
-	#transaction.set_unit_limit(priority_fee)
-	#transaction.set_unit_price(priority_fee)
-
-	var tx_data:TransactionData = await send_transaction(transaction,tx_commitment)
-	
-	on_tx_finish.emit(tx_data)
-	
 	return tx_data
 	
 func send_transaction(tx:Transaction,tx_commitment:Commitment=Commitment.CONFIRMED) -> TransactionData:
@@ -77,6 +54,8 @@ func send_transaction(tx:Transaction,tx_commitment:Commitment=Commitment.CONFIRM
 	if !tx_data.is_successful():
 		print(tx_data.get_error_message())
 		return tx_data
+		
+	print("Transaction %s is sent! \nAwaiting confirmation..." % tx_data.data["result"])
 
 	match tx_commitment:
 		Commitment.PROCESSED:
@@ -91,7 +70,53 @@ func send_transaction(tx:Transaction,tx_commitment:Commitment=Commitment.CONFIRM
 	return tx_data
 		
 	
-# a couple of default transactions (sol_transfer, spl_transfer)
+func sign_transaction_normal(transaction:Transaction, all_needed_signers:Array,custom_signer=null) -> Transaction:
+	var wallet
+	if custom_signer!=null:
+		wallet = custom_signer
+	else:
+		wallet = SolanaService.wallet.get_kp()
+		
+	transaction.set_payer(wallet)
+	
+	await add_signature(transaction,wallet,all_needed_signers)
+	return transaction
+
+func sign_transaction_serialized(tx_bytes:PackedByteArray, all_needed_signers:Array, custom_signer=null) -> Transaction:
+	var wallet
+	if custom_signer!=null:
+		wallet = custom_signer
+	else:
+		wallet = SolanaService.wallet.get_kp()
+	
+	var transaction:Transaction = Transaction.new_from_bytes(tx_bytes)
+	add_child(transaction)
+	
+	await add_signature(transaction,wallet,all_needed_signers)
+	return transaction
+	
+func add_signature(transaction:Transaction,signer,all_needed_signers:Array) -> Transaction:
+	on_tx_sign_start.emit()
+	
+	if all_needed_signers.size() == 0:
+		print("No signers provided for signature")
+		return null
+	
+	if all_needed_signers.size() == 1:
+		transaction.sign()
+		if signer is WalletAdapter:
+			await transaction.fully_signed
+		print("Signature Added!")
+		
+	elif all_needed_signers.size() > 1:
+		transaction.set_signers(all_needed_signers)
+		transaction.partially_sign([signer])
+		if signer is WalletAdapter:
+			await transaction.signer_state_changed
+		print("Partial Signature Added!")
+	
+	on_tx_signed.emit()
+	return transaction
 	
 func transfer_sol(receiver:String,amount:float,tx_commitment=Commitment.CONFIRMED,priority_fee:float=0.0, custom_sender:Keypair=null) -> TransactionData:
 	var instructions:Array[Instruction]
@@ -112,10 +137,10 @@ func transfer_sol(receiver:String,amount:float,tx_commitment=Commitment.CONFIRME
 	var transaction:Transaction = await create_transaction(instructions,priority_fee)
 	
 	if custom_sender!=null:
-		var tx_data:TransactionData = await sign_transaction(transaction,tx_commitment,custom_sender)
+		var tx_data:TransactionData = await sign_and_send(transaction,tx_commitment,custom_sender)
 		return tx_data
 	else:
-		var tx_data:TransactionData = await sign_transaction(transaction)
+		var tx_data:TransactionData = await sign_and_send(transaction)
 		return tx_data
 
 func transfer_token(token_address:String,receiver:String,amount:float,tx_commitment=Commitment.CONFIRMED,priority_fee:float=0.0,custom_sender:Keypair=null) -> TransactionData:
@@ -153,8 +178,8 @@ func transfer_token(token_address:String,receiver:String,amount:float,tx_commitm
 	var transaction:Transaction = await create_transaction(instructions,priority_fee)
 	
 	if custom_sender!=null:
-		var tx_data:TransactionData = await sign_transaction(transaction,tx_commitment,custom_sender)
+		var tx_data:TransactionData = await sign_and_send(transaction,tx_commitment,custom_sender)
 		return tx_data
 	else:
-		var tx_data:TransactionData = await sign_transaction(transaction)
+		var tx_data:TransactionData = await sign_and_send(transaction)
 		return tx_data
