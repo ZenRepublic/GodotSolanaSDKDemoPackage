@@ -52,6 +52,11 @@ func log_in_success() -> void:
 	
 func log_in_fail() -> void:
 	on_login_finish.emit(false)
+	
+func get_wallet_provider_id() -> int:
+	if use_generated:
+		return -1
+	return wallet_adapter.wallet_type
 
 func get_pubkey() -> Pubkey:
 	if use_generated:

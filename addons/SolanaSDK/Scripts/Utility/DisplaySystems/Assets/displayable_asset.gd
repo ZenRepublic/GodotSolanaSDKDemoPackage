@@ -14,6 +14,7 @@ class_name DisplayableAsset
 
 var asset:WalletAsset
 
+signal on_data_loaded()
 signal on_selected(displayable:DisplayableAsset)
 
 # Called when the node enters the scene tree for the first time.
@@ -38,7 +39,7 @@ func set_data(asset:WalletAsset) -> void:
 			visual.texture = asset.image
 		else:
 			set_default_visual()
-			print("Couldn't load the image for mint: %s" % asset.mint.to_string())
+			push_warning("Couldn't load the image for mint: %s" % asset.mint.to_string())
 			
 	if asset is Token:
 		var token = asset as Token
@@ -48,6 +49,8 @@ func set_data(asset:WalletAsset) -> void:
 			SolanaService.transaction_manager.on_tx_finish.connect(update_balance)
 	elif asset is Nft:
 		var nft = asset as Nft
+		
+	on_data_loaded.emit()
 		
 
 func set_data_manual(texture:Texture2D, nft_name:String, balance:float=0.0) -> void:

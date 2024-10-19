@@ -9,7 +9,7 @@ func fetch_candy_machine(cm_id:Pubkey) -> CandyMachineData:
 	candy_machine.queue_free()
 	return cm_data
 	
-func mint_nft(cm_id:Pubkey, cm_data:CandyMachineData, payer:WalletService, receiver,tx_commitment:TransactionManager.Commitment=TransactionManager.Commitment.FINALIZED,priority_fee:float=0.0, custom_mint_account:Keypair=null) -> TransactionData:
+func mint_nft(cm_id:Pubkey, cm_data:CandyMachineData, payer:WalletService, receiver,tx_commitment:TransactionManager.Commitment=TransactionManager.Commitment.FINALIZED, custom_mint_account:Keypair=null) -> TransactionData:
 	var mint_account:Keypair = custom_mint_account
 	if mint_account==null:
 		mint_account = SolanaService.generate_keypair()
@@ -25,14 +25,14 @@ func mint_nft(cm_id:Pubkey, cm_data:CandyMachineData, payer:WalletService, recei
 		)
 		
 	instructions.append(mint_ix)
-	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,priority_fee)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction,tx_commitment,payer.get_kp())
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,payer)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction,tx_commitment,payer.get_kp())
 	return tx_data
 	
 	
 	
 	
-func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,payer:WalletService,receiver,guards:CandyGuardAccessList,group:String,tx_commitment:TransactionManager.Commitment=TransactionManager.Commitment.FINALIZED,priority_fee:float=0.0,custom_mint_account:Keypair=null) -> TransactionData:
+func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,payer:WalletService,receiver,guards:CandyGuardAccessList,group:String,tx_commitment:TransactionManager.Commitment=TransactionManager.Commitment.FINALIZED,custom_mint_account:Keypair=null) -> TransactionData:
 	var mint_account:Keypair = custom_mint_account
 	if mint_account==null:
 		mint_account = SolanaService.generate_keypair()
@@ -52,6 +52,6 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,
 		)
 
 	instructions.append(mint_ix)
-	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,priority_fee)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction,tx_commitment,payer.get_kp())
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,payer)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction,tx_commitment)
 	return tx_data

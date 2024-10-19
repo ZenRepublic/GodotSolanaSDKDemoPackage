@@ -37,10 +37,15 @@ func refresh_account_list() -> void:
 	if list_data.size() == 0:
 		return
 	
+	clear_display()
+	
 	if refresh_button!=null:
 		refresh_button.disabled=true
 		
-	clear_display()
+	if no_entries_overlay!=null:
+		no_entries_overlay.visible=true
+	
+	
 	var accounts:Dictionary = await SolanaService.fetch_all_program_accounts_of_type(list_data["program"],list_data["acc_key"],list_data["filter"])
 	for key in accounts.keys():
 		var data:Dictionary = accounts[key]

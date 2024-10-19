@@ -26,6 +26,7 @@ func _ready() -> void:
 
 func show_display_system(_selected_asset:DisplayableAsset) -> void:
 	display_system.visible=true
+	display_system.load_all_owned_assets()
 
 func select_asset(display_selection:WalletAsset) -> void:
 	if select_label != null:

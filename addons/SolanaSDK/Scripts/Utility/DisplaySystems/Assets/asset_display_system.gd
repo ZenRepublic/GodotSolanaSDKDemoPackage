@@ -33,14 +33,14 @@ func _ready() -> void:
 		search_bar.on_field_updated.connect(filter_entries)
 		
 func load_all_owned_assets() -> void:
-	SolanaService.asset_manager.on_asset_loaded.connect(add_to_list)
-	SolanaService.asset_manager.on_asset_load_finished.connect(asset_load_finished)
-	
 #	load all nfts that have already been loaded and then add new ones as they load
 	setup_owned_assets()
 	
 	if !SolanaService.asset_manager.assets_loaded:
 		SolanaService.asset_manager.load_assets()
+		
+	if SolanaService.asset_manager.is_loading and !SolanaService.asset_manager.is_connected("on_asset_loaded",add_to_list):
+		SolanaService.asset_manager.on_asset_loaded.connect(add_to_list)
 	
 
 func setup_owned_assets() -> void:
@@ -55,7 +55,7 @@ func setup_owned_assets() -> void:
 			setup(SolanaService.asset_manager.get_owned_tokens())
 			
 
-func setup(assets:Array[WalletAsset],clear_previous:bool=false) -> void:
+func setup(assets:Array[WalletAsset],clear_previous:bool=true) -> void:
 	if clear_previous && container.get_children().size() > 0:
 		clear_display()
 	

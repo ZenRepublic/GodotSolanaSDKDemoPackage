@@ -11,7 +11,7 @@ extends Node
 var curr_tx_data:TransactionData
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SolanaService.transaction_manager.on_tx_init.connect(enable_tx_screen)
+	SolanaService.transaction_manager.on_tx_create_start.connect(enable_tx_screen)
 	SolanaService.transaction_manager.on_tx_finish.connect(process_tx_finish)
 
 

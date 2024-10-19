@@ -50,8 +50,8 @@ func setup_game() -> void:
 	],null)
 	instructions.append(setup_ix)
 	
-	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,SolanaService.wallet.get_kp())
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction)
 	
 	if !tx_data.is_successful():
 		push_error("Failed to start game")
@@ -75,8 +75,8 @@ func move() -> void:
 	})
 	
 	instructions.append(move_ix)
-	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_transaction(transaction)
+	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,SolanaService.wallet.get_kp())
+	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction)
 	
 	if !tx_data.is_successful():
 		push_error("Failed to move")

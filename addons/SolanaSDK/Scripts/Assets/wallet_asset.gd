@@ -26,7 +26,9 @@ func set_data(mint_address:Pubkey,token_metadata:MetaData,token_offchain_metadat
 	else:
 		if metadata.get_uri() != null and metadata.get_uri().length() > 0:
 			offchain_metadata = await SolanaService.file_loader.load_token_metadata(metadata.get_uri())
-			
+			if offchain_metadata.size() == 0:
+				push_warning("Offchain metadata of %s failed to load" % mint_address.to_string())
+				
 	if autoload_image:
 		await try_load_image(image_size)
 		

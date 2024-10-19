@@ -8,9 +8,11 @@ var das_supported_rpc_providers:Array[String] = [
 
 enum AssetType {NONE,NFT, TOKEN}
 
+@export var override_rpc_url:String
 @export var load_on_login:bool
 @export var load_asset_textures:bool
 @export var load_token_balances:bool
+@export var log_loaded_assets:bool=false
 
 var owned_assets:Array[WalletAsset]
 var asset_cache:Array[WalletAsset]
@@ -26,7 +28,6 @@ signal on_asset_load_started(asset_keys:Array[Pubkey])
 signal on_asset_loaded(asset:WalletAsset)
 signal on_asset_load_finished(assets:Array[WalletAsset])
 
-# Called when the node enters the scene tree for the first time.
 func setup() -> void:
 	set_asset_fetch_mode()
 	SolanaService.on_rpc_cluster_changed.connect(set_asset_fetch_mode)
@@ -36,6 +37,9 @@ func setup() -> void:
 		
 func set_asset_fetch_mode() -> void:
 	var active_rpc_url:String = ProjectSettings.get_setting("solana_sdk/client/default_url")
+	if override_rpc_url != "":
+		active_rpc_url = override_rpc_url
+		
 	asset_fetch_mode = AssetFetchMode.OG
 	
 	for rpc_provider in das_supported_rpc_providers:
@@ -59,6 +63,7 @@ func load_assets()->void:
 	var wallet_to_load:Pubkey = SolanaService.wallet.get_pubkey()
 	
 	owned_assets.clear()
+	
 	#loading from OG and DAS are 2 different ways completely
 	match asset_fetch_mode:
 		AssetFetchMode.OG:	
@@ -66,13 +71,13 @@ func load_assets()->void:
 			on_asset_load_started.emit(wallet_token_accounts.size())
 			await load_user_assets_og(wallet_token_accounts)
 		AssetFetchMode.DAS:
-			var assets_data:Array = await SolanaService.get_wallet_assets_data(wallet_to_load)
+			var assets_data:Array = await SolanaService.get_wallet_assets_data(wallet_to_load,1000,override_rpc_url)
 			on_asset_load_started.emit(assets_data.size())
 			await load_das_assets(assets_data)
 			#this only fetches NFTs, so gotta additionally load tokens as well
 			#no need to adjust anything, because NFTs will be in cache and will be skipped
-			#var wallet_token_accounts:Array[Dictionary] = await SolanaService.get_token_accounts(wallet_to_load)
-			#await load_user_assets_og(wallet_token_accounts)
+			var wallet_token_accounts:Array[Dictionary] = await SolanaService.get_token_accounts(wallet_to_load)
+			await load_user_assets_og(wallet_token_accounts)
 		
 	on_asset_load_finished.emit(owned_assets)
 	assets_loaded=true
@@ -90,7 +95,8 @@ func load_user_assets_og(token_accounts:Array[Dictionary]) -> void:
 			token.decimals = await SolanaService.get_token_decimals(asset_mint.to_string())
 			token.balance = token_accounts[i]["amount"] / pow(10,token.decimals)
 			
-		print("Loaded: ",asset.asset_name," ",asset.mint.to_string())
+		if log_loaded_assets:
+			print("Loaded: ",asset.asset_name," ",asset.mint.to_string())
 		owned_assets.append(asset)
 		on_asset_loaded.emit(asset)
 		
@@ -100,24 +106,26 @@ func load_das_assets(assets_data:Array) -> void:
 		var metadata = MetaData.new()
 		metadata.copy_from_dict(asset_data)
 		var offchain_metadata:Dictionary = asset_data["content"]["metadata"]
-		offchain_metadata["image"] = asset_data["content"]["links"]["image"]
+		if asset_data["content"]["links"].has("image"):
+			offchain_metadata["image"] = asset_data["content"]["links"]["image"]
 		var asset:WalletAsset = await create_asset(metadata.get_mint(),metadata,offchain_metadata,load_asset_textures,true)
 		if asset == null or asset in owned_assets:
 			continue
 		
-		print("Loaded: ",asset.asset_name," ",asset.mint.to_string())
+		if log_loaded_assets:
+			print("Loaded: ",asset.asset_name," ",asset.mint.to_string())
 		owned_assets.append(asset)
 		on_asset_loaded.emit(asset)
 		
-func load_assets_from_collection(nft_owner:Pubkey,collection_id:Pubkey) -> void:
-	match asset_fetch_mode:
-		AssetFetchMode.OG:	
-			push_error("This function only works in DAS fetch mode!")
-			return
-		AssetFetchMode.DAS:
-			var assets_data:Array = await SolanaService.get_collection_assets_data(nft_owner,collection_id)
-			print(assets_data)
-			await load_das_assets(assets_data)
+#func load_assets_from_collection(nft_owner:Pubkey,collection_id:Pubkey) -> void:
+	#match asset_fetch_mode:
+		#AssetFetchMode.OG:	
+			#push_error("This function only works in DAS fetch mode!")
+			#return
+		#AssetFetchMode.DAS:
+			#var assets_data:Array = await SolanaService.get_collection_assets_data(nft_owner,collection_id)
+			#print(assets_data)
+			#await load_das_assets(assets_data)
 	
 func get_owned_asset(asset_mint:Pubkey) -> WalletAsset:
 	for asset in owned_assets:
@@ -141,7 +149,7 @@ func get_asset_from_mint(asset_mint:Pubkey, load_texture:bool=false, try_load_fr
 	var metadata:MetaData = await fetch_asset_metadata(asset_mint)
 	if metadata==null:
 		return null
-		
+
 	var asset:WalletAsset = await create_asset(asset_mint,metadata,{},load_texture,try_load_from_cache)
 	return asset
 	
@@ -155,7 +163,7 @@ func fetch_asset_metadata(asset_mint:Pubkey) -> MetaData:
 			metadata = await mpl_metadata.metadata_fetched
 			mpl_metadata.queue_free()
 		AssetFetchMode.DAS:
-			var asset_data:Dictionary = await SolanaService.get_asset_data(asset_mint)
+			var asset_data:Dictionary = await SolanaService.get_asset_data(asset_mint,override_rpc_url)
 			metadata = MetaData.new()
 			metadata.copy_from_dict(asset_data)
 			
@@ -225,6 +233,8 @@ func get_owned_nfts_from_collection_key(collection_id:Pubkey) -> Array[WalletAss
 	var collection_nfts:Array[WalletAsset]
 	var owned_nfts:Array[WalletAsset] = get_owned_nfts()
 	for nft in owned_nfts:
+		if nft.metadata.get_collection() == null:
+			continue
 		if nft.metadata.get_collection().key.to_string() == collection_id.to_string():
 			collection_nfts.append(nft)
 			

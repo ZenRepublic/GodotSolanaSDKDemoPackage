@@ -13,13 +13,14 @@
 
 [node name="SolanaService" type="Node"]
 script = ExtResource("1_hwc3u")
-mainnet_rpc = "https://api.mainnet-beta.solana.com"
-devnet_rpc = "https://api.devnet.solana.com"
+mainnet_rpc = "https://mainnet.helius-rpc.com/?api-key=14091e35-f13b-4071-9578-410522205b40"
+devnet_rpc = "https://lingering-old-forest.solana-devnet.quiknode.pro/b117971e16b44a82c492776a0d5f6863a0d20993/"
 sonic_rpc = "https://www.devnet.sonic.game"
 honeycomb_rpc = "https://rpc.test.honeycombprotocol.com/"
 
 [node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
+use_generated = true
 custom_wallet_path = "C:\\Users\\thoma\\Desktop\\kp\\dev2gUnXyMLh6WyV9NTBaXeNfo1DTn2R4b69VTGNidF.json"
 
 [node name="WalletAdapter" type="WalletAdapter" parent="WalletService"]
@@ -28,14 +29,17 @@ custom_wallet_path = "C:\\Users\\thoma\\Desktop\\kp\\dev2gUnXyMLh6WyV9NTBaXeNfo1
 script = ExtResource("8_4oy84")
 load_on_login = true
 load_token_balances = true
-log_loaded_assets = true
 missing_texture_visual = ExtResource("9_oi842")
 
 [node name="TransactionManager" type="Node" parent="." node_paths=PackedStringArray("helius_api")]
 script = ExtResource("2_v3adq")
 use_custom_priority_fee = true
-helius_api = NodePath("../HeliusAPI")
-fallback_compute_unit_price = 80000
+helius_api = NodePath("HeliusAPI")
+fallback_compute_unit_price = 0
+
+[node name="HeliusAPI" type="Node" parent="TransactionManager"]
+script = ExtResource("6_jo0rl")
+priority_fee_level = 3
 
 [node name="FileLoader" type="Node" parent="."]
 script = ExtResource("7_4sv1b")
@@ -49,8 +53,3 @@ script = ExtResource("9_pob61")
 [node name="ShdwDriveCreator" type="Node" parent="."]
 script = ExtResource("9_m6qd0")
 selected_storage = "test storage"
-
-[node name="HeliusAPI" type="Node" parent="."]
-script = ExtResource("6_jo0rl")
-priority_fee_level = 3
-use_rpc_as_override = true
