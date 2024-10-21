@@ -10,12 +10,14 @@ enum PriorityFeeLevel {min,low,medium,high,veryHigh}
 @export var priority_fee_level:PriorityFeeLevel
 @export var use_recommended_fee:bool = true
 @export var fee_to_consider_congested:int = 10000
-@export var use_rpc_as_override:bool=false
+@export var override_das_rpc:bool=false
 
 func _ready() -> void:
-	if use_rpc_as_override:
-		SolanaService.asset_manager.override_rpc_url = get_rpc_url()
-	
+	if override_das_rpc:
+		SolanaService.on_rpc_cluster_set.connect(override_default_das_rpc)
+		
+func override_default_das_rpc() -> void:
+	SolanaService.das_compatible_rpc = get_rpc_url()
 
 func get_rpc_url(staked:bool=false) -> String:
 	if helius_api_key == "":
@@ -44,7 +46,7 @@ func get_rpc_url(staked:bool=false) -> String:
 	return rpc_url
 	
 func is_network_congested(calculated_fee:int) -> bool:
-	return calculated_fee > fee_to_consider_congested
+	return calculated_fee >= fee_to_consider_congested
 	
 
 func get_estimated_priority_fee(transaction:Transaction) -> int:

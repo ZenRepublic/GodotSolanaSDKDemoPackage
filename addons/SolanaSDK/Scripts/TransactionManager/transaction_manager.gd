@@ -1,7 +1,6 @@
 extends Node
 class_name TransactionManager
 
-@export var override_rpc_url:String
 ## wallet adapters automatically add unit limit of 800000 and unit price of 8000
 @export var use_custom_priority_fee:bool
 ## used to fetch estimated unit price. if you don't configure it with your own rpc key, fallback value will be used

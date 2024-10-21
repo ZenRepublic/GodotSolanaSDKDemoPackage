@@ -12,6 +12,11 @@ var default_mainnet = "https://api.mainnet-beta.solana.com"
 
 var active_rpc:String
 
+var das_supported_rpc_providers:Array[String] = [
+	"helius-rpc"
+]
+var das_compatible_rpc:String
+
 var TOKEN_METADATA_PID:String = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
 var TOKEN_PID:String = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
 var ATA_TOKEN_PID:String = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
@@ -28,19 +33,19 @@ var WRAPPED_SOL_CA:String = "So11111111111111111111111111111111111111112"
 
 var rpc:String
 
-signal on_rpc_cluster_changed
+signal on_rpc_cluster_set
 
 ## Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	wallet.on_login_finish.connect(handle_login)
-	asset_manager.setup()
-	
+func _ready() -> void:	
 	if mainnet_rpc=="":
 		mainnet_rpc=default_mainnet
 	if devnet_rpc=="":
 		devnet_rpc=default_devnet
 		
 	set_rpc_cluster(rpc_cluster)
+	
+	wallet.on_login_finish.connect(handle_login)
+	asset_manager.setup()
 	
 func handle_login(success:bool)->void:
 	if !success:
@@ -61,7 +66,17 @@ func set_rpc_cluster(new_cluster:RpcCluster)->void:
 			
 	ProjectSettings.set_setting("solana_sdk/client/default_url",active_rpc)
 	rpc_cluster = new_cluster
-	on_rpc_cluster_changed.emit()
+	
+	if is_rpc_das_compatible(active_rpc):
+		das_compatible_rpc = active_rpc
+		
+	on_rpc_cluster_set.emit()
+	
+func is_rpc_das_compatible(rpc_url:String) -> bool:
+	for rpc_provider in das_supported_rpc_providers:
+		if rpc_url.contains(rpc_provider):
+			return true
+	return false
 	
 func generate_keypair(derive_from_machine:bool=false) -> Keypair:
 	var randomizer = RandomNumberGenerator.new()
@@ -205,16 +220,18 @@ func fetch_program_account_of_type(program:AnchorProgram,account_type:String,key
 	
 func fetch_all_program_accounts_of_type(program:AnchorProgram,account_type:String,filter:Array=[]) -> Dictionary:
 	var program_instance:AnchorProgram = spawn_program_instance(program)
-	
 	program_instance.fetch_all_accounts(account_type,filter)
 	var accounts:Dictionary = await program_instance.accounts_fetched
 	program_instance.queue_free()
 	return accounts
 	
-func get_asset_data(asset_id:Pubkey, override_rpc_url:String="") -> Dictionary:
+#DAS ONLY!
+func get_asset_data(asset_id:Pubkey) -> Dictionary:
+	if das_compatible_rpc == "":
+		push_error("Can't get asset data - DAS compatible RPC is not configured")
+		return {}
 	var client:SolanaClient = spawn_client_instance()
-	if override_rpc_url!="":
-			client.url_override = override_rpc_url
+	client.url_override = das_compatible_rpc
 			
 	client.get_asset(asset_id)
 	var response_dict:Dictionary = await client.http_response_received
@@ -226,14 +243,18 @@ func get_asset_data(asset_id:Pubkey, override_rpc_url:String="") -> Dictionary:
 		
 	return response_dict["result"]
 	
-func get_wallet_assets_data(wallet_to_check:Pubkey,asset_limit:int=1000, override_rpc_url:String="") -> Array:
+#DAS ONLY!
+func get_wallet_assets_data(wallet_to_check:Pubkey,asset_limit:int=1000) -> Array:
 	var page_id:int=1
 	var wallet_assets:Array
 	
+	if das_compatible_rpc == "":
+		push_error("Can't get wallet assets - DAS compatible RPC is not configured")
+		return []
+	
 	while true:
 		var client:SolanaClient = spawn_client_instance()
-		if override_rpc_url!="":
-			client.url_override = override_rpc_url
+		client.url_override = das_compatible_rpc
 			
 		client.get_assets_by_owner(wallet_to_check,page_id,asset_limit)
 		var response_dict:Dictionary = await client.http_response_received
@@ -253,14 +274,18 @@ func get_wallet_assets_data(wallet_to_check:Pubkey,asset_limit:int=1000, overrid
 
 	return wallet_assets
 	
-func get_collection_assets_data(nft_owner:Pubkey,collection_mint:Pubkey,asset_limit:int=1000,override_rpc_url:String="") -> Array:
+#DAS ONLY!
+func get_collection_assets_data(nft_owner:Pubkey,collection_mint:Pubkey,asset_limit:int=1000) -> Array:
 	var page_id:int=1
 	var owned_collection_assets:Array
 	
+	if das_compatible_rpc == "":
+		push_error("Can't get collection assets - DAS compatible RPC is not configured")
+		return []
+	
 	while true:
 		var client:SolanaClient = spawn_client_instance()
-		if override_rpc_url!="":
-			client.url_override = override_rpc_url
+		client.url_override = das_compatible_rpc
 			
 		client.get_assets_by_group("collection_id",collection_mint,page_id,asset_limit)
 		var response_dict:Dictionary = await client.http_response_received

@@ -1,7 +1,13 @@
 extends Node
 class_name FileLoader
+
+var image_cache:Dictionary
+var metadata_cache:Dictionary
 	
 func load_token_metadata(uri:String) -> Dictionary:
+	if metadata_cache.has(uri):
+		return metadata_cache[uri]
+		
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	# Perform a GET request. The URL below returns JSON as of writing.
@@ -21,11 +27,15 @@ func load_token_metadata(uri:String) -> Dictionary:
 	
 	if response_dict["body"] == null:
 		return {}
-		
+	
+	metadata_cache[uri] = response_dict["body"]
 	return response_dict["body"]
 	
 
 func load_token_image(image_link:String,size:int=512) -> Texture2D:
+	if image_cache.has(image_link):
+		return image_cache[image_link]
+		
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	
@@ -58,6 +68,7 @@ func load_token_image(image_link:String,size:int=512) -> Texture2D:
 	if texture==null:
 		return null
 	
+	image_cache[image_link] = texture
 	return texture
 	
 	

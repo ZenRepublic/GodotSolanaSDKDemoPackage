@@ -26,14 +26,12 @@ custom_wallet_path = "C:\\Users\\thoma\\Desktop\\kp\\dev2gUnXyMLh6WyV9NTBaXeNfo1
 
 [node name="AssetManager" type="Node" parent="."]
 script = ExtResource("8_4oy84")
-load_on_login = true
 load_token_balances = true
 log_loaded_assets = true
 missing_texture_visual = ExtResource("9_oi842")
 
 [node name="TransactionManager" type="Node" parent="." node_paths=PackedStringArray("helius_api")]
 script = ExtResource("2_v3adq")
-use_custom_priority_fee = true
 helius_api = NodePath("../HeliusAPI")
 fallback_compute_unit_price = 80000
 
@@ -52,5 +50,7 @@ selected_storage = "test storage"
 
 [node name="HeliusAPI" type="Node" parent="."]
 script = ExtResource("6_jo0rl")
+helius_api_key = "14091e35-f13b-4071-9578-410522205b40"
+using_paid_plan = true
 priority_fee_level = 3
-use_rpc_as_override = true
+fee_to_consider_congested = 10001

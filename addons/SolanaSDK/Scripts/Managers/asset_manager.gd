@@ -2,13 +2,9 @@ extends Node
 class_name AssetManager
 
 enum AssetFetchMode{OG,DAS}
-var das_supported_rpc_providers:Array[String] = [
-	"helius-rpc"
-]
 
 enum AssetType {NONE,NFT, TOKEN}
 
-@export var override_rpc_url:String
 @export var load_on_login:bool
 @export var load_asset_textures:bool
 @export var load_token_balances:bool
@@ -30,23 +26,16 @@ signal on_asset_load_finished(assets:Array[WalletAsset])
 
 func setup() -> void:
 	set_asset_fetch_mode()
-	SolanaService.on_rpc_cluster_changed.connect(set_asset_fetch_mode)
+	SolanaService.on_rpc_cluster_set.connect(set_asset_fetch_mode)
 	
 	if load_on_login:
 		SolanaService.wallet.on_login_finish.connect(try_load_assets)
 		
 func set_asset_fetch_mode() -> void:
-	var active_rpc_url:String = ProjectSettings.get_setting("solana_sdk/client/default_url")
-	if override_rpc_url != "":
-		active_rpc_url = override_rpc_url
-		
-	asset_fetch_mode = AssetFetchMode.OG
-	
-	for rpc_provider in das_supported_rpc_providers:
-		if active_rpc_url.contains(rpc_provider):
-			asset_fetch_mode = AssetFetchMode.DAS
-			break
-			
+	if SolanaService.das_compatible_rpc == "":
+		asset_fetch_mode = AssetFetchMode.OG
+	else:
+		asset_fetch_mode = AssetFetchMode.DAS
 		
 func try_load_assets(logged_in:bool) -> void:
 	if logged_in:
@@ -71,7 +60,7 @@ func load_assets()->void:
 			on_asset_load_started.emit(wallet_token_accounts.size())
 			await load_user_assets_og(wallet_token_accounts)
 		AssetFetchMode.DAS:
-			var assets_data:Array = await SolanaService.get_wallet_assets_data(wallet_to_load,1000,override_rpc_url)
+			var assets_data:Array = await SolanaService.get_wallet_assets_data(wallet_to_load,1000)
 			on_asset_load_started.emit(assets_data.size())
 			await load_das_assets(assets_data)
 			#this only fetches NFTs, so gotta additionally load tokens as well
@@ -86,8 +75,11 @@ func load_assets()->void:
 func load_user_assets_og(token_accounts:Array[Dictionary]) -> void:
 	for i in range(token_accounts.size()):	
 		var asset_mint:Pubkey = Pubkey.new_from_string(token_accounts[i]["mint"])
+		if get_owned_asset(asset_mint) != null:
+			continue
+			
 		var asset:WalletAsset = await get_asset_from_mint(asset_mint,load_asset_textures)
-		if asset == null or asset in owned_assets:
+		if asset == null:
 			continue
 		
 		if asset is Token && load_token_balances:
@@ -108,8 +100,12 @@ func load_das_assets(assets_data:Array) -> void:
 		var offchain_metadata:Dictionary = asset_data["content"]["metadata"]
 		if asset_data["content"]["links"].has("image"):
 			offchain_metadata["image"] = asset_data["content"]["links"]["image"]
-		var asset:WalletAsset = await create_asset(metadata.get_mint(),metadata,offchain_metadata,load_asset_textures,true)
-		if asset == null or asset in owned_assets:
+			
+		if get_owned_asset(metadata.get_mint()) != null:
+			continue
+			
+		var asset:WalletAsset = await create_asset(metadata.get_mint(),metadata,offchain_metadata,load_asset_textures)
+		if asset == null:
 			continue
 		
 		if log_loaded_assets:
@@ -132,7 +128,7 @@ func get_owned_asset(asset_mint:Pubkey) -> WalletAsset:
 		if asset.mint.to_string() == asset_mint.to_string():
 			return asset
 	return null
-	
+
 func try_find_in_cache(asset_mint:Pubkey) -> WalletAsset:
 	for asset in asset_cache:
 		
@@ -140,17 +136,12 @@ func try_find_in_cache(asset_mint:Pubkey) -> WalletAsset:
 			return asset
 	return null
 
-func get_asset_from_mint(asset_mint:Pubkey, load_texture:bool=false, try_load_from_cache:bool=true) -> WalletAsset:		
-	if try_load_from_cache:
-		var wallet_asset:WalletAsset = try_find_in_cache(asset_mint)
-		if wallet_asset != null:
-			return wallet_asset
-			
+func get_asset_from_mint(asset_mint:Pubkey, load_texture:bool=false) -> WalletAsset:		
 	var metadata:MetaData = await fetch_asset_metadata(asset_mint)
 	if metadata==null:
 		return null
 
-	var asset:WalletAsset = await create_asset(asset_mint,metadata,{},load_texture,try_load_from_cache)
+	var asset:WalletAsset = await create_asset(asset_mint,metadata,{},load_texture)
 	return asset
 	
 func fetch_asset_metadata(asset_mint:Pubkey) -> MetaData:
@@ -163,19 +154,13 @@ func fetch_asset_metadata(asset_mint:Pubkey) -> MetaData:
 			metadata = await mpl_metadata.metadata_fetched
 			mpl_metadata.queue_free()
 		AssetFetchMode.DAS:
-			var asset_data:Dictionary = await SolanaService.get_asset_data(asset_mint,override_rpc_url)
+			var asset_data:Dictionary = await SolanaService.get_asset_data(asset_mint)
 			metadata = MetaData.new()
 			metadata.copy_from_dict(asset_data)
 			
 	return metadata
 	
-func create_asset(asset_mint:Pubkey, asset_data:MetaData,offchain_metadata:Dictionary,load_texture:bool,try_load_from_cache:bool) -> WalletAsset:
-	#	check if the mint already exists in the cache so wouldn't need to fetch again
-	if try_load_from_cache:
-		var wallet_asset:WalletAsset = try_find_in_cache(asset_mint)
-		if wallet_asset != null:
-			return wallet_asset
-			
+func create_asset(asset_mint:Pubkey, asset_data:MetaData,offchain_metadata:Dictionary,load_texture:bool) -> WalletAsset:		
 	var asset_type:AssetType = get_asset_type(asset_data)
 	match asset_type:
 		AssetType.NONE:
