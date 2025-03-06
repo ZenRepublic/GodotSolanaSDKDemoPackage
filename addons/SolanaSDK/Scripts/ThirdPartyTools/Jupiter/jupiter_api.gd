@@ -47,7 +47,7 @@ func swap_token(payer:Pubkey,swap_quote:Dictionary) -> TransactionData:
 	var serialized_tx_data:PackedByteArray = SolanaUtils.bs64_decode(response["body"]["swapTransaction"])
 	var priority_fee:float = response["body"]["prioritizationFeeLamports"]
 	#return null
-	var transaction:Transaction = await SolanaService.transaction_manager.sign_transaction_serialized(serialized_tx_data,[SolanaService.wallet.get_kp()])
+	var transaction:Transaction = await SolanaService.transaction_manager.sign_transaction_serialized(serialized_tx_data,SolanaService.wallet.get_kp(),[SolanaService.wallet.get_kp()])
 	var tx_data:TransactionData = await SolanaService.transaction_manager.send_transaction(transaction)
 	return tx_data
 

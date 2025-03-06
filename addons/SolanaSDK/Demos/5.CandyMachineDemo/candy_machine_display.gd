@@ -14,5 +14,4 @@ func load_cm_display(cm_data:Dictionary) -> void:
 		
 	if collection_displayable!=null:
 		var collection_asset:WalletAsset = await SolanaService.asset_manager.get_asset_from_mint(cm_data["collection_mint"],true)
-		if collection_asset!=null:
-			await collection_displayable.set_data(collection_asset)
+		await collection_displayable.set_data(collection_asset)

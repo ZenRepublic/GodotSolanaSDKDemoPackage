@@ -36,7 +36,9 @@ func mint_nft(cm_id:Pubkey, cm_data:CandyMachineData, payer:WalletService, recei
 		
 	instructions.append(mint_ix)
 	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,payer)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction,tx_commitment,payer.get_kp())
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,mint_account)
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,payer)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.send_transaction(transaction,tx_commitment)
 	return tx_data
 	
 	
@@ -61,8 +63,9 @@ func mint_nft_with_guards(cm_id:Pubkey,guard_id:Pubkey,cm_data:CandyMachineData,
 
 	instructions.append(mint_ix)
 	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,payer.get_kp())
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction,tx_commitment)
-	#var tx_data:TransactionData = TransactionData.new({})
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,mint_account)
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,payer)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.send_transaction(transaction,tx_commitment)
 	return tx_data
 	
 func spawn_core_candy_machine_client() -> candy_machine_core:
@@ -114,7 +117,9 @@ func mint_core_nft_with_guards(cm_key:Pubkey,guard_base_key:Pubkey,payer,receive
 	
 	instructions.append(mint_ix)
 	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,payer)
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction,tx_commitment)
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,asset_account)
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,payer)
+	var tx_data:TransactionData = await SolanaService.transaction_manager.send_transaction(transaction,tx_commitment)
 	#var tx_data:TransactionData = TransactionData.new({})
 	return tx_data
 	

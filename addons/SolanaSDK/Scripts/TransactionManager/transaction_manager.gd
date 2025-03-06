@@ -60,18 +60,17 @@ func create_transaction(instructions:Array[Instruction],payer) -> Transaction:
 	return transaction
 	
 
+#for simple transaction with one signer
 func sign_and_send(transaction:Transaction,tx_commitment:Commitment=Commitment.CONFIRMED,custom_signer=null) -> TransactionData:
 	if transaction == null:
 		on_tx_finish.emit(TransactionData.new({}))
 		return TransactionData.new({})
 		
-	var needed_signers:Array
+	var signer = SolanaService.wallet.get_kp()
 	if custom_signer!= null:
-		needed_signers = [custom_signer]
-	else:
-		needed_signers = [SolanaService.wallet.get_kp()]
+		signer = custom_signer
 	
-	transaction = await sign_transaction(transaction,needed_signers,custom_signer)
+	transaction = await add_signature(transaction,signer)
 	if transaction == null:
 		return TransactionData.new({})
 		
@@ -166,32 +165,13 @@ func create_timeout_timer() -> Timer:
 	add_child(timer)
 	return timer
 	
-	
-func sign_transaction(transaction:Transaction, all_needed_signers:Array,custom_signer=null) -> Transaction:
-	var wallet
-	if custom_signer!=null:
-		wallet = custom_signer
-	else:
-		wallet = SolanaService.wallet.get_kp()
-		
-	transaction.set_payer(wallet)
-	
-	transaction = await update_blockhash(transaction)
-	transaction = await add_signature(transaction,wallet)
-	return transaction
 
-func sign_transaction_serialized(tx_bytes:PackedByteArray, all_needed_signers:Array, custom_signer=null) -> Transaction:
-	var wallet
-	if custom_signer!=null:
-		wallet = custom_signer
-	else:
-		wallet = SolanaService.wallet.get_kp()
-	
+func sign_transaction_serialized(tx_bytes:PackedByteArray, signer, all_needed_signers:Array) -> Transaction:
 	var transaction:Transaction = Transaction.new_from_bytes(tx_bytes)
 	add_child(transaction)
 	transaction.set_signers(all_needed_signers)
 	
-	transaction = await add_signature(transaction,wallet)
+	transaction = await add_signature(transaction,signer)
 	return transaction
 	
 func add_signature(transaction:Transaction,signer) -> Transaction:

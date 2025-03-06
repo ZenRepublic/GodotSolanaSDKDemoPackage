@@ -64,7 +64,9 @@ func init_game(game_attributes:SoarUtils.GameAttributes) -> TransactionData:
 	print("Creating Game Account with ID: %s"%game_account.get_public_string())
 	instructions.append(init_game_ix)
 	var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,SolanaService.wallet.get_kp())
-	var tx_data:TransactionData = await SolanaService.transaction_manager.sign_and_send(transaction)
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,game_account)
+	transaction = await SolanaService.transaction_manager.add_signature(transaction,SolanaService.wallet.get_kp())
+	var tx_data:TransactionData = await SolanaService.transaction_manager.send_transaction(transaction)
 	return tx_data
 		
 

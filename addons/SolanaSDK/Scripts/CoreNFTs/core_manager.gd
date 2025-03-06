@@ -27,7 +27,7 @@ func get_authority_signer():
 	
 func process_transaction(instructions:Array[Instruction], custom_signer_key:Pubkey=null, extra_signers:Array[Keypair]=[]) -> TransactionData:
 	var tx_data:TransactionData
-
+	
 	if custom_signer_key!=null:
 		var signers:Array = [custom_signer_key,SolanaService.wallet.get_kp()]
 		for extra_signer in extra_signers:
@@ -44,11 +44,14 @@ func process_transaction(instructions:Array[Instruction], custom_signer_key:Pubk
 			push_error("Failed to sign with the oracle keypair!")
 			return TransactionData.new({})
 	
-		var signed_transaction:Transaction = await SolanaService.transaction_manager.sign_transaction_serialized(tx_bytes,signers)
+		var signed_transaction:Transaction = await SolanaService.transaction_manager.sign_transaction_serialized(tx_bytes,SolanaService.wallet.get_kp(),signers)
 		tx_data = await SolanaService.transaction_manager.send_transaction(signed_transaction)
 	else:
 		var transaction:Transaction = await SolanaService.transaction_manager.create_transaction(instructions,SolanaService.wallet.get_kp())
-		tx_data = await SolanaService.transaction_manager.sign_and_send(transaction,TransactionManager.Commitment.FINALIZED)
+		for signer in extra_signers:
+			transaction = await SolanaService.transaction_manager.add_signature(transaction,signer)
+		await SolanaService.transaction_manager.add_signature(transaction,SolanaService.wallet.get_kp())
+		tx_data = await SolanaService.transaction_manager.send_transaction(transaction,TransactionManager.Commitment.FINALIZED)
 		
 	return tx_data
 	

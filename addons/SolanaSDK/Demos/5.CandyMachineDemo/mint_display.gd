@@ -2,7 +2,7 @@ extends Node
 class_name MintedAssetDisplay
 
 @export var displayable_asset:DisplayableAsset
-@export var inspect_button:LinkButton
+@export var inspect_button:LinkedButton
 
 @export var loading_screen:Control
 
@@ -17,7 +17,8 @@ func display_asset(asset_key: Pubkey) -> void:
 	await get_tree().create_timer(2).timeout
 	
 	var asset:WalletAsset = await SolanaService.asset_manager.get_asset_from_mint(asset_key,true)
-	await displayable_asset.set_data(asset)
+	if asset!=null:
+		await displayable_asset.set_data(asset)
 	
 	if loading_screen!=null:
 		loading_screen.visible=false
