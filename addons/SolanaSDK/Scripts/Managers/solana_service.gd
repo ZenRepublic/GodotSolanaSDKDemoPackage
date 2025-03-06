@@ -19,6 +19,7 @@ var das_compatible_rpc:String
 
 var TOKEN_METADATA_PID:String = "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
 var TOKEN_PID:String = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+var TOKEN22_PID:String = "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
 var ATA_TOKEN_PID:String = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
 var SYSVAR_RENT_PUBKEY:String = "SysvarRent111111111111111111111111111111111"
 
@@ -30,6 +31,7 @@ var WRAPPED_SOL_CA:String = "So11111111111111111111111111111111111111112"
 @onready var account_inspector:AccountInspector = $AccountInspector
 @onready var candy_machine_manager:CandyMachineManager = $CandyMachineManager
 @onready var asset_manager:AssetManager = $AssetManager
+@onready var core_manager:CoreManager = $CoreManager
 
 var rpc:String
 
@@ -44,12 +46,10 @@ func _ready() -> void:
 		
 	set_rpc_cluster(rpc_cluster)
 	
-	wallet.on_login_finish.connect(handle_login)
+	wallet.on_login_success.connect(handle_login)
 	asset_manager.setup()
 	
-func handle_login(success:bool)->void:
-	if !success:
-		return
+func handle_login()->void:
 	transaction_manager.setup()
 	
 	
@@ -72,11 +72,18 @@ func set_rpc_cluster(new_cluster:RpcCluster)->void:
 		
 	on_rpc_cluster_set.emit()
 	
+	
 func is_rpc_das_compatible(rpc_url:String) -> bool:
 	for rpc_provider in das_supported_rpc_providers:
 		if rpc_url.contains(rpc_provider):
 			return true
 	return false
+	
+func get_das_rpc():
+	if das_compatible_rpc == "":
+		return null
+	else:
+		return das_compatible_rpc
 	
 func generate_keypair(derive_from_machine:bool=false) -> Keypair:
 	var randomizer = RandomNumberGenerator.new()
@@ -110,11 +117,6 @@ func spawn_mpl_metadata_client() -> MplTokenMetadata:
 	add_child(mpl_metadata)
 	return mpl_metadata
 	
-func spawn_mpl_candy_machine_client() -> MplCandyMachine:
-	var candy_machine:MplCandyMachine = MplCandyMachine.new()
-	add_child(candy_machine)
-	return candy_machine
-	
 func spawn_program_instance(original_program:AnchorProgram)->AnchorProgram:
 	var program_instance:AnchorProgram = AnchorProgram.new()
 	program_instance.set_pid(original_program.get_pid())
@@ -123,12 +125,34 @@ func spawn_program_instance(original_program:AnchorProgram)->AnchorProgram:
 	add_child(program_instance)
 	return program_instance
 	
-func get_account_info(account:Pubkey) -> Dictionary:
+func get_account_info(account:Pubkey, parsed:bool=true) -> Dictionary:
 	var client:SolanaClient = spawn_client_instance()
 	client.get_account_info(account.to_string())
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
+	
+	if !parsed or !response_dict.has("result"):
+		return response_dict
+		
+	var decoded_data:PackedByteArray = SolanaUtils.bs64_decode(response_dict["result"]["value"]["data"][0])
+	var parsed_data:Dictionary={
+		"mint": Pubkey.new_from_bytes(decoded_data.slice(0,32)),
+		"owner": Pubkey.new_from_bytes(decoded_data.slice(32,64)),
+		"amount": decoded_data.slice(64,72).decode_u64(0)
+	}
+	
+	response_dict["result"]["value"] = parsed_data
 	return response_dict
+	
+	
+func get_transaction_info(tx_signature:String):
+	var client:SolanaClient = spawn_client_instance()
+	client.get_transaction(tx_signature)
+	var response_dict:Dictionary = await client.http_response_received
+	client.queue_free()
+	if response_dict.size() == 0 or !response_dict.has("result"):
+		return null
+	return response_dict["result"]
 	
 func get_airdrop(address:String,sol_lamport_amount:int) -> void:
 	var client:SolanaClient = spawn_client_instance()
@@ -137,6 +161,28 @@ func get_airdrop(address:String,sol_lamport_amount:int) -> void:
 	print(response_dict)
 	
 	client.queue_free()
+	
+func get_largest_account(mint:Pubkey) -> Pubkey:
+	var client:SolanaClient = spawn_client_instance()
+	client.get_token_largest_account(mint.to_string())
+	var response_dict:Dictionary = await client.http_response_received
+	client.queue_free()
+	
+	var token_account:Pubkey = null
+	if response_dict.has("result"):
+		var address:String = response_dict["result"]["value"][0]["address"]
+		token_account = Pubkey.new_from_string(address)
+	
+	return token_account
+	
+func is_blockhash_valid(blockhash:String):
+	var client:SolanaClient = spawn_client_instance()
+	client.is_blockhash_valid(blockhash)
+	var response_dict:Dictionary = await client.http_response_received
+	print(response_dict)
+	if !response_dict.has("result"):
+		return null
+	return response_dict["result"]["value"]
 	
 func get_balance(address_to_check:String,token_address:String="") -> float:
 	var client:SolanaClient = spawn_client_instance()
@@ -193,6 +239,29 @@ func simulate_transaction(transaction:Transaction) -> Dictionary:
 		
 	return result
 	
+func is_transaction_confirmed(tx_signatures:Array) -> bool:
+	var client:SolanaClient = spawn_client_instance()
+	client.get_signature_statuses(tx_signatures,false)
+	var response_dict:Dictionary = await client.http_response_received
+	if !response_dict.has("result"):
+		return false
+	
+	var all_confirmed:bool=true
+	for status in response_dict["result"]["value"]:
+		print(status)
+		if status == null:
+			all_confirmed=false
+			break
+		if !status.has("confirmationStatus"):
+			print("NO CONFIRMATION STATUS")
+			all_confirmed=false
+			break
+		if status["confirmationStatus"] != "confirmed" and status["confirmationStatus"] != "finalized":
+			all_confirmed=false
+			break
+			
+	return all_confirmed
+	
 func get_associated_token_account(address_to_check:String,token_address:String) -> Pubkey:
 	var client:SolanaClient = spawn_client_instance()
 	client.get_token_accounts_by_owner(address_to_check,token_address,ATA_TOKEN_PID)
@@ -212,16 +281,25 @@ func get_associated_token_account(address_to_check:String,token_address:String) 
 	
 func fetch_program_account_of_type(program:AnchorProgram,account_type:String,key:Pubkey) -> Dictionary:
 	var program_instance:AnchorProgram = spawn_program_instance(program)
-	
-	program_instance.fetch_account(account_type,key)
+	var error = program_instance.fetch_account(account_type,key)
+	if error != OK:
+		print("Failed to fetch program accounts")
+		program_instance.queue_free()
+		return {}
+		
 	var account:Dictionary = await program_instance.account_fetched
 	program_instance.queue_free()
 	return account
 	
 func fetch_all_program_accounts_of_type(program:AnchorProgram,account_type:String,filter:Array=[]) -> Dictionary:
 	var program_instance:AnchorProgram = spawn_program_instance(program)
-	program_instance.fetch_all_accounts(account_type,filter)
-	var accounts:Dictionary = await program_instance.accounts_fetched
+	var error = program_instance.fetch_all_accounts(account_type,filter)
+	if error != OK:
+		print("Failed to fetch program accounts")
+		program_instance.queue_free()
+		return {}
+	
+	var accounts = await program_instance.accounts_fetched
 	program_instance.queue_free()
 	return accounts
 	
@@ -232,7 +310,6 @@ func get_asset_data(asset_id:Pubkey) -> Dictionary:
 		return {}
 	var client:SolanaClient = spawn_client_instance()
 	client.url_override = das_compatible_rpc
-			
 	client.get_asset(asset_id)
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
@@ -240,7 +317,6 @@ func get_asset_data(asset_id:Pubkey) -> Dictionary:
 	if response_dict.has("error"):
 		print("Failed to fetch asset data")
 		return {}
-		
 	return response_dict["result"]
 	
 #DAS ONLY!
@@ -306,12 +382,21 @@ func get_token_accounts(wallet_to_check:Pubkey) -> Array[Dictionary]:
 	var response_dict:Dictionary = await client.http_response_received
 	client.queue_free()
 	
-	if response_dict.has("error"):
+	client = spawn_client_instance()
+	client.get_token_accounts_by_owner(wallet_to_check.to_string(),"",TOKEN22_PID)
+	var response_dict2:Dictionary = await client.http_response_received
+	client.queue_free()
+	
+	if response_dict.has("error") or response_dict2.has("error"):
 		push_error("Failed to fetch token accounts")
 		return []
 	
+	var raw_token_data:Array
+	raw_token_data.append_array(response_dict["result"]["value"])
+	raw_token_data.append_array(response_dict2["result"]["value"])
+
 	var wallet_tokens:Array[Dictionary]
-	for token in response_dict["result"]["value"]:
+	for token in raw_token_data:
 		var token_byte_data = SolanaUtils.bs64_decode(token["account"]["data"][0])
 		var token_data:Dictionary = parse_token_data(token_byte_data)
 		#remove token accounts which no longer hold an NFT

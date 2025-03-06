@@ -33,8 +33,8 @@ func get_swap_quote(token_to_send:Pubkey,token_to_receive:Pubkey,amount_to_send:
 	var slippage:String = "slippageBps="+str(percentage_to_bps(slippage_percentage))
 
 	var quote_slug:String = "%s&%s&%s&%s" % [input_mint,output_mint,amount,slippage]
-	var transfer_quote:Dictionary = await send_get_request(JUP_QUOTE_API+quote_slug)
-	return transfer_quote
+	var transfer_quote:Dictionary = await HttpRequestHandler.send_get_request(JUP_QUOTE_API+quote_slug)
+	return transfer_quote["body"]
 	
 func swap_token(payer:Pubkey,swap_quote:Dictionary) -> TransactionData:
 	var headers:Array = ["Content-type: application/json"]
@@ -43,17 +43,17 @@ func swap_token(payer:Pubkey,swap_quote:Dictionary) -> TransactionData:
 		"userPublicKey":payer.to_string(),
 		"wrapAndUnwrapSol":true
 	}
-	var response:Dictionary = await send_post_request(JSON.stringify(body),headers,JUP_SWAP_API)
-	var serialized_tx_data:PackedByteArray = SolanaUtils.bs64_decode(response["swapTransaction"])
-	var priority_fee:float = response["prioritizationFeeLamports"]
+	var response:Dictionary = await HttpRequestHandler.send_post_request(JSON.stringify(body),headers,JUP_SWAP_API)
+	var serialized_tx_data:PackedByteArray = SolanaUtils.bs64_decode(response["body"]["swapTransaction"])
+	var priority_fee:float = response["body"]["prioritizationFeeLamports"]
 	#return null
 	var transaction:Transaction = await SolanaService.transaction_manager.sign_transaction_serialized(serialized_tx_data,[SolanaService.wallet.get_kp()])
 	var tx_data:TransactionData = await SolanaService.transaction_manager.send_transaction(transaction)
 	return tx_data
 
 func get_token_data(token_mint:Pubkey) -> Dictionary:
-	var response:Dictionary = await send_get_request(JUP_TOKEN_API+token_mint.to_string())
-	return response
+	var response:Dictionary = await HttpRequestHandler.send_get_request(JUP_TOKEN_API+token_mint.to_string())
+	return response["body"]
 	
 func get_token_status(token_mint:Pubkey) -> TokenStatus:
 	var response:Dictionary = await get_token_data(token_mint)
@@ -71,65 +71,11 @@ func get_token_unit_price(token_mint:Pubkey,price_against:Pubkey=null) -> float:
 	if price_against!=null:
 		vs_token = "&vsToken="+price_against.to_string()
 		
-	var response:Dictionary = await send_get_request(JUP_PRICE_API+ids+vs_token)
+	var response:Dictionary = await HttpRequestHandler.send_get_request(JUP_PRICE_API+ids+vs_token)
 	if response == {}:
 		return 0
-	return response["data"][token_mint.to_string()]["price"]
-		
-func send_get_request(request_link:String) -> Dictionary:
-	var http_request = HTTPRequest.new()
-	add_child(http_request)
-	# Perform a GET request. The URL below returns JSON as of writing.
-	var request = http_request.request(request_link)
-	if request != OK:
-		push_error("An error occurred in the HTTP request.")
-		return {}
-		
-	var raw_response = await http_request.request_completed
-	http_request.queue_free()
-	var response_dict = parse_http_response(raw_response,true)
-	
-	if response_dict["response_code"] != 200:
-		print(response_dict)
-		return {}
-	
-	if response_dict["body"] == null:
-		return {}
-		
-	return response_dict["body"]
-	
-func send_post_request(body, headers:Array,endpoint:String) -> Dictionary:
-	var http_request = HTTPRequest.new()
-	add_child(http_request)
-	var request = http_request.request(endpoint,headers,HTTPClient.METHOD_POST,body)
-	if request != OK:
-		push_error("An error occurred in the HTTP request.")
-		return {}
-		
-	var raw_response = await http_request.request_completed
-	http_request.queue_free()
-	var response_dict = parse_http_response(raw_response,true)
+	return response["body"]["data"][token_mint.to_string()]["price"]
 
-	if response_dict["response_code"] != 200:
-		print(response_dict)
-		return {}
-	
-	return response_dict["body"]
-	
-func parse_http_response(response:Array, body_to_json:bool=false) -> Dictionary:
-	var body = response[3]
-	if body_to_json:
-		var json = JSON.new()
-		json.parse(response[3].get_string_from_utf8())
-		body = json.get_data()
-	
-	var dict = {
-		"result":response[0],
-		"response_code":response[1],
-		"headers":response[2],
-		"body":body
-	}
-	return dict
 	
 func percentage_to_bps(value:float) -> int:
 	return roundi(value*10)

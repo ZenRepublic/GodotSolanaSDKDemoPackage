@@ -1,6 +1,8 @@
 extends Node
 class_name TransactionManager
 
+@export var confirmation_check_rate:float=1.0
+@export var confirmation_timeout:float = 35.0
 ## wallet adapters automatically add unit limit of 800000 and unit price of 8000
 @export var use_custom_priority_fee:bool
 ## used to fetch estimated unit price. if you don't configure it with your own rpc key, fallback value will be used
@@ -10,10 +12,18 @@ class_name TransactionManager
 
 enum Commitment{PROCESSED,CONFIRMED,FINALIZED}
 
+var tx_blockhash:String
+var tx_timeout_timer:Timer
+
+var failed_consecutive_tx_count:int=0
+
 signal on_tx_create_start
 signal on_tx_sign_start
-signal on_tx_signed
+signal on_tx_signed(confirmed:bool)
 signal on_tx_finish(tx_data:TransactionData)
+signal on_tx_cancelled
+
+signal on_tx_confirmed(success:bool)
 
 func setup() -> void:
 #	temporary solution. Don't use custom fees if using phantom
@@ -27,17 +37,18 @@ func create_transaction(instructions:Array[Instruction],payer) -> Transaction:
 	var transaction:Transaction = Transaction.new()	
 	add_child(transaction)
 	transaction.set_payer(payer)
-	
+
 	for idx in range(instructions.size()):
 		if instructions[idx] == null:
 			push_error("instruction %s is null, couldn't build a transaction!"%idx)
 			return null
+		print(idx)
 		transaction.add_instruction(instructions[idx])
+		print("HANDLED")
 		
-	transaction.update_latest_blockhash()
-	await transaction.blockhash_updated
-		
-	if use_custom_priority_fee:
+	transaction = await update_blockhash(transaction)
+	
+	if use_custom_priority_fee and SolanaService.rpc_cluster == SolanaService.RpcCluster.MAINNET:
 		var consumed_units:int = await get_compute_units_used(transaction,20)
 		transaction.set_unit_limit(consumed_units)
 		var estimated_fee = await get_needed_unit_price(transaction)
@@ -45,7 +56,7 @@ func create_transaction(instructions:Array[Instruction],payer) -> Transaction:
 		print("Using custom priority fee with following values:")
 		print("Compute Unit Limit: ",consumed_units)
 		print("Microlamports fee per Compute Unit: ",estimated_fee)
-	
+
 	return transaction
 	
 
@@ -60,22 +71,25 @@ func sign_and_send(transaction:Transaction,tx_commitment:Commitment=Commitment.C
 	else:
 		needed_signers = [SolanaService.wallet.get_kp()]
 	
-	transaction = await sign_transaction_normal(transaction,needed_signers,custom_signer)
-	
-	on_tx_signed.emit()
+	transaction = await sign_transaction(transaction,needed_signers,custom_signer)
+	if transaction == null:
+		return TransactionData.new({})
+		
 	var tx_data:TransactionData = await send_transaction(transaction,tx_commitment)
 	
-	on_tx_finish.emit(tx_data)
 	return tx_data
 	
 func send_transaction(tx:Transaction,tx_commitment:Commitment=Commitment.CONFIRMED) -> TransactionData:
+	print(tx.serialize())
 	#trying to force a staked connection if network is considered congested	
-	if helius_api!=null:
+	if helius_api!=null and SolanaService.rpc_cluster == SolanaService.RpcCluster.MAINNET:
 		if helius_api.is_network_congested(tx.get_unit_price()):
 			var staked_url = helius_api.get_rpc_url(true)
 			if staked_url != "":
 				print("CONGESTION IDENTIFIED, USING STAKED CONNECTION RPC!")
-				tx.set_url_override(staked_url)
+				print(staked_url)
+				ProjectSettings.set_setting("solana_sdk/client/default_url",staked_url)
+				#tx.set_url_override(staked_url)
 		
 	tx.send()
 	var response:Dictionary = await tx.transaction_response_received
@@ -83,51 +97,77 @@ func send_transaction(tx:Transaction,tx_commitment:Commitment=Commitment.CONFIRM
 	
 	if !tx_data.is_successful():
 		print(tx_data.get_error_message())
+		on_tx_finish.emit(tx_data)
+		tx.queue_free()
 		return tx_data
 		
-	print("Transaction %s is sent! \nAwaiting confirmation..." % tx_data.data["result"])
-	
-##	1 - processed
-##	2 - confirmed
-##	3 - finalized
-##	4 - failed
-	#var tx_status:int
-	#while true:
-		#tx_status = await tx.confirmation_status_changed
-		#print(tx_status)
-		#if tx_status == 4:
-			#break
-		#
-		#match tx_commitment:
-			#Commitment.PROCESSED:
-				#if tx_status == 1:
-					#break
-			#Commitment.CONFIRMED:
-				#if tx_status == 2:
-					#break
-			#Commitment.FINALIZED:
-				#if tx_status == 3:
-					#break
-		#print(tx_status)
+	var tx_signature:String = tx_data.data["result"]
+	print("Transaction %s is sent! \nAwaiting confirmation..." % tx_signature)
+	handle_transaction_confirmation(tx,tx_signature,tx_blockhash,tx_commitment)		
+	var transaction_success:bool = await on_tx_confirmed
 		
-	match tx_commitment:
-		Commitment.PROCESSED:
-			await tx.processed
-		Commitment.CONFIRMED:
-			await tx.confirmed
-		Commitment.FINALIZED:
-			await tx.finalized  
+	if transaction_success:
+		print_rich("[url]%s[/url]" % tx_data.get_link())
+	else:
+		tx_data = TransactionData.new({})
 		
-	tx.queue_free()	
-	
-	#if tx_status == 4:
-		#return TransactionData.new({})
-
-	print_rich("[url]%s[/url]" % tx_data.get_link())
+	tx.queue_free()
+	on_tx_finish.emit(tx_data)
 	return tx_data
-		
 	
-func sign_transaction_normal(transaction:Transaction, all_needed_signers:Array,custom_signer=null) -> Transaction:
+	
+var confirmation_in_progress:bool=false
+func handle_transaction_confirmation(tx:Transaction,tx_signature,blockhash:String,tx_commitment:Commitment) -> void:
+	confirmation_in_progress=true
+	#match tx_commitment:
+		#Commitment.PROCESSED:
+			#tx.processed.connect(handle_transaction_pass,CONNECT_ONE_SHOT)
+		#Commitment.CONFIRMED:
+			#tx.confirmed.connect(handle_transaction_pass,CONNECT_ONE_SHOT)
+		#Commitment.FINALIZED:
+			#tx.finalized.connect(handle_transaction_pass,CONNECT_ONE_SHOT)
+	
+	var wait_time:float=0
+#	this can freeze and not return anything if after transaction polling for 30 seconds
+#	the transaction doesnt land. so we need to add a timer and check for confirmation
+	while confirmation_in_progress:
+		print("Transaction in progress, please wait...")
+		tx_timeout_timer = create_timeout_timer()
+		tx_timeout_timer.start()
+		await tx_timeout_timer.timeout
+		tx_timeout_timer.queue_free()
+		wait_time += confirmation_check_rate
+		
+#		if transaction is confirmed, then trigger signal and break out
+		var tx_confirmed:bool = await SolanaService.is_transaction_confirmed([tx_signature])
+		if tx_confirmed:
+			handle_transaction_pass()
+		elif wait_time >= confirmation_timeout:
+			handle_transaction_timeout()
+	
+func handle_transaction_pass() -> void:
+	if tx_timeout_timer!=null:
+		tx_timeout_timer.queue_free()
+	confirmation_in_progress=false
+	failed_consecutive_tx_count=0
+	on_tx_confirmed.emit(true)
+	
+func handle_transaction_timeout() -> void:
+	if tx_timeout_timer!=null:
+		tx_timeout_timer.queue_free()
+	confirmation_in_progress=false
+	failed_consecutive_tx_count+=1
+	on_tx_confirmed.emit(false)
+
+func create_timeout_timer() -> Timer:
+	var timer = Timer.new()
+	timer.wait_time = confirmation_check_rate
+	timer.one_shot = true
+	add_child(timer)
+	return timer
+	
+	
+func sign_transaction(transaction:Transaction, all_needed_signers:Array,custom_signer=null) -> Transaction:
 	var wallet
 	if custom_signer!=null:
 		wallet = custom_signer
@@ -136,10 +176,8 @@ func sign_transaction_normal(transaction:Transaction, all_needed_signers:Array,c
 		
 	transaction.set_payer(wallet)
 	
-	transaction.update_latest_blockhash()
-	await transaction.blockhash_updated
-	
-	await add_signature(transaction,wallet,all_needed_signers)
+	transaction = await update_blockhash(transaction)
+	transaction = await add_signature(transaction,wallet)
 	return transaction
 
 func sign_transaction_serialized(tx_bytes:PackedByteArray, all_needed_signers:Array, custom_signer=null) -> Transaction:
@@ -151,42 +189,53 @@ func sign_transaction_serialized(tx_bytes:PackedByteArray, all_needed_signers:Ar
 	
 	var transaction:Transaction = Transaction.new_from_bytes(tx_bytes)
 	add_child(transaction)
+	transaction.set_signers(all_needed_signers)
 	
-	await add_signature(transaction,wallet,all_needed_signers)
+	transaction = await add_signature(transaction,wallet)
 	return transaction
 	
-func add_signature(transaction:Transaction,signer,all_needed_signers:Array) -> Transaction:
+func add_signature(transaction:Transaction,signer) -> Transaction:
 	on_tx_sign_start.emit()
 	
-	if all_needed_signers.size() == 0:
-		print("No signers provided for signature")
-		return null
-	
-	if all_needed_signers.size() == 1:
-		transaction.sign()
-		if signer is WalletAdapter:
-			await transaction.fully_signed
-		print("Signature Added!")
-		
-	elif all_needed_signers.size() > 1:
-		transaction.set_signers(all_needed_signers)
-		transaction.partially_sign([signer])
-		if signer is WalletAdapter:
-			await transaction.signer_state_changed
-		print("Partial Signature Added!")
-	
-	on_tx_signed.emit()
+	transaction.partially_sign([signer])
+	if signer is WalletAdapter:
+		transaction.signer_state_changed.connect(handle_transaction_approve,CONNECT_ONE_SHOT)
+		transaction.signing_failed.connect(handle_transaction_cancel,CONNECT_ONE_SHOT)
+		var confirmed:bool = await on_tx_signed
+		if !confirmed:
+			on_tx_cancelled.emit()
+			return null
 	return transaction
 	
+func handle_transaction_approve() -> void:
+	print("Partial Signature Added!")
+	on_tx_signed.emit(true)
+	
+func handle_transaction_cancel(signer_id:int) -> void:
+	print("Transaction Cancelled")
+	on_tx_signed.emit(false)
+	
+func update_blockhash(transaction:Transaction) -> Transaction:
+	transaction.update_latest_blockhash()
+	var response:Dictionary = await transaction.blockhash_updated
+	if response.has("result"):
+		tx_blockhash = response["result"]["value"]["blockhash"]
+	else:
+		print("Failed To Fetch valid blockhash for transaction")
+		tx_blockhash = ""
+	
+	return transaction
 	
 func get_compute_units_used(transaction:Transaction, inflate_percentage:int=0) -> int:
 	var simulated_tx_data:Dictionary = await SolanaService.simulate_transaction(transaction)
-	var consumed_units:int
+
 	if simulated_tx_data.size() == 0:
-		consumed_units = fallback_compute_unit_limit
-		return consumed_units
+		return fallback_compute_unit_limit
 		
-	consumed_units = int(simulated_tx_data["result"]["value"]["unitsConsumed"])
+	var consumed_units = int(simulated_tx_data["result"]["value"]["unitsConsumed"])
+	if consumed_units == 0:
+		return fallback_compute_unit_limit
+		
 	if inflate_percentage > 0:
 		var inflate_amount:float = inflate_percentage/float(100)
 		consumed_units += consumed_units*inflate_amount
@@ -201,7 +250,13 @@ func get_needed_unit_price(transaction:Transaction) -> int:
 	if estimated_unit_price == 0:
 		print("Failed to fetch estimated priority fee, using default value...")
 		estimated_unit_price = fallback_compute_unit_price
+	
+#	if solflare, make sure minimum price is 100000
+	var wallet_provider_id = SolanaService.wallet.get_wallet_provider_id()
+	if wallet_provider_id == 1:
+		estimated_unit_price = max(estimated_unit_price,100000)
 		
+	estimated_unit_price += estimated_unit_price*failed_consecutive_tx_count
 	return estimated_unit_price
 	
 	

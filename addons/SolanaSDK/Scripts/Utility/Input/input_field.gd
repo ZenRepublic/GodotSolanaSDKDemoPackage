@@ -1,7 +1,7 @@
 extends LineEdit
 class_name InputField
 
-enum InputType{ALPHANUMERIC,INTEGER,DECIMAL}
+enum InputType{ALPHANUMERIC,INTEGER,DECIMAL, URL}
 
 @export var input_type = InputType.ALPHANUMERIC
 @export var min_length:int = 0
@@ -20,6 +20,7 @@ enum InputType{ALPHANUMERIC,INTEGER,DECIMAL}
 var alphanumeric_regex = "^[a-zA-Z0-9 _\\-@]+$"
 var integer_regex = "^[-+]?\\d+$"
 var fraction_regex = "^[-+]?[0-9]+(\\.[0-9]+)?$"
+var url_regex = "^(https?:\\/\\/)?([a-zA-Z0-9.-]+)\\.([a-zA-Z]{2,6})(:[0-9]{1,5})?(\\/\\S*)?$"
 
 @onready var input_constraint = RegEx.new()
 var old_text
@@ -39,6 +40,8 @@ func _ready() -> void:
 			input_constraint.compile(integer_regex)
 		InputType.DECIMAL:
 			input_constraint.compile(fraction_regex)
+		InputType.URL:
+			input_constraint.compile(url_regex)
 			
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -84,7 +87,7 @@ func validate_text(new_text:String) -> String:
 					return ""
 		InputType.INTEGER:
 			var value:int = int(new_text)
-			value = clamp(value,int(get_min_value()),int(get_max_value()))
+			value = clamp(value,get_min_value(),get_max_value())
 			if value == 0 and not allow_zero:
 				return ""
 			adjusted_text = str(value)
@@ -94,21 +97,26 @@ func validate_text(new_text:String) -> String:
 			if value == 0 and not allow_zero:
 				return ""
 			adjusted_text = str(value)
+		InputType.URL:
+			adjusted_text = new_text.strip_edges()
 	
 	return adjusted_text
 		
 	
-func get_min_value() -> float:
+func get_min_value():
 	if min_value == -1:
 		return -INF
 	else:
 		return min_value
 		
-func get_max_value() -> float:
+func get_max_value():
 	if max_value == -1:
 		return INF
 	else:
 		return max_value
+		
+func set_value(value:String) -> void:
+	text = validate_text(value)
 	
 		
 func is_valid() -> bool:
@@ -142,5 +150,13 @@ func get_field_value():
 			if text.length() == 0:
 				return null
 			return float(text)
+		InputType.URL:
+			if text.length() == 0:
+				if null_if_empty:
+					return null
+				else:
+					return ""
+			else:
+				return text
 			
 	

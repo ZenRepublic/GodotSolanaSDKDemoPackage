@@ -13,7 +13,7 @@ var curr_tx_data:TransactionData
 func _ready() -> void:
 	SolanaService.transaction_manager.on_tx_create_start.connect(enable_tx_screen)
 	SolanaService.transaction_manager.on_tx_finish.connect(process_tx_finish)
-
+	SolanaService.transaction_manager.on_tx_cancelled.connect(process_tx_cancel)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -37,6 +37,9 @@ func process_tx_finish(tx_data:TransactionData) -> void:
 		if auto_close_fail:
 			await get_tree().create_timer(time_to_close).timeout
 			screen_switcher.close_active_panel() 
+			
+func process_tx_cancel() -> void:
+	screen_switcher.close_active_panel()
 	
 func copy_error_logs() -> void:
 	if curr_tx_data == null:

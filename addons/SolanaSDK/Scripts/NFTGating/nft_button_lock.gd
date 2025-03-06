@@ -18,7 +18,10 @@ func handle_asset_loaded(asset:WalletAsset) -> void:
 	
 func try_unlock() -> void:
 	super()
-	var held_nft_list:Array[WalletAsset] = SolanaService.asset_manager.get_owned_nfts_from_collection(collection_gate)
+	if !SolanaService.wallet.is_logged_in():
+		return
+		
+	var held_nft_list:Array[WalletAsset] = SolanaService.asset_manager.get_owned_assets_from_collection(collection_gate)
 	
 	match lock_type:
 		NFTLockType.HELD_AMOUNT:

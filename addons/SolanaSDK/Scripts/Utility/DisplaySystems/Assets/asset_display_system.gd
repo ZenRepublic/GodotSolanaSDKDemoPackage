@@ -1,16 +1,17 @@
 extends Node
 class_name AssetDisplaySystem
 
+@export var display_type:Array[AssetManager.AssetType]
 @export var container:Container
-@export var no_asset_overlay:Control
-@export var minimum_entry_size:Vector2
-@export var display_type:AssetManager.AssetType
 @export var display_entry_scn:PackedScene
-@export var search_bar:InputField
 
-@export var load_all_owned:bool
+@export var load_on_ready:bool
+@export var das_assets_only:bool=false
 @export var close_on_select:bool
 @export var destroy_on_close:bool
+
+@export var no_asset_overlay:Control
+@export var search_bar:InputField
 
 @export_category("Token Display Settings")
 
@@ -26,31 +27,33 @@ signal on_asset_selected(asset:WalletAsset)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	on_display_updated.connect(handle_display_update)
-	if load_all_owned:
-		load_all_owned_assets()
+	if load_on_ready:
+		if SolanaService.wallet.is_logged_in():
+			load_all_owned_assets()
+		else:
+			SolanaService.wallet.on_login_success.connect(load_all_owned_assets)
 	
 	if search_bar!=null:
 		search_bar.on_field_updated.connect(filter_entries)
 		
+		
 func load_all_owned_assets() -> void:
 #	load all nfts that have already been loaded and then add new ones as they load
-	setup_owned_assets()
+	clear_display()
+	SolanaService.asset_manager.on_asset_loaded.connect(add_to_list)
+	SolanaService.asset_manager.on_asset_load_finished.connect(asset_load_finished,CONNECT_ONE_SHOT)
 	
-	if !SolanaService.asset_manager.assets_loaded:
-		SolanaService.asset_manager.load_assets()
-		
-	if SolanaService.asset_manager.is_loading and !SolanaService.asset_manager.is_connected("on_asset_loaded",add_to_list):
-		SolanaService.asset_manager.on_asset_loaded.connect(add_to_list)
+	SolanaService.asset_manager.load_assets(das_assets_only)
 	
 
 func setup_owned_assets() -> void:
 	match display_type:
-		AssetManager.AssetType.NFT:
+		AssetManager.AssetType.NFT or AssetManager.AssetType.ASSET:
 			if collection_filter.size()==0:
-				setup(SolanaService.asset_manager.get_owned_nfts())
+				setup(SolanaService.asset_manager.get_owned_assets())
 			else:
 				for collection in collection_filter:
-					setup(SolanaService.asset_manager.get_owned_nfts_from_collection(collection))
+					setup(SolanaService.asset_manager.get_owned_assets_from_collection(collection))
 		AssetManager.AssetType.TOKEN:
 			setup(SolanaService.asset_manager.get_owned_tokens())
 			
@@ -66,14 +69,13 @@ func setup(assets:Array[WalletAsset],clear_previous:bool=true) -> void:
 		add_to_list(asset)
 		
 func add_to_list(asset:WalletAsset) -> void:
-	if asset.asset_type != display_type:
+	if !display_type.has(asset.asset_type):
 		return
 		
-	if display_type == AssetManager.AssetType.NFT and !belongs_to_collection_filter(asset):
+	if (asset is Nft or asset is CoreAsset) and !belongs_to_collection_filter(asset):
 		return
 	
 	var entry_instance:DisplayableAsset = display_entry_scn.instantiate() as DisplayableAsset
-	entry_instance.custom_minimum_size = minimum_entry_size
 	entry_instance.visible = matches_filter(asset)
 	container.add_child(entry_instance)
 	
@@ -85,6 +87,7 @@ func add_to_list(asset:WalletAsset) -> void:
 	on_display_updated.emit()
 	
 func asset_load_finished(owned_assets:Array[WalletAsset])->void:
+	SolanaService.asset_manager.on_asset_loaded.disconnect(add_to_list)
 	on_display_updated.emit()
 	pass
 	
@@ -136,13 +139,13 @@ func close() -> void:
 	if destroy_on_close:
 		queue_free()
 		
-func belongs_to_collection_filter(nft:Nft) -> bool:
+func belongs_to_collection_filter(asset:WalletAsset) -> bool:
 	if collection_filter.size() == 0:
 		return true
 		
 	var pass_collection_filter= (collection_filter.size()==0)
 	for collection in collection_filter:
-		if collection.belongs_to_collection(nft):
+		if collection.belongs_to_collection(asset):
 			return true
 			
 	return false

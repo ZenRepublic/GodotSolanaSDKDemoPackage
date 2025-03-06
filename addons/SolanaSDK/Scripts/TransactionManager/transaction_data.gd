@@ -3,8 +3,13 @@ class_name TransactionData
 
 var data:Dictionary
 
-func _init(raw_data:Dictionary) -> void:
+func _init(raw_data:Dictionary, custom_data:Dictionary={}) -> void:
 	data = raw_data
+	if custom_data.size()>0:
+		data["custom_data"] = custom_data
+		
+func set_custom_data(custom_data:Dictionary) -> void:
+	data["custom_data"] = custom_data
 	
 func is_successful():
 	return data.size() != 0 && data.has("result")
