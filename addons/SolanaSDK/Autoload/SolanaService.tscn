@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Managers/solana_service.gd" id="1_hwc3u"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/TransactionManager/transaction_manager.gd" id="2_v3adq"]
-[ext_resource type="PackedScene" uid="uid://clveiq3atvwet" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletAdapterUI.tscn" id="3_o8kic"]
+[ext_resource type="PackedScene" uid="uid://clveiq3atvwet" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletAdapterUI.tscn" id="3_bgdxg"]
 [ext_resource type="Texture2D" uid="uid://dkyfoudbohuqq" path="res://addons/SolanaSDK/Textures/missingicon.png" id="4_s5tc6"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Managers/wallet_service.gd" id="5_f327g"]
 [ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/ThirdPartyTools/Helius/helius_api.gd" id="6_jo0rl"]
@@ -25,7 +25,7 @@ honeycomb_rpc = "https://rpc.test.honeycombprotocol.com/"
 [node name="WalletService" type="Node" parent="."]
 script = ExtResource("5_f327g")
 use_generated = true
-wallet_adapter_scn = ExtResource("3_o8kic")
+wallet_adapter_scn = ExtResource("3_bgdxg")
 
 [node name="WalletAdapter" type="WalletAdapter" parent="WalletService"]
 
@@ -61,6 +61,7 @@ script = ExtResource("6_jo0rl")
 priority_fee_level = 3
 use_recommended_fee = false
 fee_to_consider_congested = 0
+override_das_rpc = true
 
 [node name="CoreManager" type="Node" parent="."]
 script = ExtResource("12_ynxal")

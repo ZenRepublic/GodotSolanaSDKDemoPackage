@@ -55,14 +55,9 @@ func try_unlock() -> void:
 func get_hashlist_from_file(file_path: String) -> Array[String]:
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	
-	# Open the file
 	if file!=null:
-		# Read the entire file content
 		var json_content = file.get_as_text()
-		# Parse the JSON content
-		#print(json_content)
 		var parsed_json = parse_json(json_content)
-		# Close the file
 		file.close()
 		return parsed_json
 	else:

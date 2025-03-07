@@ -57,6 +57,7 @@ func pop_adapter() -> void:
 	wallet_adapter_ui.on_provider_selected.connect(login_adapter)
 
 func login_adapter(provider_id:int) -> void:
+	print("PROVIDER: ",provider_id)
 	wallet_adapter.wallet_type = provider_id	
 	wallet_adapter.connect_wallet()
 

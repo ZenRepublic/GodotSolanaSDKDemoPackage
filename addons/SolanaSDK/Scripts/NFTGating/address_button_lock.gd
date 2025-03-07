@@ -25,4 +25,5 @@ func try_unlock() -> void:
 	
 func set_address_list(list:Array[Pubkey]) -> void:
 	address_list = list
+	try_unlock()
 	

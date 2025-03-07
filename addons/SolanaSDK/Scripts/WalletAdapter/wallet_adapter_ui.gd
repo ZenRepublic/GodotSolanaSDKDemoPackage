@@ -53,7 +53,6 @@ func on_button_pressed(id_selected:int) -> void:
 		audio_player.play()
 	on_provider_selected.emit(id_selected)
 	
-	SolanaService.wallet.login_adapter(id_selected)
 	if signing_overlay!=null:
 		signing_overlay.visible=true
 		

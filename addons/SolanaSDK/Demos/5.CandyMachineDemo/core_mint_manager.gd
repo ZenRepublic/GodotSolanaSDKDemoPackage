@@ -10,6 +10,7 @@ class_name CoreMintManager
 @export var loading_screen:Control
 @export var mint_display_scn:PackedScene
 
+@export var load_on_start:bool=true
 @export var fetch_data_on_become_visible:bool=true
 
 var cm_key:Pubkey
@@ -34,7 +35,8 @@ func _ready() -> void:
 		mint_plugins = MintAssetArgs.new()
 		mint_plugins.plugins = []
 		
-	await refresh_candy_machine_data()
+	if load_on_start:
+		await refresh_candy_machine_data()
 	if fetch_data_on_become_visible:
 		self.visibility_changed.connect(on_visibility_changed)
 	
