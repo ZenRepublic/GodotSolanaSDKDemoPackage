@@ -1,7 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0iqm3erodaqo"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/7.HighscoreDemo/leaderboard_entry.gd" id="1_13eo7"]
-
+[ext_resource type="Script" uid="uid://cs30la02klrj4" path="res://addons/SolanaSDK/Demos/7.HighscoreDemo/leaderboard_entry.gd" id="1_13eo7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dyygh"]
 bg_color = Color(0.411765, 0.666667, 0.517647, 1)

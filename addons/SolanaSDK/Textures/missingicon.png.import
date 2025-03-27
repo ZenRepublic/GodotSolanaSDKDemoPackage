@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dkyfoudbohuqq"
-path="res://.godot/imported/missingicon.png-54c9dc61466d7c783b16cbf272da2103.ctex"
+path.s3tc="res://.godot/imported/missingicon.png-54c9dc61466d7c783b16cbf272da2103.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/SolanaSDK/Textures/missingicon.png"
-dest_files=["res://.godot/imported/missingicon.png-54c9dc61466d7c783b16cbf272da2103.ctex"]
+dest_files=["res://.godot/imported/missingicon.png-54c9dc61466d7c783b16cbf272da2103.s3tc.ctex"]
 
 [params]
 
-compress/mode=4
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

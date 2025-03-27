@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgbp0rixlgwes"
-path="res://.godot/imported/open-treasure-chest-icon-flat-style-vector.png-f24c723b06dd3ea2e3c1e660311a9030.ctex"
+path.s3tc="res://.godot/imported/open-treasure-chest-icon-flat-style-vector.png-f24c723b06dd3ea2e3c1e660311a9030.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/SolanaSDK/Textures/open-treasure-chest-icon-flat-style-vector.png"
-dest_files=["res://.godot/imported/open-treasure-chest-icon-flat-style-vector.png-f24c723b06dd3ea2e3c1e660311a9030.ctex"]
+dest_files=["res://.godot/imported/open-treasure-chest-icon-flat-style-vector.png-f24c723b06dd3ea2e3c1e660311a9030.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

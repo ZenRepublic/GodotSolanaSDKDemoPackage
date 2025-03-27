@@ -13,7 +13,8 @@ var default_mainnet = "https://api.mainnet-beta.solana.com"
 var active_rpc:String
 
 var das_supported_rpc_providers:Array[String] = [
-	"helius-rpc"
+	"helius-rpc",
+	"aura"
 ]
 var das_compatible_rpc:String
 
@@ -305,6 +306,7 @@ func fetch_all_program_accounts_of_type(program:AnchorProgram,account_type:Strin
 	
 #DAS ONLY!
 func get_asset_data(asset_id:Pubkey) -> Dictionary:
+	print("GETTING ASSET DATA: ",asset_id.to_string())
 	if das_compatible_rpc == "":
 		push_error("Can't get asset data - DAS compatible RPC is not configured")
 		return {}

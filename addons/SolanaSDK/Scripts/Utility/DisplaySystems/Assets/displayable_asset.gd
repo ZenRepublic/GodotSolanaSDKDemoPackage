@@ -16,12 +16,19 @@ class_name DisplayableAsset
 @export var auto_load_balance:bool
 
 var asset:WalletAsset
+var default_tex:Texture2D
+var default_name:String
 
 signal on_data_loaded()
 signal on_selected(displayable:DisplayableAsset)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if visual!=null:
+		default_tex = visual.texture
+	if name_label!=null:
+		default_name = name_label.text
+		
 	if select_button!=null:
 		select_button.pressed.connect(handle_select)
 	pass # Replace with function body.
@@ -71,7 +78,7 @@ func handle_image_load_complete() -> void:
 	if asset.image!=null:
 		visual.texture = asset.image
 	else:
-		set_default_visual()
+		reset_to_default()
 		push_warning("Couldn't load the image for mint: %s" % asset.mint.to_string())
 	
 func truncate_name(full_name:String,include_id:bool=true) -> String:
@@ -101,10 +108,12 @@ func update_balance(tx_data:TransactionData=null) -> void:
 	var token:Token = asset as Token
 	balance_label.set_value(await token.get_balance(true))
 	
-func set_default_visual():
-	if visual == null:
-		return
+func reset_to_default():
+	if visual != null:
+		visual.texture = default_tex
+	if name_label!=null:
+		name_label.text = default_name
 		
-	if default_image_path.length()>0:
-		visual.texture = load(default_image_path)
+	#if default_image_path.length()>0:
+		#visual.texture = load(default_image_path)
 	

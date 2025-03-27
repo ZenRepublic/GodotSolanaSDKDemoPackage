@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://clveiq3atvwet"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_ui.gd" id="1_pslxa"]
+[ext_resource type="Script" uid="uid://dpo6hj5s2tcgl" path="res://addons/SolanaSDK/Scripts/WalletAdapter/wallet_adapter_ui.gd" id="1_pslxa"]
 [ext_resource type="Texture2D" uid="uid://dkyfoudbohuqq" path="res://addons/SolanaSDK/Textures/missingicon.png" id="2_l6v2h"]
 [ext_resource type="PackedScene" uid="uid://rxgh26e3ch4f" path="res://addons/SolanaSDK/Scripts/WalletAdapter/WalletAdapterSlot.tscn" id="5_antmm"]
 [ext_resource type="Texture2D" uid="uid://b3003ar1uxa77" path="res://addons/SolanaSDK/Textures/closebutton.jpg.png" id="7_nuaxe"]

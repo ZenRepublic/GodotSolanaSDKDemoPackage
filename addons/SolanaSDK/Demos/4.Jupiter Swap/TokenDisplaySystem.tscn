@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dpx1ioj25vfxs"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/DisplaySystems/Assets/asset_display_system.gd" id="1_rs44u"]
+[ext_resource type="Script" uid="uid://okfi452wp7yu" path="res://addons/SolanaSDK/Scripts/Utility/DisplaySystems/Assets/asset_display_system.gd" id="1_rs44u"]
 [ext_resource type="PackedScene" uid="uid://d34k0q4mj2qqt" path="res://addons/SolanaSDK/Demos/4.Jupiter Swap/TokenDisplayEntry.tscn" id="2_gxoe0"]
 [ext_resource type="Texture2D" uid="uid://b3003ar1uxa77" path="res://addons/SolanaSDK/Textures/closebutton.jpg.png" id="3_t4eec"]
 

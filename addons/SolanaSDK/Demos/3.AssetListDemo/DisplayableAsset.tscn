@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6ync1x06vh2q"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/DisplaySystems/Assets/displayable_asset.gd" id="1_d5vc2"]
+[ext_resource type="Script" uid="uid://fyl7vadeoj03" path="res://addons/SolanaSDK/Scripts/Utility/DisplaySystems/Assets/displayable_asset.gd" id="1_d5vc2"]
 [ext_resource type="Texture2D" uid="uid://dkyfoudbohuqq" path="res://addons/SolanaSDK/Textures/missingicon.png" id="2_7dajo"]
 
 [node name="DisplayableAsset" type="PanelContainer" node_paths=PackedStringArray("visual", "name_label")]

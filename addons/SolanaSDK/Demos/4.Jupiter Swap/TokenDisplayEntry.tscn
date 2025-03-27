@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://d34k0q4mj2qqt"]
 
 [ext_resource type="Texture2D" uid="uid://dkyfoudbohuqq" path="res://addons/SolanaSDK/Textures/missingicon.png" id="1_cgotv"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/DisplaySystems/Assets/displayable_asset.gd" id="1_isrdy"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/Utility/Input/number_label.gd" id="3_k3dfe"]
+[ext_resource type="Script" uid="uid://fyl7vadeoj03" path="res://addons/SolanaSDK/Scripts/Utility/DisplaySystems/Assets/displayable_asset.gd" id="1_isrdy"]
+[ext_resource type="Script" uid="uid://bnket1c06w8fq" path="res://addons/SolanaSDK/Scripts/Utility/Input/number_label.gd" id="3_k3dfe"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_80nu6"]
 

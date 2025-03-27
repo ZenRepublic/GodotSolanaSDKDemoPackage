@@ -105,4 +105,5 @@ func get_available_wallet_extensions() -> Array:
 func is_logged_in() -> bool:
 	if use_generated:
 		return keypair!=null
-	return wallet_adapter.get_connected_key().to_string()!=""
+		
+	return wallet_adapter.get_connected_key()!=null and wallet_adapter.get_connected_key().to_string()!=""

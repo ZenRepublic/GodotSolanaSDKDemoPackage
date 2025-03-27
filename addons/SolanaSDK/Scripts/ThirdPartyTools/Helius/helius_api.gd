@@ -29,7 +29,6 @@ func get_rpc_url(staked:bool=false) -> String:
 		if using_paid_plan:
 			url_type = "staked"
 		else:
-			print("Can't use a staked connection without a paid helius plan")
 			return ""
 	else:
 		match SolanaService.rpc_cluster:

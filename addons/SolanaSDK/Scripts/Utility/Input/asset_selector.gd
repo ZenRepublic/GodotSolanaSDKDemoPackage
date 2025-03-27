@@ -3,7 +3,6 @@ class_name AssetSelector
 
 @export var displayable_asset:DisplayableAsset
 @export var display_system_scn:PackedScene
-
 #set if you want for asset to be invisible before something is clicked
 @export var asset_content:Control
 @export var select_label:Label
@@ -34,15 +33,14 @@ func select_asset(display_selection:WalletAsset) -> void:
 		select_label.visible= (display_selection==null)
 	if asset_content != null:
 		asset_content.visible= (display_selection!=null)
-		
-	if display_selection == null:
-		selected_asset = null
-		displayable_asset.set_default_visual()
-		on_selected.emit(null)
-		return
 	
 	selected_asset = display_selection
-	await displayable_asset.set_data(selected_asset)
+	
+	if selected_asset!=null:
+		await displayable_asset.set_data(selected_asset)
+	else:
+		displayable_asset.reset_to_default()
+		
 	on_selected.emit(selected_asset)
 	
 func is_valid() -> bool:

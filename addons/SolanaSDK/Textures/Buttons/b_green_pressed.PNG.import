@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cye2pbirpht4u"
-path="res://.godot/imported/b_green_pressed.PNG-2dffc3fd41f0338e7174b2c9c0c72fed.ctex"
+path.s3tc="res://.godot/imported/b_green_pressed.PNG-2dffc3fd41f0338e7174b2c9c0c72fed.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/SolanaSDK/Textures/Buttons/b_green_pressed.PNG"
-dest_files=["res://.godot/imported/b_green_pressed.PNG-2dffc3fd41f0338e7174b2c9c0c72fed.ctex"]
+dest_files=["res://.godot/imported/b_green_pressed.PNG-2dffc3fd41f0338e7174b2c9c0c72fed.s3tc.ctex"]
 
 [params]
 
-compress/mode=4
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

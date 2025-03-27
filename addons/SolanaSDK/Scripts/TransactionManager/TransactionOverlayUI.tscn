@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://blmw46he11fxs"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Scripts/TransactionManager/transaction_overlay_ui.gd" id="1_nrydi"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/screen_switcher.gd" id="2_l6gvy"]
+[ext_resource type="Script" uid="uid://buog8pi2fxynr" path="res://addons/SolanaSDK/Scripts/TransactionManager/transaction_overlay_ui.gd" id="1_nrydi"]
+[ext_resource type="Script" uid="uid://dk1jjwibe5bvs" path="res://addons/SolanaSDK/Demos/_LoginDemo/screen_switcher.gd" id="2_l6gvy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjeht"]
 bg_color = Color(0.34902, 0.360784, 0.482353, 1)

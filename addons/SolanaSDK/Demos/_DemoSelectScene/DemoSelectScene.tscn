@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=3 uid="uid://2ktq3vdndve"]
 
-[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/1.TokenTransferDemo/account_manager.gd" id="2_10qtm"]
+[ext_resource type="Script" uid="uid://dsdask8ywjpvf" path="res://addons/SolanaSDK/Demos/1.TokenTransferDemo/account_manager.gd" id="2_10qtm"]
 [ext_resource type="Texture2D" uid="uid://dnqcw4msg2uow" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_pressed.PNG" id="3_b8juh"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_DemoSelectScene/rpc_network_switcher.gd" id="3_lb3d3"]
+[ext_resource type="Script" uid="uid://b3sv8lukj6ju5" path="res://addons/SolanaSDK/Demos/_DemoSelectScene/rpc_network_switcher.gd" id="3_lb3d3"]
 [ext_resource type="Texture2D" uid="uid://5erj253phx4s" path="res://addons/SolanaSDK/Textures/Buttons/b_orange_hover.PNG" id="4_mglv1"]
 [ext_resource type="Texture2D" uid="uid://et1kvxp5bprg" path="res://addons/SolanaSDK/Textures/Buttons/b_inactive.PNG" id="5_dpk8s"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_change_button.gd" id="7_agyvs"]
-[ext_resource type="Script" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_loader.gd" id="9_6qm0y"]
+[ext_resource type="Script" uid="uid://rodqxxqhixqe" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_change_button.gd" id="7_agyvs"]
+[ext_resource type="Script" uid="uid://b5nw7fquhlcbl" path="res://addons/SolanaSDK/Demos/_LoginDemo/scene_loader.gd" id="9_6qm0y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bume7"]
 bg_color = Color(0.937255, 0.682353, 0.341176, 1)
